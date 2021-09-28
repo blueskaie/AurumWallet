@@ -1,0 +1,10 @@
+{
+  "title": "AUR",
+  "code": "AUR",
+  "icon": "aur.webp",
+  "decimals": 9,
+  "contract": {
+    "1": "0x5b6afbd5184638c9c49c485c3de5ed56269ba6cb",
+    "2": ""
+  }
+}

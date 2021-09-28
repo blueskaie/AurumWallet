@@ -1,0 +1,10 @@
+{
+  "title": "USDT",
+  "code": "USDT",
+  "icon": "usdt.webp",
+  "decimals": 18,
+  "contract": {
+    "1": "0x55d398326f99059ff775485246999027b3197955",
+    "2": "0x7ef95a0fee0dd31b22626fa2e10ee6a223f8a684"
+  }
+}
