@@ -43,7 +43,19 @@ const IOSSlider = withStyles({
   markLabel: {
     color: "#ffffff",
     fontSize: 12
-  }
+  },
+  "&>.MuiSlider-rail": {
+    background: 'black'
+  },
+  "&>.MuiSlider-track": {
+    background: '#333333'
+  },
+  "&>.MuiSlider-thumb": {
+    background: 'white',
+    width: '30px',
+    height: '15px',
+    borderRadius: '15px'
+  },
 })(Slider);
 
 const Swap = () => {
@@ -238,9 +250,9 @@ const Swap = () => {
 
   return (
     <div className={classes.swap}>
-      <BackButtonHeader title="" />
+      <BackButtonHeader title=""/>
       {/* swap_feature */}
-      <div className={classes.swaptitle} >
+      <div className={classes.swaptitle}>
         <div>Swap</div>
         <div>Tokens</div>
       </div>
@@ -271,8 +283,8 @@ const Swap = () => {
                         { fromToken 
                           ? (tokenLogos[fromToken.code.toUpperCase()]
                             ? <img src={tokenLogos[fromToken.code.toUpperCase()]} alt={fromToken.code} className="tokenImage" />
-                            : <Jazzicon diameter={10} seed={fromToken.contract[network.id]} /> )
-                          : <div style={{width: 10, height: 10}}></div>
+                            : <Jazzicon diameter={20} seed={fromToken.contract[network.id]} /> )
+                          : <div style={{width: 20, height: 20}}></div>
                         }
                       </div>
                       <div style={{color:'white', marginLeft: '5px'}}>{fromToken?fromToken.code:'From'}</div>
@@ -318,9 +330,9 @@ const Swap = () => {
               </FormControl>
             </div>
             <form method="post" autoComplete="off">
-              <div style={{textAlign: 'center'}}>
+              <div style={{textAlign: 'center', display: 'flex', flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center'}} id='real_slider' className={classes.divslider}>
+                <div style={{color: 'white', marginRight: '5px'}}>0%</div>
                 <IOSSlider
-                  className={classes.sliderbar}
                   value={allowedSlippage}
                   onChange={(e, value)=>setAllowedSlippage(value)}
                   aria-labelledby="input-slider"
@@ -333,6 +345,7 @@ const Swap = () => {
                   color='secondary'
                   disabled={autoSlippage}
                 />
+              <div style={{color: 'white', marginLeft: '25px'}}>100%</div>
               </div>
             </form>
             {/* <p className="tolerance">Slippage tolerance</p> */}
@@ -457,7 +470,7 @@ const Swap = () => {
       >
         <form method="post" autoComplete="off" className={classes.settingForm}>
           <label className={classes.label}>Slippage tolerance</label>
-          <div style={{textAlign: 'center'}}>
+          <div style={{textAlign: 'center'}} id='dlg_slider'>
             <IOSSlider
               value={allowedSlippage}
               onChange={(e, value)=>setAllowedSlippage(value)}

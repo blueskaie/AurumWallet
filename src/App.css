@@ -361,3 +361,39 @@ img {
 .termofservice p{
   color:white;
 }
+#real_slider .MuiSlider-root .MuiSlider-rail {
+  background: #333333;
+}
+#real_slider .MuiSlider-root .MuiSlider-track {
+  background: #111111;
+}
+#real_slider .MuiSlider-root .MuiSlider-mark {
+  height: 10px;
+  top: 11px;
+  background: #333333;
+}
+#real_slider .MuiSlider-root .MuiSlider-thumb {
+  background: white;
+  width: 30px;
+  height: 15px;
+  border-radius: 15px;
+  top: 13px;
+}
+#dlg_slider .MuiSlider-root .MuiSlider-rail {
+  background: #333333;
+}
+#dlg_slider .MuiSlider-root .MuiSlider-track {
+  background: #111111;
+}
+#dlg_slider .MuiSlider-root .MuiSlider-mark {
+  height: 10px;
+  top: 11px;
+  background: #333333;
+}
+#dlg_slider .MuiSlider-root .MuiSlider-thumb {
+  background: white;
+  width: 30px;
+  height: 15px;
+  border-radius: 15px;
+  top: 13px;
+}

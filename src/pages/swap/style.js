@@ -7,6 +7,12 @@ const useStyles = makeStyles((theme) => ({
     height: 750,
     width: 375,
     padding: "20px 0px",
+    "&>.makeStyles-root-53": {
+      marginLeft: '20px',
+    },
+    "&>.makeStyles-swaptitle-28": {
+      paddingLeft: '20px'
+    }
   },
   swaptitle:{
     position: 'relative',
@@ -98,8 +104,7 @@ const useStyles = makeStyles((theme) => ({
     display: 'flex',
     justifyContent :'space-between',
     alignItems: 'center',
-    marginTop: theme.spacing(2),
-    marginBottom: theme.spacing(2)
+    marginBottom: theme.spacing(1)
   },
   swapRouter: {
     background: 'transparent',
@@ -125,7 +130,7 @@ const useStyles = makeStyles((theme) => ({
     cursor: 'pointer'
   },
   setting: {
-    margin: '10px 0',
+    margin: '0px 0',
     color: 'white',
     cursor: 'pointer',
     width: '15px'

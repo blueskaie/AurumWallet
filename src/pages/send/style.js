@@ -42,9 +42,22 @@ const useStyles = makeStyles((theme) => ({
     flexDirection: 'column',
     marginTop: 20
   },
-  sliderbar: {
+  divslider: {
     background: 'red',
-    color: 'red'
+    "&>.WithStyles(ForwardRef(Slider))-root-65": {
+      "&>.MuiSlider-rail": {
+        background: 'black'
+      },
+      "&>.MuiSlider-track": {
+        background: '#333333'
+      },
+      "&>.MuiSlider-thumb": {
+        background: 'white',
+        width: '30px',
+        height: '15px',
+        borderRadius: '15px'
+      },
+    }
   }
 }));
 
