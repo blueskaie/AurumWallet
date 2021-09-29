@@ -39,7 +39,12 @@ const useStyles = makeStyles((theme) => ({
   },
   submitWrapper: {
     display: 'flex',
-    flexDirection: 'column'
+    flexDirection: 'column',
+    marginTop: 20
+  },
+  sliderbar: {
+    background: 'red',
+    color: 'red'
   }
 }));
 

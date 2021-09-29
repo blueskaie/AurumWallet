@@ -1,7 +1,7 @@
 import React, {useState, useEffect, useMemo} from "react";
 // get our fontawesome imports
 import Dialog from '@material-ui/core/Dialog';
-import { faCaretDown } from "@fortawesome/free-solid-svg-icons";
+import { faCaretDown, faCaretUp, faCog } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useHistory } from "react-router-dom";
 import { useRecoilValue, useRecoilState } from 'recoil';
@@ -27,6 +27,8 @@ import Slider from '@material-ui/core/Slider';
 
 import { DEFAULT_TOKEN } from "../../config/tokens";
 import Jazzicon from 'react-jazzicon';
+
+// import AurumIcon128 from '../../../public/images/icon128.png';
 
 function Alert(props) {
   return <MuiAlert elevation={6} variant="filled" {...props} />;
@@ -239,37 +241,43 @@ const Swap = () => {
       <BackButtonHeader title="" />
       {/* swap_feature */}
       <div className={classes.swaptitle} >
-        <h1>Swap Feature</h1>
+        <div>Swap</div>
+        <div>Tokens</div>
       </div>
       {/* main_div */}
       <div className="swapcontent">
         <form method="post" autoComplete="off" onSubmit={handleSubmit}>
           <div className="swaptoken">
-            <div className={classes.swaptab}>
-              <div className={classes.swaptabItem}>Swap</div>
-              <div className={classes.swaptabItem}>Pool</div>
+            <div className={classes.swapOptions} style={{paddingRight: '7px'}}>
+              <select className={classes.swapRouter} onChange={(e)=>setSwapRouter(e.target.value)} value={swapRouter}>
+                <option value="pancake">Apeswap</option>
+                <option value="apeswap">Pancake</option>
+              </select>
+              <div className={classes.setting} onClick={()=>setOpenSettingsDialog(true)}>
+                <FontAwesomeIcon icon={faCog} style={{width: '20px', height: '20px', color:'white', marginRight: '10px'}}/>
+              </div>
             </div>
             <div className="swapform">
               <FormControl error={errors.fromToken} style={{width: '100%'}}>
                 {!fromSelect && <div className="from">
-                  <div className="fromtokeninfo" onClick={()=>{setFromSelect(true); setToSelect(false);}}>
-                    <p>{fromToken?fromToken.code:'From'}</p>
-                    <FontAwesomeIcon icon={faCaretDown} style={{color:'white'}}/>
+                  <div className="fromtokeninfoleft">
+                    <div>From</div>
+                    <div>250</div>
                   </div>
                   <div className={classes.amountSection}>
                     <div className={classes.balanceAmount}>Balance: {fromToken ? parseFloat(LatomicNumber.toDecimal(fromToken.balance, fromToken.decimals)).toFixed(5) : ''}</div>
-                    <div className={classes.tokenAmount}>
-                      <p className={classes.maxBtn} onClick={onMaxAmount}>MAX</p>
-                      <input type="number" className="fromtokenamount" placeholder="0.0" value={swapAmount} onChange={onSwapAmount}/>
+                    <div className="fromtokeninfo" onClick={()=>{setFromSelect(true); setToSelect(false);}}>
+                      <div>
+                        { fromToken 
+                          ? (tokenLogos[fromToken.code.toUpperCase()]
+                            ? <img src={tokenLogos[fromToken.code.toUpperCase()]} alt={fromToken.code} className="tokenImage" />
+                            : <Jazzicon diameter={10} seed={fromToken.contract[network.id]} /> )
+                          : <div style={{width: 10, height: 10}}></div>
+                        }
+                      </div>
+                      <div style={{color:'white', marginLeft: '5px'}}>{fromToken?fromToken.code:'From'}</div>
+                      <FontAwesomeIcon icon={faCaretDown} style={{color:'white', marginLeft: '5px'}}/>
                     </div>
-                  </div>
-                  <div>
-                    { fromToken 
-                      ? (tokenLogos[fromToken.code.toUpperCase()]
-                        ? <img src={tokenLogos[fromToken.code.toUpperCase()]} alt={fromToken.code} className="tokenImage" />
-                        : <Jazzicon diameter={32} seed={fromToken.contract[network.id]} /> )
-                      : <div style={{width: 32, height: 32}}></div>
-                    }
                   </div>
                 </div>}
                 <TokenSelect data={filteredTokenList(toToken)} onChange={onFromChange} isShown={fromSelect}/>
@@ -277,25 +285,30 @@ const Swap = () => {
                   {helper.fromToken}
                 </FormHelperText>
               </FormControl>
-              <FormControl error={errors.toToken} style={{marginTop: 20, width: '100%'}}>
+              <div style={{margin: '5px 0px', display: 'flex', flexDirection: 'row', justifyContent: 'center', alignItems: 'center'}}>
+                <FontAwesomeIcon icon={faCaretDown} style={{color:'white', marginLeft: '5px'}}/>
+                <FontAwesomeIcon icon={faCaretUp} style={{color:'white', marginLeft: '5px'}}/>
+              </div>
+              <FormControl error={errors.toToken} style={{width: '100%'}}>
                 {!toSelect && <div className="from">
-                  <div className="fromtokeninfo" onClick={()=>{setToSelect(true); setFromSelect(false);}}>
-                    <p>{toToken?toToken.code:'To'}</p>
-                    <FontAwesomeIcon icon={faCaretDown} style={{color:'white'}}/>                  
+                  <div className="fromtokeninfoleft">
+                    <div>To</div>
+                    <div>250,000,000</div>
                   </div>
                   <div className={classes.amountSection}>
                     <div className={classes.balanceAmount}>Balance: {toToken?parseFloat(LatomicNumber.toDecimal(toToken.balance,toToken.decimals)).toFixed(5) : ''}</div>
-                    <div className={classes.tokenAmount}>
-                      <input type="number" className="fromtokenamount" placeholder="0.0" value={expectedAmount} disabled/>
+                    <div className="fromtokeninfo" onClick={()=>{setToSelect(true); setFromSelect(false);}}>
+                      <div>
+                        { toToken 
+                          ? (tokenLogos[toToken.code.toUpperCase()]
+                            ? <img src={tokenLogos[toToken.code.toUpperCase()]} alt={toToken.code} className="tokenImage" />
+                            : <Jazzicon diameter={20} seed={toToken.contract[network.id]} /> )
+                          : <div style={{width: 20, height: 20}}></div>
+                        }
+                      </div>
+                      <div style={{color:'white', marginLeft: '5px'}}>{toToken?toToken.code:'To'}</div>
+                      <FontAwesomeIcon icon={faCaretDown} style={{color:'white', marginLeft: '5px'}}/>
                     </div>
-                  </div>
-                  <div>
-                    { toToken 
-                      ? (tokenLogos[toToken.code.toUpperCase()]
-                        ? <img src={tokenLogos[toToken.code.toUpperCase()]} alt={toToken.code} className="tokenImage" />
-                        : <Jazzicon diameter={32} seed={toToken.contract[network.id]} /> )
-                      : <div style={{width: 32, height: 32}}></div>
-                    }
                   </div>
                 </div>}
                 <TokenSelect data={filteredTokenList(fromToken)} onChange={onToChange} isShown={toSelect}/>
@@ -304,17 +317,28 @@ const Swap = () => {
                 </FormHelperText>
               </FormControl>
             </div>
+            <form method="post" autoComplete="off">
+              <div style={{textAlign: 'center'}}>
+                <IOSSlider
+                  className={classes.sliderbar}
+                  value={allowedSlippage}
+                  onChange={(e, value)=>setAllowedSlippage(value)}
+                  aria-labelledby="input-slider"
+                  step={25}
+                  valueLabelDisplay="off"
+                  // marks={availableSlipageToleranceArray}
+                  marks
+                  min={0}
+                  max={100}
+                  color='secondary'
+                  disabled={autoSlippage}
+                />
+              </div>
+            </form>
             {/* <p className="tolerance">Slippage tolerance</p> */}
-            <div className={classes.swapOptions}>
-              <select className={classes.swapRouter} onChange={(e)=>setSwapRouter(e.target.value)} value={swapRouter}>
-                <option value="pancake">Pancake</option>
-                <option value="apeswap">Apeswap</option>
-              </select>
-              <div className={classes.setting} onClick={()=>setOpenSettingsDialog(true)}>Settings</div>
-            </div>
             <div className={classes.submitWrapper}>
-              {!isAllowed && <Button variant="contained" color="secondary" disabled={formSubmitting} onClick={approveToken}>Approve</Button> }
-              {isAllowed && <Button variant="contained" color="primary" disabled={formSubmitting} type="submit">Exchange</Button>}
+              {/* {!isAllowed && <Button variant="contained" color="secondary" disabled={formSubmitting} onClick={approveToken}>Approve</Button> } */}
+              <Button variant="contained" color="secondary" style={{background: 'white', color: 'black', borderRadius: '15px'}} disabled={formSubmitting} type="submit">Swap</Button>
               {formSubmitting && <LinearProgress />}
             </div>
 
@@ -324,14 +348,12 @@ const Swap = () => {
         <div className="swapinfo">
             <div className="swapsubinfo">
               <p>Minimum received</p>
-              <p className="greennumber">{toToken ? `${minimumReceivedAmount.toFixed(4)} ${toToken.code}` : 0}</p>
-            </div>
-            <div className="swapsubinfo">
               <p>Price Impact</p>
-              <p>0.0000</p>
+              <p>Liquidity provider fee</p>
             </div>
             <div className="swapsubinfo">
-              <p>Liquidity provider fee</p>
+              <p className="greennumber">{toToken ? `${minimumReceivedAmount.toFixed(4)} ${toToken.code}` : 0}</p>
+              <p>0.0000</p>
               <p>0.00</p>
             </div>
         </div>
@@ -440,11 +462,12 @@ const Swap = () => {
               value={allowedSlippage}
               onChange={(e, value)=>setAllowedSlippage(value)}
               aria-labelledby="input-slider"
-              step={null}
+              step={25}
               valueLabelDisplay="off"
-              marks={availableSlipageToleranceArray}
-              min={0.1}
-              max={1.5}
+              // marks={availableSlipageToleranceArray}
+              marks
+              min={0}
+              max={100}
               disabled={autoSlippage}
             />
             <div style={{display: 'flex', justifyContent: 'space-between', alignItems: 'center'}}>

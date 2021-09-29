@@ -2,24 +2,25 @@ import { makeStyles } from "@material-ui/core/styles";
 
 const useStyles = makeStyles((theme) => ({
   swap: {
-    background:'linear-gradient(#0d1014,#1d2d5d,#111422,#2a2d36)',
+    background:'#111111',
     textAlign: "center",
-    height: 559,
+    height: 750,
     width: 375,
     padding: "20px 0px",
   },
   swaptitle:{
     position: 'relative',
-    margin:'0px 20px 40px 20px',
+    margin:'50px 20px 40px 20px',
     textAlign: 'left',
-    '& h1':{
+    '& div':{
       color:'white',
       fontFamily: 'unset',
       marginTop:0,
         fontSize: 33,
+        fontWeight: 700,
         lineHeight: '31px',
         fontWeight: '100',
-        letterSpacing: '2px'
+        letterSpacing: '1px'
     }
   },
   swaptab: {
@@ -35,7 +36,7 @@ const useStyles = makeStyles((theme) => ({
   },
   bottomimg: {
     position: "absolute",
-    bottom: "-8px",
+    bottom: "-185px",
     left: "-30px",
     width: 447,
     maxWidth: "inherit",
@@ -79,7 +80,7 @@ const useStyles = makeStyles((theme) => ({
     padding: 20
   },
   settingForm: {
-    background: '#27304c',
+    background: '#222222',
     padding: 40
   },
   slippageInput: {
@@ -101,13 +102,13 @@ const useStyles = makeStyles((theme) => ({
     marginBottom: theme.spacing(2)
   },
   swapRouter: {
-    background: '#232b40',
+    background: 'transparent',
     outline:'none',
     height: 25,
-    border:'1px solid white',
-    borderRadius: 7,
+    border:'none',
     color: 'white',
-    padding: '0 5px'
+    padding: '0 5px',
+    fontWeight: '600'
   },
   maxBtn: {
     margin: 0,
@@ -126,7 +127,8 @@ const useStyles = makeStyles((theme) => ({
   setting: {
     margin: '10px 0',
     color: 'white',
-    cursor: 'pointer'
+    cursor: 'pointer',
+    width: '15px'
   },
   label: {
     color: 'white',
@@ -143,7 +145,12 @@ const useStyles = makeStyles((theme) => ({
     color:  'white'
   },
   amountSection: {
-    width: 135,
+    width: 150,
+    display: 'flex',
+    flexDirection: "column",
+    alignItems: 'flex-end',
+    justifyContent: 'center',
+    justifyContent: 'space-evenly',
     height: 'calc(100% - 10px);'
   },
   balanceAmount: {
