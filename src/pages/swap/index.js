@@ -1,7 +1,7 @@
 import React, {useState, useEffect, useMemo} from "react";
 // get our fontawesome imports
 import Dialog from '@material-ui/core/Dialog';
-import { faCaretDown } from "@fortawesome/free-solid-svg-icons";
+import { faCaretDown, faCaretUp, faCog } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useHistory } from "react-router-dom";
 import { useRecoilValue, useRecoilState } from 'recoil';
@@ -28,6 +28,8 @@ import Slider from '@material-ui/core/Slider';
 import { DEFAULT_TOKEN } from "../../config/tokens";
 import Jazzicon from 'react-jazzicon';
 
+// import AurumIcon128 from '../../../public/images/icon128.png';
+
 function Alert(props) {
   return <MuiAlert elevation={6} variant="filled" {...props} />;
 }
@@ -38,15 +40,42 @@ const IOSSlider = withStyles({
     height: 2,
     padding: '15px 0',
   },
+  mark: {
+    width: 1,
+    height: 10,
+    marginTop: -4,
+    backgroundColor: '#ffffff'
+  },
   markLabel: {
     color: "#ffffff",
     fontSize: 12
-  }
+  },
+  thumb: {
+    background: 'white',
+    width: 28,
+    height: 12,
+    borderRadius: 15,
+    marginLeft: -15,
+    marginTop: -5,
+    "&.Mui-disabled": {
+      width: 28,
+      height: 12,
+      marginLeft: -15,
+      marginTop: -5
+    }
+  },
+  rail: {
+    background: '#aaaaaa',
+    height: 1
+  },
+  track: {
+    background: '#ffffff',
+    height: 1
+  },
 })(Slider);
 
 const Swap = () => {
   const classes = useStyles();
-  const history = useHistory();
   const network = useRecoilValue( currentNetwork );
   const provider = useRecoilValue( networkProvider );
   const availableTokenList = useRecoilValue(tokenList);
@@ -171,13 +200,21 @@ const Swap = () => {
     }
   }
 
-  const filteredTokenList = (token) => {
-    if (token) {
-        return availableTokenList.filter(item=>item.code!==token.code);
-    } else {
-        return availableTokenList;
-    }
+  const filteredFromTokenList = useMemo(()=>{
+    if (toToken && availableTokenList) {
+      return availableTokenList.filter(item=>item.code!==toToken.code);
+  } else {
+      return availableTokenList;
   }
+  }, [availableTokenList, toToken])
+
+  const filteredToTokenList = useMemo(()=>{
+    if (fromToken && availableTokenList) {
+      return availableTokenList.filter(item=>item.code!==fromToken.code);
+  } else {
+      return availableTokenList;
+  }
+  }, [availableTokenList, fromToken])
 
   const onMaxAmount = () => {
     if (fromToken) {
@@ -236,109 +273,124 @@ const Swap = () => {
 
   return (
     <div className={classes.swap}>
-      <BackButtonHeader title="" />
+      <div className={classes.header}>
+        <BackButtonHeader title=""/>
+      </div>
       {/* swap_feature */}
-      <div className={classes.swaptitle} >
-        <h1>Swap Feature</h1>
+      <div className={classes.swaptitle}>
+        <div>Swap</div>
+        <div>Tokens</div>
       </div>
       {/* main_div */}
-      <div className="swapcontent">
+      <div className={classes.swapcontent}>
         <form method="post" autoComplete="off" onSubmit={handleSubmit}>
-          <div className="swaptoken">
-            <div className={classes.swaptab}>
-              <div className={classes.swaptabItem}>Swap</div>
-              <div className={classes.swaptabItem}>Pool</div>
+          <div className={classes.swaptoken}>
+            <div className={classes.swapOptions} style={{paddingRight: '7px'}}>
+              <select className={classes.swapRouter} onChange={(e)=>setSwapRouter(e.target.value)} value={swapRouter}>
+                <option value="pancake">Apeswap</option>
+                <option value="apeswap">Pancake</option>
+              </select>
+              <div className={classes.setting} onClick={()=>setOpenSettingsDialog(true)}>
+                <FontAwesomeIcon icon={faCog} style={{width: 15, height: 15, color:'white'}}/>
+              </div>
             </div>
-            <div className="swapform">
+            <div >
               <FormControl error={errors.fromToken} style={{width: '100%'}}>
-                {!fromSelect && <div className="from">
-                  <div className="fromtokeninfo" onClick={()=>{setFromSelect(true); setToSelect(false);}}>
-                    <p>{fromToken?fromToken.code:'From'}</p>
-                    <FontAwesomeIcon icon={faCaretDown} style={{color:'white'}}/>
+                {!fromSelect && <div className={classes.swapform}>
+                  <div className={classes.fromtokeninfoleft}>
+                    <div>From</div>
+                    <div><input type="number" className={classes.fromtokenamount} placeholder="0.0" value={swapAmount} onChange={onSwapAmount}/></div>
                   </div>
                   <div className={classes.amountSection}>
                     <div className={classes.balanceAmount}>Balance: {fromToken ? parseFloat(LatomicNumber.toDecimal(fromToken.balance, fromToken.decimals)).toFixed(5) : ''}</div>
-                    <div className={classes.tokenAmount}>
-                      <p className={classes.maxBtn} onClick={onMaxAmount}>MAX</p>
-                      <input type="number" className="fromtokenamount" placeholder="0.0" value={swapAmount} onChange={onSwapAmount}/>
+                    <div className={classes.fromtokeninfo} onClick={()=>{setFromSelect(true); setToSelect(false);}}>
+                      <div>
+                        { fromToken 
+                          ? (tokenLogos[fromToken.code.toUpperCase()]
+                            ? <img src={tokenLogos[fromToken.code.toUpperCase()]} alt={fromToken.code} width={20} />
+                            : <Jazzicon diameter={20} seed={fromToken.contract[network.id]} /> )
+                          : <div style={{width: 20, height: 20}}></div>
+                        }
+                      </div>
+                      <div style={{color:'white', marginLeft: '5px'}}>{fromToken?fromToken.code:'From'}</div>
+                      <FontAwesomeIcon icon={faCaretDown} style={{color:'white', marginLeft: '5px'}}/>
                     </div>
                   </div>
-                  <div>
-                    { fromToken 
-                      ? (tokenLogos[fromToken.code.toUpperCase()]
-                        ? <img src={tokenLogos[fromToken.code.toUpperCase()]} alt={fromToken.code} className="tokenImage" />
-                        : <Jazzicon diameter={32} seed={fromToken.contract[network.id]} /> )
-                      : <div style={{width: 32, height: 32}}></div>
-                    }
-                  </div>
                 </div>}
-                <TokenSelect data={filteredTokenList(toToken)} onChange={onFromChange} isShown={fromSelect}/>
+                <TokenSelect data={filteredFromTokenList} onChange={onFromChange} isShown={fromSelect}/>
                 <FormHelperText id="address_helper">
                   {helper.fromToken}
                 </FormHelperText>
               </FormControl>
-              <FormControl error={errors.toToken} style={{marginTop: 20, width: '100%'}}>
-                {!toSelect && <div className="from">
-                  <div className="fromtokeninfo" onClick={()=>{setToSelect(true); setFromSelect(false);}}>
-                    <p>{toToken?toToken.code:'To'}</p>
-                    <FontAwesomeIcon icon={faCaretDown} style={{color:'white'}}/>                  
+              <div style={{margin: '5px 0px', display: 'flex', flexDirection: 'row', justifyContent: 'center', alignItems: 'center'}}>
+                <FontAwesomeIcon icon={faCaretDown} style={{color:'white', marginLeft: '5px'}}/>
+                <FontAwesomeIcon icon={faCaretUp} style={{color:'white', marginLeft: '5px'}}/>
+              </div>
+              <FormControl error={errors.toToken} style={{width: '100%'}}>
+                {!toSelect && <div className={classes.swapform}>
+                  <div className={classes.fromtokeninfoleft}>
+                    <div>To</div>
+                    <div><input type="number" className={classes.fromtokenamount} placeholder="0.0" value={expectedAmount} disabled/></div>
                   </div>
                   <div className={classes.amountSection}>
                     <div className={classes.balanceAmount}>Balance: {toToken?parseFloat(LatomicNumber.toDecimal(toToken.balance,toToken.decimals)).toFixed(5) : ''}</div>
-                    <div className={classes.tokenAmount}>
-                      <input type="number" className="fromtokenamount" placeholder="0.0" value={expectedAmount} disabled/>
+                    <div className={classes.fromtokeninfo} onClick={()=>{setToSelect(true); setFromSelect(false);}}>
+                      <div>
+                        { toToken 
+                          ? (tokenLogos[toToken.code.toUpperCase()]
+                            ? <img src={tokenLogos[toToken.code.toUpperCase()]} alt={toToken.code} width={20} />
+                            : <Jazzicon diameter={20} seed={toToken.contract[network.id]} /> )
+                          : <div style={{width: 20, height: 20}}></div>
+                        }
+                      </div>
+                      <div style={{color:'white', marginLeft: '5px'}}>{toToken?toToken.code:'To'}</div>
+                      <FontAwesomeIcon icon={faCaretDown} style={{color:'white', marginLeft: '5px'}}/>
                     </div>
                   </div>
-                  <div>
-                    { toToken 
-                      ? (tokenLogos[toToken.code.toUpperCase()]
-                        ? <img src={tokenLogos[toToken.code.toUpperCase()]} alt={toToken.code} className="tokenImage" />
-                        : <Jazzicon diameter={32} seed={toToken.contract[network.id]} /> )
-                      : <div style={{width: 32, height: 32}}></div>
-                    }
-                  </div>
                 </div>}
-                <TokenSelect data={filteredTokenList(fromToken)} onChange={onToChange} isShown={toSelect}/>
+                <TokenSelect data={filteredToTokenList} onChange={onToChange} isShown={toSelect}/>
                 <FormHelperText id="address_helper">
                   {helper.toToken}
                 </FormHelperText>
               </FormControl>
             </div>
-            {/* <p className="tolerance">Slippage tolerance</p> */}
-            <div className={classes.swapOptions}>
-              <select className={classes.swapRouter} onChange={(e)=>setSwapRouter(e.target.value)} value={swapRouter}>
-                <option value="pancake">Pancake</option>
-                <option value="apeswap">Apeswap</option>
-              </select>
-              <div className={classes.setting} onClick={()=>setOpenSettingsDialog(true)}>Settings</div>
+            <div style={{marginTop: 10, marginBottom: 10, textAlign: 'center', display: 'flex', flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center'}} id='real_slider' className={classes.divslider}>
+              <div style={{color: 'white', marginRight: '15px'}}>0%</div>
+              <IOSSlider
+                aria-labelledby="input-slider"
+                step={25}
+                valueLabelDisplay="off"
+                marks
+                min={0}
+                max={100}
+                color='secondary'
+              />
+              <div style={{color: 'white', marginLeft: '15px'}}>100%</div>
             </div>
             <div className={classes.submitWrapper}>
-              {!isAllowed && <Button variant="contained" color="secondary" disabled={formSubmitting} onClick={approveToken}>Approve</Button> }
-              {isAllowed && <Button variant="contained" color="primary" disabled={formSubmitting} type="submit">Exchange</Button>}
+              {!isAllowed && <Button variant="contained" color="secondary" style={{background: 'white', color: 'black', borderRadius: '15px'}} disabled={formSubmitting} onClick={approveToken}>Approve</Button> }
+              {isAllowed && <Button variant="contained" color="secondary" style={{background: 'white', color: 'black', borderRadius: '15px'}} disabled={formSubmitting} type="submit">Swap</Button> }
               {formSubmitting && <LinearProgress />}
             </div>
-
           </div>
         </form>
           
-        <div className="swapinfo">
-            <div className="swapsubinfo">
+        <div className={classes.swapinfo}>
+            <div className={classes.swapsubinfo}>
               <p>Minimum received</p>
-              <p className="greennumber">{toToken ? `${minimumReceivedAmount.toFixed(4)} ${toToken.code}` : 0}</p>
-            </div>
-            <div className="swapsubinfo">
               <p>Price Impact</p>
-              <p>0.0000</p>
-            </div>
-            <div className="swapsubinfo">
               <p>Liquidity provider fee</p>
+            </div>
+            <div className={classes.swapsubinfo}>
+              <p style={{color: '#00d70a'}}>{toToken ? `${minimumReceivedAmount.toFixed(4)} ${toToken.code}` : 0}</p>
+              <p>0.0000</p>
               <p>0.00</p>
             </div>
         </div>
       </div>
       
       {/* term of service */}
-      <div className="termofservice">
+      <div className={classes.termofservice}>
         <p>Terms of service</p>
       </div>
 
@@ -435,7 +487,7 @@ const Swap = () => {
       >
         <form method="post" autoComplete="off" className={classes.settingForm}>
           <label className={classes.label}>Slippage tolerance</label>
-          <div style={{textAlign: 'center'}}>
+          <div style={{textAlign: 'center'}} id='dlg_slider'>
             <IOSSlider
               value={allowedSlippage}
               onChange={(e, value)=>setAllowedSlippage(value)}

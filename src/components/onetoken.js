@@ -103,7 +103,7 @@ const OneToken = (props) => {
     <div className={classes.onetoken} onClick={goToDetail}>
       <div className={classes.tokenimg}>
         { tokenLogos[code.toUpperCase()]
-            ? <img src={tokenLogos[code.toUpperCase()]} alt={code} className="tokenImage" />
+            ? <img src={tokenLogos[code.toUpperCase()]} alt={code} width={20} />
             : <Jazzicon diameter={40} seed={contract[network.id]} />
         }
       </div>

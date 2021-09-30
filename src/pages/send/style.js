@@ -39,7 +39,25 @@ const useStyles = makeStyles((theme) => ({
   },
   submitWrapper: {
     display: 'flex',
-    flexDirection: 'column'
+    flexDirection: 'column',
+    marginTop: 20
+  },
+  divslider: {
+    background: 'red',
+    "&>.WithStyles(ForwardRef(Slider))-root-65": {
+      "&>.MuiSlider-rail": {
+        background: 'black'
+      },
+      "&>.MuiSlider-track": {
+        background: '#333333'
+      },
+      "&>.MuiSlider-thumb": {
+        background: 'white',
+        width: '30px',
+        height: '15px',
+        borderRadius: '15px'
+      },
+    }
   }
 }));
 

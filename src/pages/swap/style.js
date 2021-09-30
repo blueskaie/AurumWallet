@@ -1,25 +1,33 @@
 import { makeStyles } from "@material-ui/core/styles";
 
 const useStyles = makeStyles((theme) => ({
-  swap: {
-    background:'linear-gradient(#0d1014,#1d2d5d,#111422,#2a2d36)',
+  root: {
+    background:'#111111',
     textAlign: "center",
-    height: 559,
     width: 375,
-    padding: "20px 0px",
+    "&>.makeStyles-root-53": {
+      marginLeft: '20px',
+    },
+    "&>.makeStyles-swaptitle-28": {
+      paddingLeft: '20px'
+    }
+  },
+  header: {
+    marginTop: 20
   },
   swaptitle:{
     position: 'relative',
-    margin:'0px 20px 40px 20px',
+    margin:'10px 20px 20px 20px',
     textAlign: 'left',
-    '& h1':{
+    '& div':{
       color:'white',
       fontFamily: 'unset',
       marginTop:0,
         fontSize: 33,
+        fontWeight: 700,
         lineHeight: '31px',
         fontWeight: '100',
-        letterSpacing: '2px'
+        letterSpacing: '1px'
     }
   },
   swaptab: {
@@ -35,7 +43,7 @@ const useStyles = makeStyles((theme) => ({
   },
   bottomimg: {
     position: "absolute",
-    bottom: "-8px",
+    bottom: 0,
     left: "-30px",
     width: 447,
     maxWidth: "inherit",
@@ -50,9 +58,64 @@ const useStyles = makeStyles((theme) => ({
     textAlign: 'center',
     color: 'white'
   },
+  swapcontent: {
+    width: '80%',
+    margin: 'auto',
+    position: 'relative',
+    zIndex: 3,
+  },
+  swaptoken : {
+    position: 'relative',
+    zIndex: 2,
+    background: '#222222',
+    borderRadius: 10,
+    boxShadow: '0px 10px 5px #000000a0',
+    padding: 20
+  },
   swapAmount: {
     fontSize: 22,
     fontWeight: 700
+  },
+  fromtokeninfoleft: {
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'space-between',
+    textAlign: 'left',
+    overflow:'hidden',
+    justifyContent:  'space-evenly',
+    color: 'white',
+    height: '100%'
+  },
+  fromtokeninfo: {
+    display: 'flex',
+    flexDirection: 'row',
+    alignItems: 'center',
+    textAlign: 'left',
+    overflow:'hidden',
+    justifyContent:  'flex-end',
+    "& P": {
+      color:'white',
+      margin:3
+    }
+  },
+  fromtokenamount: {
+    width:  '100%',
+    background: 'transparent',
+    border: 'none',
+    outline: 'none',
+    color:  'white',
+    margin:  0,
+    fontSize: 12
+  },
+  swapform: {
+    border:'1px solid white',
+    borderRadius: 13,
+    display: 'flex',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    flexDirection: 'row',
+    padding: '0 20px',
+    height:  56
   },
   accountInfo: {
     marginTop: 15,
@@ -75,19 +138,22 @@ const useStyles = makeStyles((theme) => ({
     borderRadius: 10
   },
   gasForm: {
-    background: '#27304c',
+    background: '#222222',
     padding: 20
   },
   settingForm: {
-    background: '#27304c',
+    background: '#222222',
     padding: 40
   },
   slippageInput: {
-    width: 130,
+    width: 110,
     height: 25,
     marginRight: 5,
     color: 'white',
-    background: 'transparent'
+    background: 'transparent',
+    border: '1px solid #aaaaaa',
+    borderRadius: 5,
+    padding: '0 10px',
   },
   formrow: {
     width: "100%",
@@ -97,17 +163,16 @@ const useStyles = makeStyles((theme) => ({
     display: 'flex',
     justifyContent :'space-between',
     alignItems: 'center',
-    marginTop: theme.spacing(2),
-    marginBottom: theme.spacing(2)
+    marginBottom: theme.spacing(1)
   },
   swapRouter: {
-    background: '#232b40',
+    background: 'transparent',
     outline:'none',
     height: 25,
-    border:'1px solid white',
-    borderRadius: 7,
+    border:'none',
     color: 'white',
-    padding: '0 5px'
+    padding: '0 5px',
+    fontWeight: '600'
   },
   maxBtn: {
     margin: 0,
@@ -124,9 +189,10 @@ const useStyles = makeStyles((theme) => ({
     cursor: 'pointer'
   },
   setting: {
-    margin: '10px 0',
+    margin: '0px 0',
     color: 'white',
-    cursor: 'pointer'
+    cursor: 'pointer',
+    width: '15px'
   },
   label: {
     color: 'white',
@@ -143,11 +209,15 @@ const useStyles = makeStyles((theme) => ({
     color:  'white'
   },
   amountSection: {
-    width: 135,
+    width: 150,
+    display: 'flex',
+    flexDirection: "column",
+    alignItems: 'flex-end',
+    justifyContent: 'center',
+    justifyContent: 'space-evenly',
     height: 'calc(100% - 10px);'
   },
   balanceAmount: {
-    marginLeft: 10,
     textAlign: 'left',
     color: 'white'
   },
@@ -156,7 +226,36 @@ const useStyles = makeStyles((theme) => ({
     display: 'flex',
     alignItems: 'center',
     width: 135
-  }
+  },
+  swapinfo: {
+    zIndex: 1,
+    position:'relative',
+    borderRadius: '0px 0px 10px 10px',
+    marginTop: -10,
+    background: '#333333',
+    padding: '20px 20px 10px 20px',
+    boxShadow: '0px 10px 5px #000000c2',
+    display:'flex',
+    flexDirection: 'row',
+    justifyContent: 'space-between'
+  },
+  swapsubinfo: {
+    display: 'flex',
+    flexDirection: 'column',
+    justifyContent: 'space-between',
+    alignItems: 'flex-start',
+    "& p" : {
+      margin: '3px 0',
+      color: 'white'
+    }
+  },
+  termofservice: {
+    position: 'absolute',
+    bottom: 10,
+    textAlign: 'center',
+    width: '100%',
+    color: 'white'
+  },
 }));
 
 export default useStyles;
