@@ -25,9 +25,10 @@ const useStyles = makeStyles((theme) => ({
     }
   },
   select: {
-    padding:'0 5px',
+    padding:'3px 10px',
     border: '1px solid #777777',
     borderRadius:20,
+    fontSize: 14,
     "&:hover:before":{
       borderBottom:'2px solid transparent!important',
     },

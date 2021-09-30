@@ -3,7 +3,6 @@ import { makeStyles } from "@material-ui/core/styles";
 const useStyles = makeStyles((theme) => ({
   root: {
     flexGrow: 1,
-    background: "linear-gradient(154deg, #191535 13%,#181a1f, #2b3039)",
     color: "white",
     padding: 30,
     "&::before":{
@@ -13,8 +12,13 @@ const useStyles = makeStyles((theme) => ({
       display:'none',
     }
   },
+  logoImage: {
+    width: 30,
+    height: 30,
+    cursor: 'pointer'
+  },
   wallettitle: {
-    margin: "60px 20px 40px 20px",
+    margin: "40px 20px 40px 20px",
     fontWeight: "200",
     fontSize: 33,
     lineHeight: 0.98,
@@ -23,7 +27,7 @@ const useStyles = makeStyles((theme) => ({
     display: "flex",
     flexDirection: "column",
     padding: "0 33px",
-    marginTop:65
+    marginTop: 50
   },
   passwordinput: {
 
@@ -66,13 +70,14 @@ const useStyles = makeStyles((theme) => ({
     },
   },
   submit: {
-    padding: "8px 8px",
-    background: "linear-gradient(#484f5e, #1a1d22)",
-    width: "50%",
-    margin: "30px auto",
-    color: "white",
-    borderRadius: "30px",
-    border: "none",
+    padding: "8px 0px",
+    color: "#000000",
+    fontSize: 14,
+    borderRadius: 20,
+    background: "#ffffff",
+    width: 130,
+    margin: 'auto',
+    marginTop: 30,
   },
 
   footer: {
@@ -83,8 +88,8 @@ const useStyles = makeStyles((theme) => ({
   },
   bottomimg: {
     position: "absolute",
-    bottom: "-100px",
-    left: "0px",
+    bottom: -70,
+    left: 0,
     width: 415,
     maxWidth: "inherit",
     zIndex: 1,

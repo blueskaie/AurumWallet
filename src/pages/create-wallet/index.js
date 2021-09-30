@@ -88,13 +88,21 @@ export default function CreateWallet() {
     setWallet(provider.eth.accounts.create());
     setCurrentTokens(ALL_TOKENS);
   };
+  
+  const handleBackClick = () => {
+    if(history.length) {
+      history.goBack();
+    } else {
+      history.push('/');
+    }
+  }
 
   return (
     <>
       <div className={classes.root}>
+        <img className={classes.logoImage} src="images/logo2.png" alt="AurumWallet" onClick={handleBackClick}/>
         <h1 className={classes.wallettitle}>
-          Create
-          <br /> Wallet
+          Create <br /> Wallet
         </h1>
         {!wallet && (
           <form
@@ -132,9 +140,15 @@ export default function CreateWallet() {
               />
               <FormHelperText>{helperText}</FormHelperText>
             </FormControl>
-            <button type="submit" className={classes.submit}>
+            <Button
+              variant="contained"
+              color="primary"
+              type="submit"
+              className={classes.submit}
+              disableRipple
+            >
               OK
-            </button>
+            </Button>
           </form>
         )}
         { wallet &&
