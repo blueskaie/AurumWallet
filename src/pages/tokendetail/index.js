@@ -113,7 +113,7 @@ const TokenDetail = (props) => {
   }];
   
   return (
-    <>
+    <div style={{background: '#111111', height: '100%'}}>
       <div className={classes.header}>
         <BackButtonHeader title={`${coin && coin.code} Detail`} />
       </div>
@@ -126,7 +126,7 @@ const TokenDetail = (props) => {
         {coin && <Transactions token={coin} height={200}/>}
       </Container>
 
-    </>
+    </div>
   );
 };
 
