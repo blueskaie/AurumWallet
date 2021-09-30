@@ -40,8 +40,7 @@ export default function BackButtonHeader({title}) {
   return (
     <Toolbar className={classes.root}>
       <IconButton edge="start" onClick={handleBackClick} className={classes.menuButton} color="inherit" aria-label="menu">
-        {/* <ArrowBack /> */}
-        <img src='images/aurum.png' style={{width:'64px', height:'64px'}} alt='' />
+        <ArrowBack />
       </IconButton>
       <Typography variant="h6" className={classes.title}>
         {title}

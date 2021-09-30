@@ -43,7 +43,7 @@ const TokenSelect = (props) => {
                 {filteredTokenList.map((token, index)=>(
                     <li key={index} className={classes.tokenItem} onClick={()=>selectToken(token)}>
                         { token && (tokenLogos[token.code.toUpperCase()]
-                            ? <img src={tokenLogos[token.code.toUpperCase()]} alt={token.code} className="tokenImage" />
+                            ? <img src={tokenLogos[token.code.toUpperCase()]} alt={token.code} width={30} />
                             : <Jazzicon diameter={30} seed={token.contract[network.id]} />
                         )}
                         <p className={classes.tokenName}>{token.code}</p>
@@ -83,7 +83,7 @@ const useStyles = makeStyles((theme) => ({
         margin: 0,
         listStyleType: 'none',
         color: 'white',
-        background: 'linear-gradient(to right, #6d7897,#2c385c);',
+        background: '#222222',
         borderRadius: '0 0 16px 16px',
         border: '1px solid white',
         borderTop: 'none',
@@ -95,7 +95,7 @@ const useStyles = makeStyles((theme) => ({
         overflow: 'auto',
         padding: '20px 0',
         color: 'white',
-        background: 'linear-gradient(to right, #6d7897,#2c385c);',
+        background: '#222222',
         borderRadius: '0 0 16px 16px',
         border: '1px solid white',
         borderTop: 'none',

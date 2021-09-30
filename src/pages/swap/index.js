@@ -40,27 +40,42 @@ const IOSSlider = withStyles({
     height: 2,
     padding: '15px 0',
   },
+  mark: {
+    width: 1,
+    height: 10,
+    marginTop: -4,
+    backgroundColor: '#ffffff'
+  },
   markLabel: {
     color: "#ffffff",
     fontSize: 12
   },
-  "&>.MuiSlider-rail": {
-    background: 'black'
-  },
-  "&>.MuiSlider-track": {
-    background: '#333333'
-  },
-  "&>.MuiSlider-thumb": {
+  thumb: {
     background: 'white',
-    width: '30px',
-    height: '15px',
-    borderRadius: '15px'
+    width: 28,
+    height: 12,
+    borderRadius: 15,
+    marginLeft: -15,
+    marginTop: -5,
+    "&.Mui-disabled": {
+      width: 28,
+      height: 12,
+      marginLeft: -15,
+      marginTop: -5
+    }
+  },
+  rail: {
+    background: '#aaaaaa',
+    height: 1
+  },
+  track: {
+    background: '#ffffff',
+    height: 1
   },
 })(Slider);
 
 const Swap = () => {
   const classes = useStyles();
-  const history = useHistory();
   const network = useRecoilValue( currentNetwork );
   const provider = useRecoilValue( networkProvider );
   const availableTokenList = useRecoilValue(tokenList);
@@ -185,13 +200,21 @@ const Swap = () => {
     }
   }
 
-  const filteredTokenList = (token) => {
-    if (token) {
-        return availableTokenList.filter(item=>item.code!==token.code);
-    } else {
-        return availableTokenList;
-    }
+  const filteredFromTokenList = useMemo(()=>{
+    if (toToken && availableTokenList) {
+      return availableTokenList.filter(item=>item.code!==toToken.code);
+  } else {
+      return availableTokenList;
   }
+  }, [availableTokenList, toToken])
+
+  const filteredToTokenList = useMemo(()=>{
+    if (fromToken && availableTokenList) {
+      return availableTokenList.filter(item=>item.code!==fromToken.code);
+  } else {
+      return availableTokenList;
+  }
+  }, [availableTokenList, fromToken])
 
   const onMaxAmount = () => {
     if (fromToken) {
@@ -250,39 +273,41 @@ const Swap = () => {
 
   return (
     <div className={classes.swap}>
-      <BackButtonHeader title=""/>
+      <div className={classes.header}>
+        <BackButtonHeader title=""/>
+      </div>
       {/* swap_feature */}
       <div className={classes.swaptitle}>
         <div>Swap</div>
         <div>Tokens</div>
       </div>
       {/* main_div */}
-      <div className="swapcontent">
+      <div className={classes.swapcontent}>
         <form method="post" autoComplete="off" onSubmit={handleSubmit}>
-          <div className="swaptoken">
+          <div className={classes.swaptoken}>
             <div className={classes.swapOptions} style={{paddingRight: '7px'}}>
               <select className={classes.swapRouter} onChange={(e)=>setSwapRouter(e.target.value)} value={swapRouter}>
                 <option value="pancake">Apeswap</option>
                 <option value="apeswap">Pancake</option>
               </select>
               <div className={classes.setting} onClick={()=>setOpenSettingsDialog(true)}>
-                <FontAwesomeIcon icon={faCog} style={{width: '20px', height: '20px', color:'white', marginRight: '10px'}}/>
+                <FontAwesomeIcon icon={faCog} style={{width: 15, height: 15, color:'white'}}/>
               </div>
             </div>
-            <div className="swapform">
+            <div >
               <FormControl error={errors.fromToken} style={{width: '100%'}}>
-                {!fromSelect && <div className="from">
-                  <div className="fromtokeninfoleft">
+                {!fromSelect && <div className={classes.swapform}>
+                  <div className={classes.fromtokeninfoleft}>
                     <div>From</div>
-                    <div>250</div>
+                    <div><input type="number" className={classes.fromtokenamount} placeholder="0.0" value={swapAmount} onChange={onSwapAmount}/></div>
                   </div>
                   <div className={classes.amountSection}>
                     <div className={classes.balanceAmount}>Balance: {fromToken ? parseFloat(LatomicNumber.toDecimal(fromToken.balance, fromToken.decimals)).toFixed(5) : ''}</div>
-                    <div className="fromtokeninfo" onClick={()=>{setFromSelect(true); setToSelect(false);}}>
+                    <div className={classes.fromtokeninfo} onClick={()=>{setFromSelect(true); setToSelect(false);}}>
                       <div>
                         { fromToken 
                           ? (tokenLogos[fromToken.code.toUpperCase()]
-                            ? <img src={tokenLogos[fromToken.code.toUpperCase()]} alt={fromToken.code} className="tokenImage" />
+                            ? <img src={tokenLogos[fromToken.code.toUpperCase()]} alt={fromToken.code} width={20} />
                             : <Jazzicon diameter={20} seed={fromToken.contract[network.id]} /> )
                           : <div style={{width: 20, height: 20}}></div>
                         }
@@ -292,7 +317,7 @@ const Swap = () => {
                     </div>
                   </div>
                 </div>}
-                <TokenSelect data={filteredTokenList(toToken)} onChange={onFromChange} isShown={fromSelect}/>
+                <TokenSelect data={filteredFromTokenList} onChange={onFromChange} isShown={fromSelect}/>
                 <FormHelperText id="address_helper">
                   {helper.fromToken}
                 </FormHelperText>
@@ -302,18 +327,18 @@ const Swap = () => {
                 <FontAwesomeIcon icon={faCaretUp} style={{color:'white', marginLeft: '5px'}}/>
               </div>
               <FormControl error={errors.toToken} style={{width: '100%'}}>
-                {!toSelect && <div className="from">
-                  <div className="fromtokeninfoleft">
+                {!toSelect && <div className={classes.swapform}>
+                  <div className={classes.fromtokeninfoleft}>
                     <div>To</div>
-                    <div>250,000,000</div>
+                    <div><input type="number" className={classes.fromtokenamount} placeholder="0.0" value={expectedAmount} disabled/></div>
                   </div>
                   <div className={classes.amountSection}>
                     <div className={classes.balanceAmount}>Balance: {toToken?parseFloat(LatomicNumber.toDecimal(toToken.balance,toToken.decimals)).toFixed(5) : ''}</div>
-                    <div className="fromtokeninfo" onClick={()=>{setToSelect(true); setFromSelect(false);}}>
+                    <div className={classes.fromtokeninfo} onClick={()=>{setToSelect(true); setFromSelect(false);}}>
                       <div>
                         { toToken 
                           ? (tokenLogos[toToken.code.toUpperCase()]
-                            ? <img src={tokenLogos[toToken.code.toUpperCase()]} alt={toToken.code} className="tokenImage" />
+                            ? <img src={tokenLogos[toToken.code.toUpperCase()]} alt={toToken.code} width={20} />
                             : <Jazzicon diameter={20} seed={toToken.contract[network.id]} /> )
                           : <div style={{width: 20, height: 20}}></div>
                         }
@@ -323,49 +348,41 @@ const Swap = () => {
                     </div>
                   </div>
                 </div>}
-                <TokenSelect data={filteredTokenList(fromToken)} onChange={onToChange} isShown={toSelect}/>
+                <TokenSelect data={filteredToTokenList} onChange={onToChange} isShown={toSelect}/>
                 <FormHelperText id="address_helper">
                   {helper.toToken}
                 </FormHelperText>
               </FormControl>
             </div>
-            <form method="post" autoComplete="off">
-              <div style={{textAlign: 'center', display: 'flex', flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center'}} id='real_slider' className={classes.divslider}>
-                <div style={{color: 'white', marginRight: '5px'}}>0%</div>
-                <IOSSlider
-                  value={allowedSlippage}
-                  onChange={(e, value)=>setAllowedSlippage(value)}
-                  aria-labelledby="input-slider"
-                  step={25}
-                  valueLabelDisplay="off"
-                  // marks={availableSlipageToleranceArray}
-                  marks
-                  min={0}
-                  max={100}
-                  color='secondary'
-                  disabled={autoSlippage}
-                />
-              <div style={{color: 'white', marginLeft: '25px'}}>100%</div>
-              </div>
-            </form>
-            {/* <p className="tolerance">Slippage tolerance</p> */}
+            <div style={{marginTop: 10, marginBottom: 10, textAlign: 'center', display: 'flex', flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center'}} id='real_slider' className={classes.divslider}>
+              <div style={{color: 'white', marginRight: '15px'}}>0%</div>
+              <IOSSlider
+                aria-labelledby="input-slider"
+                step={25}
+                valueLabelDisplay="off"
+                marks
+                min={0}
+                max={100}
+                color='secondary'
+              />
+              <div style={{color: 'white', marginLeft: '15px'}}>100%</div>
+            </div>
             <div className={classes.submitWrapper}>
-              {/* {!isAllowed && <Button variant="contained" color="secondary" disabled={formSubmitting} onClick={approveToken}>Approve</Button> } */}
-              <Button variant="contained" color="secondary" style={{background: 'white', color: 'black', borderRadius: '15px'}} disabled={formSubmitting} type="submit">Swap</Button>
+              {!isAllowed && <Button variant="contained" color="secondary" style={{background: 'white', color: 'black', borderRadius: '15px'}} disabled={formSubmitting} onClick={approveToken}>Approve</Button> }
+              {isAllowed && <Button variant="contained" color="secondary" style={{background: 'white', color: 'black', borderRadius: '15px'}} disabled={formSubmitting} type="submit">Swap</Button> }
               {formSubmitting && <LinearProgress />}
             </div>
-
           </div>
         </form>
           
-        <div className="swapinfo">
-            <div className="swapsubinfo">
+        <div className={classes.swapinfo}>
+            <div className={classes.swapsubinfo}>
               <p>Minimum received</p>
               <p>Price Impact</p>
               <p>Liquidity provider fee</p>
             </div>
-            <div className="swapsubinfo">
-              <p className="greennumber">{toToken ? `${minimumReceivedAmount.toFixed(4)} ${toToken.code}` : 0}</p>
+            <div className={classes.swapsubinfo}>
+              <p style={{color: '#00d70a'}}>{toToken ? `${minimumReceivedAmount.toFixed(4)} ${toToken.code}` : 0}</p>
               <p>0.0000</p>
               <p>0.00</p>
             </div>
@@ -373,7 +390,7 @@ const Swap = () => {
       </div>
       
       {/* term of service */}
-      <div className="termofservice">
+      <div className={classes.termofservice}>
         <p>Terms of service</p>
       </div>
 
@@ -475,12 +492,11 @@ const Swap = () => {
               value={allowedSlippage}
               onChange={(e, value)=>setAllowedSlippage(value)}
               aria-labelledby="input-slider"
-              step={25}
+              step={null}
               valueLabelDisplay="off"
-              // marks={availableSlipageToleranceArray}
-              marks
-              min={0}
-              max={100}
+              marks={availableSlipageToleranceArray}
+              min={0.1}
+              max={1.5}
               disabled={autoSlippage}
             />
             <div style={{display: 'flex', justifyContent: 'space-between', alignItems: 'center'}}>
