@@ -46,7 +46,7 @@ export default function Home() {
     <div className={classes.root}>
       <div className={classes.header}>
         <Toolbar className={classes.toolbar}>
-          <img src="images/aurum.png" alt="AurumWallet" className="logo-image" style={{width: '50px', height: '50px'}} />
+          <img src="images/aurum.png" alt="AurumWallet" className="logo-image" style={{width: 30, height: 30}} />
           <Clipboard
             component="button"
             button-href="#"
