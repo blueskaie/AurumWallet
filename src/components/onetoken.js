@@ -70,7 +70,7 @@ const OneToken = (props) => {
           speed: 350
       }
     },
-    colors: ['#32CD32'],
+    colors: ['#555555'],
     dataLabels: {
       enabled: false
     },
