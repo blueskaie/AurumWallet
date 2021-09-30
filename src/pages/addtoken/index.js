@@ -74,7 +74,7 @@ export default function AddCustomToken() {
   }
 
   return (
-    <>
+    <div style={{background: '#111111', height: '100%'}}>
       <div className={classes.header}>
       <BackButtonHeader title="Add Token" />
 
@@ -116,7 +116,7 @@ export default function AddCustomToken() {
               <FormHelperText>{helpers.test}</FormHelperText>
             </FormControl> */}
 
-            <Button variant="contained" color="primary" type="submit">Save</Button>
+            <Button variant="contained" color="secondary" type="submit" style={{background: 'white', color: 'black'}}>Save</Button>
           </form>
         </div>
 
@@ -126,6 +126,6 @@ export default function AddCustomToken() {
           </Alert>
         </Snackbar>
       </Container>
-    </>
+    </div>
   )
 }

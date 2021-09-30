@@ -1,10 +1,11 @@
 import { makeStyles } from "@material-ui/core/styles";
+import { withThemeCreator } from "@material-ui/styles";
 
 const useStyles = makeStyles((theme) => ({
   root: {
     flexGrow: 1,
     //backgroundColor: theme.palette.background.paper,
-    background: "linear-gradient(#100f1c,#261f73,#16191e, #2d3036)",
+    background: "#111111",
   },
   toolbar: {
     flexGrow: 1,
@@ -16,7 +17,7 @@ const useStyles = makeStyles((theme) => ({
   },
   title:{
     cursor:'pointer',
-    color:'white',
+    color:'#777777',
     flexGrow: 1,
     fontSize: '1rem',
   },
@@ -27,7 +28,7 @@ const useStyles = makeStyles((theme) => ({
     marginTop:20,
   },
   rightlink: {
-    color:'white',
+    color:'#777777',
     background:'transparent',
     height:46,
     minHeight:46
@@ -54,7 +55,7 @@ const useStyles = makeStyles((theme) => ({
   },
   bottomimg: {
     position: "absolute",
-    bottom: "0px",
+    bottom: "-150px",
     left: "-30px",
     width: 447,
     maxWidth: "inherit",
@@ -71,12 +72,12 @@ const useStyles = makeStyles((theme) => ({
     "& button": {
       justifyContent: "space-around",
       alignItems: "center",
-      color: "white",
+      color: "#777777",
       backgroundSize: "cover",
       backgroundColor: "transparent",
       display: "flex",
       "& span": {
-        color: "white",
+        color: "#777777",
       },
     },
   },
@@ -88,6 +89,16 @@ const useStyles = makeStyles((theme) => ({
     },
     userSelect:'none'
 
+  },
+  portfolio:{
+    color: 'white',
+    border: '1px solid white',
+    borderRadius: '10px',
+    fontSize: '20px',
+    margin: '20px 30px',
+    padding: '10px',
+    display: 'flex',
+    flexDirection: 'row'
   }
   
 }));

@@ -16,6 +16,8 @@ import TokenList from "../../components/token-list";
 import SliderList from "../../components/slider-list";
 
 import useStyles from "./style";
+import { faCaretDown, faCaretUp } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 function Alert(props) {
   return <MuiAlert elevation={6} variant="filled" {...props} />;
@@ -44,6 +46,7 @@ export default function Home() {
     <div className={classes.root}>
       <div className={classes.header}>
         <Toolbar className={classes.toolbar}>
+          <img src="images/aurum.png" alt="AurumWallet" className="logo-image" style={{width: '50px', height: '50px'}} />
           <Clipboard
             component="button"
             button-href="#"
@@ -62,14 +65,31 @@ export default function Home() {
           </Toolbar>
         </div>
       </div>
-      <React.Suspense fallback={<div className="slidebar"></div>}>
+      <div className={classes.portfolio}>
+        <div style={{flex: '4', fontWeight: '300', padding: '10px'}}>
+          <div style={{fontWeight: '700', fontSize: '25px'}}>Portfolio</div>
+          <div>$826,181.55</div>
+          <div style={{fontSize: '15px'}}>
+            <FontAwesomeIcon icon={faCaretDown} style={{color: 'red'}} />
+            {/* <FontAwesomeIcon icon={faCaretUp} style={{color: 'green'}} /> */}
+            <span style={{color: 'red', marginTop: '10px'}}>$7,578.44/7.8%</span>
+            <span style={{marginLeft: '10px', marginTop: '10px'}}>24h</span>
+          </div>
+        </div>
+        <div style={{flex: '1', fontSize:'12px'}}>
+          <select style={{fontWeight: '400', borderRadius: '5px'}}>
+            <option value='USD'>USD</option>
+          </select>
+        </div>
+      </div>
+      {/* <React.Suspense fallback={<div className="slidebar"></div>}>
         <SliderList />
-      </React.Suspense>
+      </React.Suspense> */}
 
       <div className={classes.mywallet}>
         <div className="description">
           <h3>My Wallet</h3>
-          <p onClick={addToken}>Add token</p>
+          <p onClick={addToken} style={{color: 'white'}}>Add token</p>
         </div>
         <ScrollContainer className={classes.tokenlist} vertical={true}>
           <React.Suspense fallback={<div>Loading...</div>}>

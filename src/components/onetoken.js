@@ -9,6 +9,8 @@ import { useRecoilValue } from 'recoil';
 import { currentNetwork  } from '../store/atoms'
 import callAPI from "../utils/api-utils";
 import ReactApexChart from 'react-apexcharts';
+import { faCaretDown, faCaretUp } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 const OneToken = (props) => {
 
@@ -108,8 +110,19 @@ const OneToken = (props) => {
         }
       </div>
       <div className={classes.tokeninfo}>
-        <p className={classes.tokenname}>{code}</p>
-        <p className={classes.tokenprice}>{parseFloat(LatomicNumber.toDecimal(balance,decimals)).toFixed(4)}</p>
+        <div style={{display: 'flex', flexDirection: 'row', justifyContent: 'space-between'}}>
+          <p className={classes.tokenname}>{code}</p>
+          <p className={classes.tokenname}>2,150</p>
+        </div>
+        <div style={{display: 'flex', flexDirection: 'row', justifyContent: 'space-between'}}>
+          <p className={classes.tokenprice}>{parseFloat(LatomicNumber.toDecimal(balance,decimals)).toFixed(4)}</p>
+          <p className={classes.tokenprice}>$818,075</p>
+        </div>
+        <div style={{color: 'red'}} >
+          <FontAwesomeIcon icon={faCaretDown} />
+          {/* <FontAwesomeIcon icon={faCaretUp} style={{color: 'green'}} /> */}
+          <span>5.35%</span>
+        </div>
       </div>
       <div className={classes.pricechart}>
         <ReactApexChart options={options} series={series} type="area" height={90}/>
@@ -129,7 +142,7 @@ const useStyles = makeStyles((theme) => ({
     boxSizing: "border-box",
     padding: "5px 10px",
     borderRadius: 10,
-    background: "linear-gradient(to right, #6d7897,#2c385c)",
+    background: "#222222",
 
   },
   tokenimg:{
@@ -147,6 +160,7 @@ const useStyles = makeStyles((theme) => ({
     textAlign: "left",
     alignSelf: "center",
     marginLeft: 7,
+    width: '100%'
   },
   tokenname: {
     color: "white",
@@ -160,9 +174,9 @@ const useStyles = makeStyles((theme) => ({
   },
   pricechart: {
     position: 'absolute',
-    top: -23,
-    right: 15,
-    width: 160,
+    top: -8,
+    right: 0,
+    width: '100%',
     height :'100%'
   },
 }));
