@@ -100,7 +100,7 @@ export default function CreateWallet() {
   return (
     <>
       <div className={classes.root}>
-        <img className={classes.logoImage} src="images/logo2.png" alt="AurumWallet" onClick={handleBackClick}/>
+        <img className={classes.logoImage} src="images/logo.png" alt="AurumWallet" onClick={handleBackClick}/>
         <h1 className={classes.wallettitle}>
           Create <br /> Wallet
         </h1>

@@ -66,7 +66,7 @@ export default function Signin() {
 
       <Box className={classes.root}>
         <div className="auth-logo">
-          <img src="images/logo2.png" alt="AurumWallet" className="logo-image" />
+          <img src="images/logo.png" alt="AurumWallet" className="logo-image" />
         </div>
 
         <h1 className="auth-title">Welcome</h1>
