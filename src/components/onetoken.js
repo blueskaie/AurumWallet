@@ -1,6 +1,6 @@
 import React, {useState, useEffect, useMemo} from "react";
 import { useHistory } from "react-router-dom";
-
+import { Box } from "@material-ui/core";
 import { makeStyles, useTheme } from "@material-ui/core/styles";
 import * as LatomicNumber from '../utils/big.number'
 import {tokenLogos} from "../config/token-info"
@@ -16,7 +16,7 @@ const OneToken = (props) => {
 
   const classes = useStyles(useTheme());
   const history = useHistory();
-  const { code, balance, coinId, decimals, contract } = props;
+  const { code, balance, coinId, decimals, contract, trade } = props;
 
   const network = useRecoilValue( currentNetwork );
   const [chartData, setChartData] = useState([]);
@@ -70,7 +70,15 @@ const OneToken = (props) => {
           speed: 350
       }
     },
-    colors: ['#555555'],
+    colors: ['#222121'],
+    fill: {
+      type: 'gradient',
+      gradient: {
+        shadeIntensity: 0,
+        opacityFrom: 1,
+        opacityTo: 1,
+      }
+    },
     dataLabels: {
       enabled: false
     },
@@ -101,33 +109,34 @@ const OneToken = (props) => {
     }
   };
 
+  const up = Math.random() * 20 - 10;
+
   return (
-    <div className={classes.onetoken} onClick={goToDetail}>
-      <div className={classes.tokenimg}>
+    <Box className={classes.onetoken} onClick={goToDetail}>
+      <Box className={classes.tokenimg}>
         { tokenLogos[code.toUpperCase()]
             ? <img src={tokenLogos[code.toUpperCase()]} alt={code} width={20} />
             : <Jazzicon diameter={40} seed={contract[network.id]} />
         }
-      </div>
-      <div className={classes.tokeninfo}>
-        <div style={{display: 'flex', flexDirection: 'row', justifyContent: 'space-between'}}>
+      </Box>
+      <Box className={classes.tokeninfo}>
+        <Box style={{display: 'flex', flexDirection: 'row', justifyContent: 'space-between'}}>
           <p className={classes.tokenname}>{code}</p>
-          <p className={classes.tokenname}>2,150</p>
-        </div>
-        <div style={{display: 'flex', flexDirection: 'row', justifyContent: 'space-between'}}>
-          <p className={classes.tokenprice}>{parseFloat(LatomicNumber.toDecimal(balance,decimals)).toFixed(4)}</p>
-          <p className={classes.tokenprice}>$818,075</p>
-        </div>
-        <div style={{color: 'red'}} >
-          <FontAwesomeIcon icon={faCaretDown} />
-          {/* <FontAwesomeIcon icon={faCaretUp} style={{color: 'green'}} /> */}
-          <span>5.35%</span>
-        </div>
-      </div>
-      <div className={classes.pricechart}>
+          <p className={classes.tokenname}>{parseFloat(LatomicNumber.toDecimal(balance,decimals)).toFixed(4).toLocaleString()}</p>
+        </Box>
+        <Box style={{display: 'flex', flexDirection: 'row', justifyContent: 'space-between'}}>
+          <p className={classes.tokenprice}>{parseFloat(LatomicNumber.toDecimal(balance,decimals)).toFixed(4).toLocaleString()}</p>
+          <p className={classes.tokenprice}>${(parseFloat(LatomicNumber.toDecimal(balance,decimals)) * trade).toFixed(4).toLocaleString()}</p>
+        </Box>
+        <Box style={{color: up > 0?'green':'red'}} >
+          {up > 0 ? <FontAwesomeIcon icon={faCaretUp} /> : <FontAwesomeIcon icon={faCaretDown} /> }
+          <span style={{marginLeft: 5}}>{Math.abs(up.toFixed(2))}%</span>
+        </Box>
+      </Box>
+      <Box className={classes.pricechart}>
         <ReactApexChart options={options} series={series} type="area" height={90}/>
-      </div>
-    </div>
+      </Box>
+    </Box>
   );
 };
 
@@ -135,23 +144,26 @@ const useStyles = makeStyles((theme) => ({
   onetoken: {
     position: 'relative',
     cursor:'pointer',
-    maxHeight: 60,
-    zIndex: 2,
+    height: 70,
+    zIndex: 1,
     display: "flex",
-    margin: "10px 0px",
+    margin: "8px 0px",
     boxSizing: "border-box",
-    padding: "5px 10px",
+    boxShadow: '0px 3px 3px #000000c2',
+    padding: 10,
     borderRadius: 10,
-    background: "#222222",
+    background: "#1e1d1d",
+    alignItems: 'center'
 
   },
   tokenimg:{
-    width: 46,
-    height: 46,
-    borderRadius: 23,
+    width: 40,
+    height: 40,
+    borderRadius: 20,
     overflow:'hidden',
+    zIndex: 3,
     "& > img": {
-      width: 46,
+      width: 40,
     },
   },
   tokeninfo: {
@@ -160,7 +172,8 @@ const useStyles = makeStyles((theme) => ({
     textAlign: "left",
     alignSelf: "center",
     marginLeft: 7,
-    width: '100%'
+    width: 'calc(100% - 50px)',
+    zIndex: 3
   },
   tokenname: {
     color: "white",
@@ -174,10 +187,11 @@ const useStyles = makeStyles((theme) => ({
   },
   pricechart: {
     position: 'absolute',
-    top: -8,
+    top: -5,
     right: 0,
     width: '100%',
-    height :'100%'
+    height :'100%',
+    zIndex: 2
   },
 }));
 

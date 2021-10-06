@@ -6,6 +6,7 @@ import {Button, Box, TextField, FormControl, FormHelperText} from '@material-ui/
 import {Alert} from '@material-ui/lab'
 import { makeStyles, useTheme } from '@material-ui/core/styles';
 import { useRecoilState, useRecoilValue } from 'recoil';
+import Layout from "../../components/layout";
 
 import Clipboard from 'react-clipboard.js';
 import { encryptKeyStore } from '../../utils/keystore';
@@ -98,9 +99,8 @@ export default function CreateWallet() {
   }
 
   return (
-    <>
-      <div className={classes.root}>
-        <img className={classes.logoImage} src="images/logo.png" alt="AurumWallet" onClick={handleBackClick}/>
+    <Layout isShownHeader={false}>
+      <Box className={classes.root}>
         <h1 className={classes.wallettitle}>
           Create <br /> Wallet
         </h1>
@@ -157,26 +157,22 @@ export default function CreateWallet() {
               SAVE YOUR PRIVATE KEY
             </Alert>
 
-            <div className={classes.copyGroup}>
+            <Box className={classes.copyGroup}>
               <textarea type="text" rows="3" readOnly value={wallet.privateKey}></textarea>
               <Clipboard component="button" button-href="#" data-clipboard-text={wallet.privateKey}>
                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" className="icon"><path d="M6 6V2c0-1.1.9-2 2-2h10a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2h-4v4a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V8c0-1.1.9-2 2-2h4zm2 0h4a2 2 0 0 1 2 2v4h4V2H8v4zM2 8v10h10V8H2z"/></svg>
               </Clipboard>
-            </div>
+            </Box>
 
-            <div className={classes.keyInfo}>
+            <Box className={classes.keyInfo}>
               <p><strong>Do not lose it!</strong> It can't be recovered if you lose it.</p>
               <p><strong>Do not share it!</strong> Your funds will be stolen if you use it on a malicious site.</p>
               <p><strong>Make a backup!</strong> Just in case your laptop is set on fire.</p>
-            </div>
+            </Box>
             <Button variant="contained" color="primary" onClick={copyConfirmed}>I've copied it somewhere safe</Button>
           </Box>
         }
-        <div className={classes.footer}>
-          <p className={classes.terms}>Terms of service</p>
-        </div>
-        <img src="images/wave.png" className={classes.bottomimg} />
-      </div>
-    </>
+      </Box>
+    </Layout>
   );
 }

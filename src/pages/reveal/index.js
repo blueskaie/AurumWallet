@@ -1,8 +1,8 @@
 import * as React from "react";
 // get our fontawesome imports
-import { faCaretDown } from "@fortawesome/free-solid-svg-icons";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import Layout from "../../components/layout";
 import { useHistory } from "react-router-dom";
+import { Box } from "@material-ui/core";
 import useStyles from "./style";
 
 const Reveal = () => {
@@ -14,22 +14,22 @@ const Reveal = () => {
   }
   
   return (
-    <div className={classes.root}>
-      
-      <div className={classes.lock}>
-        <div className={classes.lockimage}>
-          <img src="images/lock.png"/>
-        </div>
-        <span className={classes.reveal} onClick={goWallet}>
-          Reveal seedphrase
-        </span>
-      </div>
-
-      <div className={classes.footer}>
-        <p className={classes.terms}>Terms of service</p>
-      </div>
-      <img src="images/wave.png" className={classes.bottomimg}/>
-    </div>
+    <Layout isShownWallet={false} isShownNetworkSelector={false}>
+      <Box className={classes.root}>
+        <Box className={classes.lock}>
+          <Box className={classes.lockimage}>
+            <img src="images/lock.png"/>
+          </Box>
+          <span className={classes.reveal} onClick={goWallet}>
+            Reveal seedphrase
+          </span>
+        </Box>
+        <Box className={classes.footer}>
+          <p className={classes.terms}>Terms of service</p>
+        </Box>
+        <img src="images/wave.png" className={classes.bottomimg}/>
+      </Box>
+    </Layout>
   );
 };
 

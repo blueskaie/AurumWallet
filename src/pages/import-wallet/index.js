@@ -1,7 +1,7 @@
 import React from 'react'
 
 import { useHistory } from 'react-router-dom'
-
+import Layout from "../../components/layout";
 import {Button, Box, TextField, FormControl, FormHelperText } from '@material-ui/core';
 
 import { useTheme } from '@material-ui/core/styles';
@@ -97,14 +97,13 @@ export default function ImportWallet() {
   }
 
   return (
-    <>
-      <Header loggedIn={false} />
+    <Layout isShownHeader={false}>
       <Box className={classes.root}>
-        <div className="auth-logo">
+        <div className={classes.logo}>
           <img src="images/logo.png" alt="AurumWallet" className="wallet-image"/>
         </div>
 
-        <h1 className="logo-title">AurumWallet</h1>
+        <h1 className={classes.logoTitle}>AurumWallet</h1>
 
         <form method="post" autoComplete="off" onSubmit={handleSubmit} className={classes.form}>
           <FormControl className={classes.passwordinput} error={keyError}>
@@ -121,11 +120,11 @@ export default function ImportWallet() {
               {helperText}
             </FormHelperText>
           </FormControl>
-          <Button variant="contained" color="primary" type="submit" className={classes.formButton}>Import private key</Button>
+          <Button variant="contained" type="submit" className={classes.button}>Import private key</Button>
         </form>
-        <Button onClick={() => { history.push('/'); }} variant="contained" className={classes.fullWidth}>Cancel</Button>
+        <Button onClick={() => { history.push('/'); }} variant="contained" className={classes.button}>Cancel</Button>
 
       </Box>
-    </>
+    </Layout>
   )
 }

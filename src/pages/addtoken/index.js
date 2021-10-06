@@ -1,7 +1,7 @@
 import React,{useEffect} from 'react'
 import { getTokenInfoByAddress } from '../../utils/token-utils';
-import BackButtonHeader from '../../components/back-button-header'
-import {  Button, Container, TextField, FormControl, FormHelperText, Snackbar } from '@material-ui/core'
+import Layout from "../../components/layout";
+import {  Button, Box, TextField, FormControl, FormHelperText, Snackbar } from '@material-ui/core'
 import MuiAlert from '@material-ui/lab/Alert';
 
 import { useSetRecoilState,useRecoilValue} from 'recoil';
@@ -74,13 +74,9 @@ export default function AddCustomToken() {
   }
 
   return (
-    <div style={{background: '#111111', height: '100%'}}>
-      <div className={classes.header}>
-      <BackButtonHeader title="Add Token" />
-
-      </div>
-      <Container className={classes.root}>
-        <div className={classes.formWrap}>
+    <Layout isShownWallet={false} isShownNetworkSelector={false}>
+      <Box className={classes.root}>
+        <Box className={classes.formWrap}>
           <form method="post" onSubmit={handleSubmit} className={classes.form} >
 
             <FormControl error={helpers.contract} className={classes.formControl}>
@@ -116,16 +112,16 @@ export default function AddCustomToken() {
               <FormHelperText>{helpers.test}</FormHelperText>
             </FormControl> */}
 
-            <Button variant="contained" color="secondary" type="submit" style={{background: 'white', color: 'black'}}>Save</Button>
+            <Button variant="contained" type="submit" style={{marginTop: 50, background: 'white', color: 'black', borderRadius: '15px'}}>Save</Button>
           </form>
-        </div>
+        </Box>
 
         <Snackbar open={openSuccess} autoHideDuration={6000} onClose={() => setOpenSuccess(false)}>
           <Alert onClose={() => setOpenSuccess(false)} severity="success">
             Token added successfully!
           </Alert>
         </Snackbar>
-      </Container>
-    </div>
+      </Box>
+    </Layout>
   )
 }

@@ -1,7 +1,7 @@
 import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 
-import Options from './options';
+import MenuOptions from './menu-options';
 import NetworkSelector from './network-selector'
 
 import { AppBar, Toolbar } from '@material-ui/core';
@@ -41,7 +41,7 @@ export default function Header({loggedIn, children}) {
           <span>AURUMWALLET</span>
         </Link> }
         <NetworkSelector />
-        { loggedIn && <Options loggedIn={loggedIn} /> }
+        { loggedIn && <MenuOptions loggedIn={loggedIn} /> }
       </Toolbar>
       {children}
     </AppBar>

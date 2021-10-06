@@ -3,7 +3,19 @@ import { makeStyles } from "@material-ui/core/styles";
 const useStyles = makeStyles((theme) => ({
   root: {
     textAlign: 'center',
-    padding:theme.spacing(2)
+    marginTop: -60
+  },
+  logo: {
+    width: 150,
+    margin: '0 auto',
+    marginTop: 15
+  },
+  logoTitle: {
+    color: 'white',
+    fontWeight: 'bold',
+    fontSize: 30,
+    margin: 0,
+    userSelect: 'none'
   },
   flexBox: {
     display: 'flex',
@@ -24,19 +36,18 @@ const useStyles = makeStyles((theme) => ({
     margin: "auto",
   },
   passwordinput: {
-    height:92,
     "& input": {
       padding: "12px 10px",
       color: "white",
-      border: "1px solid #9c9c9c",
+      border: "1px solid #ffffff",
       marginBottom: 10,
       marginTop: 15,
       background: "transparent",
       "&::placeholder": {
-        color: "#9c9c9c",
+        color: "#ffffff",
       },
       "&:focus": {
-        border: "1px solid #9c9c9c",
+        border: "1px solid #ffffff",
       },
       "&::before":{
         display:'none',
@@ -44,19 +55,18 @@ const useStyles = makeStyles((theme) => ({
     },
   },
   repasswordinput:{
-    height:140,
     "& input": {
       padding: "12px 10px",
       color: "white",
-      border: "1px solid #9c9c9c",
+      border: "1px solid #ffffff",
       marginBottom: 10,
       marginTop: 15,
       background: "transparent",
       "&::placeholder": {
-        color: "#9c9c9c",
+        color: "#ffffff",
       },
       "&:focus": {
-        border: "1px solid #9c9c9c",
+        border: "1px solid #ffffff",
       },
       "&::before":{
         display:'none',
@@ -69,14 +79,14 @@ const useStyles = makeStyles((theme) => ({
   fieldPassword: {
     marginBottom: theme.spacing(2)
   },
-  formButton: {
+  button: {
     marginBottom: theme.spacing(2),
     padding: "10px 45px",
-    color: "#b9b9b9",
+    background: '#ffffff',
+    color: "#000000",
     fontSize: 14,
     borderRadius: 20,
-    background: "linear-gradient(#565556,#080808)",
-    width: "100%",
+    width: "80%",
     margin: "auto",
   },
   links: {

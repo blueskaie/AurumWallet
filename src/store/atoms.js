@@ -8,6 +8,7 @@ import {
 import Networks from '../config/networks'
 import { precisionFormat } from '../utils/format-utils'
 import { getProvider, loadSingle } from '../utils/token-utils'
+import { getCurrencyPerToken } from '../utils/chainlink-utils'
 import { BNB_CODE } from '../config/tokens';
 import coingekoCoinIds from '../config/coingecko-info';
 
@@ -219,6 +220,14 @@ export const networkTransactions = selectorFamily({
   }
 });
 
+export const currentCurrencyCode = atom({
+  key: 'currentCurrencyCode',
+  default: "USD",
+  persistence_UNSTABLE: {
+    type: 'currentCurrencyCode'
+  }
+});
+
 
 export const tokenList = selector({
   key: 'tokenList',
@@ -228,7 +237,7 @@ export const tokenList = selector({
     const network = get(currentNetwork);
     const wallet = get(currentWallet);
     const tokens = get(allTokens);
-
+    
     console.log("tokenList step1",tokens);
 
     let toUseTokens = tokens.filter( item => {
@@ -265,15 +274,19 @@ export const tokenLoader = selectorFamily({
   key: 'tokenLoader',
   get: ({token, network, address}) => async ({get}) => {
     get(refreshCalled)
-
+    const currency = get(currentCurrencyCode);
     if (token.code === BNB_CODE) {
       const wallet = get(currentWallet)
       const web3 = get(networkProvider)
+
       const bal = await web3.eth.getBalance(wallet.address)
-      return {...token, balance: bal, coinId: coingekoCoinIds[token.code.toLowerCase()]};
+      const trade = await getCurrencyPerToken(network, token.code, currency);
+      return {...token, balance: bal, coinId: coingekoCoinIds[token.code.toLowerCase()], trade: trade};
     }
+    const trade = await getCurrencyPerToken(network, token.code, currency);
     const {balance, allowance} = await loadSingle(network, token, address);
-    return {...token, balance, allowance, coinId: coingekoCoinIds[token.code.toLowerCase()]};
+
+    return {...token, balance, allowance, coinId: coingekoCoinIds[token.code.toLowerCase()], trade, trade};
   }
 })
 

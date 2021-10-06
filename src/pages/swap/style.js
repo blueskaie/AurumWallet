@@ -2,75 +2,42 @@ import { makeStyles } from "@material-ui/core/styles";
 
 const useStyles = makeStyles((theme) => ({
   root: {
-    background:'#111111',
-    textAlign: "center",
-    width: 375,
-    "&>.makeStyles-root-53": {
-      marginLeft: '20px',
-    },
-    "&>.makeStyles-swaptitle-28": {
-      paddingLeft: '20px'
-    }
-  },
-  header: {
-    marginTop: 20
   },
   swaptitle:{
     position: 'relative',
-    margin:'10px 20px 20px 20px',
+    marginTop: -20,
     textAlign: 'left',
-    '& div':{
-      color:'white',
-      fontFamily: 'unset',
-      marginTop:0,
-        fontSize: 33,
-        fontWeight: 700,
-        lineHeight: '31px',
-        fontWeight: '100',
-        letterSpacing: '1px'
-    }
-  },
-  swaptab: {
-    display:'flex',
-    justifyContent: 'space-around',
-    marginBottom: 20
-  },
-  swaptabItem: {
     color:'white',
-    background: 'transparent',
-    outline:'none',
-    border:'none',
-  },
-  bottomimg: {
-    position: "absolute",
-    bottom: 0,
-    left: "-30px",
-    width: 447,
-    maxWidth: "inherit",
-    zIndex: 1,
-  },
-  submitWrapper: {
-    display: 'flex',
-    flexDirection: 'column'
-  },
-  comfirmModal: {
-    borderRadius: 10,
-    textAlign: 'center',
-    color: 'white'
+    fontFamily: 'unset',
+    fontSize: 33,
+    fontWeight: 700,
+    lineHeight: '31px',
+    fontWeight: '100',
+    letterSpacing: '1px'
   },
   swapcontent: {
-    width: '80%',
-    margin: 'auto',
+    width: '100%',
+    marginTop: 20,
     position: 'relative',
     zIndex: 3,
   },
   swaptoken : {
     position: 'relative',
     zIndex: 2,
-    background: '#222222',
+    background: '#1e1d1d',
     borderRadius: 10,
-    boxShadow: '0px 10px 5px #000000a0',
-    padding: 20
+    boxShadow: '0px 5px 5px #000000a0',
+    padding: 15
+  },
+  swapform: {
+    border:'1px solid white',
+    borderRadius: 13,
+    display: 'flex',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    flexDirection: 'row',
+    padding: '0 20px',
+    height:  56
   },
   swapAmount: {
     fontSize: 22,
@@ -107,15 +74,15 @@ const useStyles = makeStyles((theme) => ({
     margin:  0,
     fontSize: 12
   },
-  swapform: {
-    border:'1px solid white',
-    borderRadius: 13,
+  submitWrapper: {
     display: 'flex',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-    flexDirection: 'row',
-    padding: '0 20px',
-    height:  56
+    flexDirection: 'column'
+  },
+  comfirmModal: {
+    borderRadius: 10,
+    textAlign: 'center',
+    color: 'white',
+    width: '100%'
   },
   accountInfo: {
     marginTop: 15,
@@ -138,11 +105,11 @@ const useStyles = makeStyles((theme) => ({
     borderRadius: 10
   },
   gasForm: {
-    background: '#222222',
+    background: '#1e1d1d',
     padding: 20
   },
   settingForm: {
-    background: '#222222',
+    background: '#1e1d1d',
     padding: 40
   },
   slippageInput: {
@@ -232,12 +199,13 @@ const useStyles = makeStyles((theme) => ({
     position:'relative',
     borderRadius: '0px 0px 10px 10px',
     marginTop: -10,
-    background: '#333333',
-    padding: '20px 20px 10px 20px',
-    boxShadow: '0px 10px 5px #000000c2',
+    background: '#222121',
+    padding: '25px 35px 10px 35px',
+    boxShadow: '0px 5px 5px #000000c2',
     display:'flex',
     flexDirection: 'row',
-    justifyContent: 'space-between'
+    justifyContent: 'space-between',
+    fontSize: 10
   },
   swapsubinfo: {
     display: 'flex',
@@ -248,13 +216,6 @@ const useStyles = makeStyles((theme) => ({
       margin: '3px 0',
       color: 'white'
     }
-  },
-  termofservice: {
-    position: 'absolute',
-    bottom: 10,
-    textAlign: 'center',
-    width: '100%',
-    color: 'white'
   },
 }));
 

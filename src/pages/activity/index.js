@@ -1,24 +1,19 @@
 import React from 'react'
 
-import {  Button, Container } from '@material-ui/core'
-import BackButtonHeader from '../../components/back-button-header'
-import Transactions from '../../components/transactions'
+import Layout from "../../components/layout";
+import {  Box } from '@material-ui/core';
+import Transactions from '../../components/transactions';
 
 import useStyles from "./style";
-
 
 export default function Activity() {
   const classes = useStyles( );
 
   return (
-    <>
-      <div className={classes.header}>
-        <BackButtonHeader title="Activity" />
-      </div>
-
-      <Container className={classes.root}>
+    <Layout isShownWallet={false} isShownNetworkSelector={false}>
+      <Box className={classes.root}>
         <Transactions/>
-      </Container>
-    </>
+      </Box>
+    </Layout>
   )
 }

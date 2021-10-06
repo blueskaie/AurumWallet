@@ -1,7 +1,7 @@
 import React from "react";
 import { useHistory } from "react-router-dom";
 import { decryptKeyStore } from "../../utils/keystore";
-import Header from "../../components/header";
+import Layout from "../../components/layout";
 import { networkProvider, currentWallet, allWallets } from "../../store/atoms";
 
 import { useRecoilState, useRecoilValue } from "recoil";
@@ -61,26 +61,24 @@ export default function Signin() {
   };
 
   return (
-    <div className={classes.signin}>
-      <Header loggedIn={false} />
-
+    <Layout isShownHeader={false}>
       <Box className={classes.root}>
-        <div className="auth-logo">
+        <Box className="auth-logo">
           <img src="images/logo.png" alt="AurumWallet" className="logo-image" />
-        </div>
+        </Box>
 
         <h1 className="auth-title">Welcome</h1>
         <p className="auth-subtitle">
           to the <b>AURUM</b> wallet
         </p>
-        <div className="message error"></div>
+        <Box className="message error"></Box>
         <form
           method="post"
           autoComplete="off"
           onSubmit={handleSubmit}
           className={classes.form}
         >
-          <FormControl className={classes.fieldPassword} error={error}>
+          <FormControl error={error}>
             <TextField
               value={pass}
               onChange={(event) => {
@@ -100,6 +98,7 @@ export default function Signin() {
             type="submit"
             className={classes.formButton}
             disableRipple
+            style={{background: 'white', color: 'black', borderRadius: '15px'}}
           >
             Sign In
           </Button>
@@ -108,11 +107,6 @@ export default function Signin() {
 
         </form>
       </Box>
-      <img
-        src="images/wave.png"
-        className={classes.bottomimg}
-        alt="bottom_image"
-      />
-    </div>
+    </Layout>
   );
 }

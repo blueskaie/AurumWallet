@@ -1,17 +1,14 @@
 import React from 'react'
 
-import {  Button, Container } from '@material-ui/core'
-import BackButtonHeader from '../../components/back-button-header'
+import Layout from "../../components/layout";
 
-import {FormControl, TextField, FormHelperText, LinearProgress} from '@material-ui/core';
+import {FormControl, TextField, FormHelperText, LinearProgress, Button, Box, Snackbar} from '@material-ui/core';
 
-import Header from '../../components/header'
 import { useRecoilValue } from 'recoil';
 
 import { networkProvider, currentWallet, currentNetwork } from '../../store/atoms'
 import { decryptKeyStore } from '../../utils/keystore'
 
-import Snackbar from '@material-ui/core/Snackbar';
 import MuiAlert from '@material-ui/lab/Alert';
 
 import { DEFAULT_TOKEN } from '../../config/tokens';
@@ -108,13 +105,8 @@ export default function Send() {
   }
 
   return (
-    <>
-      <div className={classes.header}>
-        <BackButtonHeader title="Send" />
-      </div>
-
-      <Container className={classes.root}>
-
+    <Layout isShownWallet={false} isShownNetworkSelector={false}>
+      <Box className={classes.root}>
         <form method="post" autoComplete="off" onSubmit={handleSubmit} className={classes.form}>
 
           <FormControl  error={errors.address} className={classes.formrow}>
@@ -146,7 +138,7 @@ export default function Send() {
           </FormControl>
 
           <div className={classes.submitWrapper}>
-            <Button variant="contained" color="primary" type="submit" disabled={formSubmitting}>Send</Button>
+            <Button variant="contained" color="primary" type="submit" disabled={formSubmitting} style={{background: 'white', color: 'black', borderRadius: '15px'}}>Send</Button>
             {formSubmitting && <LinearProgress />}
           </div>
 
@@ -163,7 +155,7 @@ export default function Send() {
             Payment failed
           </Alert>
         </Snackbar>
-      </Container>
-    </>
+      </Box>
+    </Layout>
   )
 }

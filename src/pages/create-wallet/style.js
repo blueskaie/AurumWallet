@@ -3,22 +3,10 @@ import { makeStyles } from "@material-ui/core/styles";
 const useStyles = makeStyles((theme) => ({
   root: {
     flexGrow: 1,
-    color: "white",
-    padding: 30,
-    "&::before":{
-      display:'none',
-    },
-    "&::after":{
-      display:'none',
-    }
-  },
-  logoImage: {
-    width: 30,
-    height: 30,
-    cursor: 'pointer'
+    color: '#ffffff'
   },
   wallettitle: {
-    margin: "40px 20px 40px 20px",
+    margin: "30px 0",
     fontWeight: "200",
     fontSize: 33,
     lineHeight: 0.98,
@@ -26,23 +14,21 @@ const useStyles = makeStyles((theme) => ({
   form: {
     display: "flex",
     flexDirection: "column",
-    padding: "0 33px",
-    marginTop: 50
   },
   passwordinput: {
 
     "& input": {
       padding: "12px 10px",
       color: "white",
-      border: "1px solid #9c9c9c",
+      border: "1px solid #ffffff",
       marginBottom: 10,
       marginTop: 15,
       background: "transparent",
       "&::placeholder": {
-        color: "#9c9c9c",
+        color: "#ffffff",
       },
       "&:focus": {
-        border: "1px solid #9c9c9c",
+        border: "1px solid #ffffff",
       },
       "&::before":{
         display:'none',
@@ -54,15 +40,15 @@ const useStyles = makeStyles((theme) => ({
     "& input": {
       padding: "12px 10px",
       color: "white",
-      border: "1px solid #9c9c9c",
+      border: "1px solid #ffffff",
       marginBottom: 10,
       marginTop: 15,
       background: "transparent",
       "&::placeholder": {
-        color: "#9c9c9c",
+        color: "#ffffff",
       },
       "&:focus": {
-        border: "1px solid #9c9c9c",
+        border: "1px solid #ffffff",
       },
       "&::before":{
         display:'none',
@@ -75,25 +61,11 @@ const useStyles = makeStyles((theme) => ({
     fontSize: 14,
     borderRadius: 20,
     background: "#ffffff",
-    width: 130,
+    width: "70%",
     margin: 'auto',
     marginTop: 30,
   },
 
-  footer: {
-    position: "absolute",
-    left: "50%",
-    transform: "translate(-50%,-50%)",
-    bottom: 10,
-  },
-  bottomimg: {
-    position: "absolute",
-    bottom: -70,
-    left: 0,
-    width: 415,
-    maxWidth: "inherit",
-    zIndex: 1,
-  },
   flexBox: {
     display: 'flex',
     flexDirection: 'column'

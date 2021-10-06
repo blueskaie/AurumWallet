@@ -26,8 +26,8 @@ const useStyles = makeStyles((theme) => ({
   },
   select: {
     padding:'3px 10px',
-    border: '1px solid #777777',
-    borderRadius:20,
+    border: '1px solid #ffffff',
+    borderRadius:8,
     fontSize: 14,
     "&:hover:before":{
       borderBottom:'2px solid transparent!important',
@@ -41,7 +41,7 @@ const useStyles = makeStyles((theme) => ({
     '& .MuiSelect-root': {
       paddingRight: theme.spacing(3),
       paddingLeft: theme.spacing(0),
-      color:'#777777',
+      color:'#ffffff',
         },
     '& img': {
       width: theme.spacing(2),
@@ -61,7 +61,7 @@ const useStyles = makeStyles((theme) => ({
   },
   list:{
     backgroundColor:'#17191e',
-    color:'#777777',
+    color:'#ffffff',
     '& li:hover':{
       background:'#2d2d2d'
     }

@@ -3,9 +3,8 @@ import React from 'react';
 import { Box, Container, Typography, FormControl, TextField, FormHelperText, Button } from '@material-ui/core'
 import { makeStyles } from '@material-ui/core/styles';
 import { decryptKeyStore } from '../../utils/keystore';
+import Layout from "../../components/layout";
 
-import BackButtonHeader from '../../components/back-button-header'
-import Header from '../../components/header'
 import { useRecoilValue } from 'recoil';
 import { currentWallet, networkProvider } from '../../store/atoms';
 
@@ -67,15 +66,8 @@ export default function ExportKey() {
     return false;
   }
 
-  return (<>
-  {/* <Header loggedIn={true}>
-        <BackButtonHeader title="Export Key" />
-      </Header> */}
-      <div className={classes.header}>
-        <BackButtonHeader title="Reveal" />
-      </div>
-      <Container className={classes.root}>
-
+  return (<Layout isShownWallet={false} isShownNetworkSelector={false}>
+      <Box className={classes.root}>
         {
         !passValid && 
           <form method="post" autoComplete="off" onSubmit={handleSubmit} className={classes.form}>
@@ -94,7 +86,7 @@ export default function ExportKey() {
               </FormHelperText>
             </FormControl>
 
-            <Button variant="contained" color="primary" type="submit" className={classes.formButton}>Submit</Button>
+            <Button variant="contained" color="primary" type="submit" className={classes.formButton} style={{background: 'white', color: 'black', borderRadius: '15px'}}>Submit</Button>
           </form>
         }
 
@@ -105,22 +97,21 @@ export default function ExportKey() {
               SAVE YOUR PRIVATE KEY
             </Alert>
 
-            <div className={classes.copyGroup}>
+            <Box className={classes.copyGroup}>
               <textarea type="text" rows="3" readOnly value={privateKey}></textarea>
               <Clipboard component="button" button-href="#" data-clipboard-text={privateKey}>
                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" className="icon"><path d="M6 6V2c0-1.1.9-2 2-2h10a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2h-4v4a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V8c0-1.1.9-2 2-2h4zm2 0h4a2 2 0 0 1 2 2v4h4V2H8v4zM2 8v10h10V8H2z"/></svg>
               </Clipboard>
-            </div>
+            </Box>
 
-            <div className={classes.keyInfo}>
+            <Box className={classes.keyInfo}>
               <p><strong>Do not lose it!</strong> It can't be recovered if you lose it.</p>
               <p><strong>Do not share it!</strong> Your funds will be stolen if you use it on a malicious site.</p>
               <p><strong>Make a backup!</strong> Just in case your laptop is set on fire.</p>
-            </div>
-            <Button variant="contained" color="primary" onClick={copyConfirmed}>I've copied it somewhere safe</Button>
+            </Box>
+            <Button variant="contained" color="primary" onClick={copyConfirmed} style={{background: 'white', color: 'black', borderRadius: '15px'}}>I've copied it somewhere safe</Button>
           </Box>
         }
-
-      </Container>
-  </>)
+      </Box>
+  </Layout>)
 }
