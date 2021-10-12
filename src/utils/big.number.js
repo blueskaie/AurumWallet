@@ -13,9 +13,9 @@ export const compare = (val1, val2) => {
 };
 
 export const reciprocal = (val, fixedDecimals) => {
-  if (parseFloat(val) == 0) return '0';
+  if (parseFloat(val) === 0) return '0';
   const result = new BigNumber('1').dividedBy(new BigNumber(val));
-  if (fixedDecimals == null) return result.toString();
+  if (fixedDecimals === null) return result.toString();
   return result.toFixed(fixedDecimals).toString();
 };
 
@@ -40,7 +40,7 @@ export const priceFormat = (val) => {
 
 export const convertNumerString = (v) => {
   let vf = '0';
-  if (v != '') vf = v.replace(/,/g, '');
+  if (v !== '') vf = v.replace(/,/g, '');
   if (v.substr(v.length - 1) === '.') {
     vf = v.substr(v.length - 1);
   }
@@ -50,15 +50,15 @@ export const convertNumerString = (v) => {
 export const getMaxNumber = () => new BigNumber(2).pow(256).minus(1).toString();
 
 export const priceConvert = (val, fixedDecimals) => {
-  if (val == '') return '';
+  if (val === '') return '';
 
   const price = new BigNumber(convertNumerString(val));
-  const digits = `1${'0'.repeat(fixedDecimals == undefined ? 12 : fixedDecimals)}`;
+  const digits = `1${'0'.repeat(fixedDecimals === undefined ? 12 : fixedDecimals)}`;
 
   const strVal = new BigNumber(price.multipliedBy(digits).toFixed(0))
     .dividedBy(new BigNumber(digits))
     .toString();
-  return strVal == '0' && val == '0' ? '' : strVal;
+  return strVal === '0' && val === '0' ? '' : strVal;
 };
 
 export const calcTipFeeAmount = (amount, feeRate) => {

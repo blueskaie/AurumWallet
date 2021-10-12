@@ -17,6 +17,8 @@ import useStyles from "./style";
 export default function Home() {
   const classes = useStyles(useTheme());
   const history = useHistory();
+  const [showInfo, setToggleInfo] = React.useState(true);
+
   const addToken = () => { history.push("/add-token"); };
 
   return (
@@ -26,7 +28,7 @@ export default function Home() {
           <SliderList />
         </React.Suspense> */}
         <React.Suspense fallback={<Box className="slidebar"></Box>}>
-          <StatisticInfo/>
+          <StatisticInfo showInfo={showInfo} setToggleInfo={()=>setToggleInfo(!showInfo)}/>
         </React.Suspense>
 
         <Box className={classes.mywallet}>
@@ -36,7 +38,7 @@ export default function Home() {
           </Box>
           <ScrollContainer className={classes.tokenlist} vertical={true}>
             <React.Suspense fallback={<Box>Loading...</Box>}>
-              <TokenList />
+              <TokenList showInfo={showInfo}/>
             </React.Suspense>
           </ScrollContainer>
         </Box>

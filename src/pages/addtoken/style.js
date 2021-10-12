@@ -8,15 +8,20 @@ const useStyles = makeStyles((theme) => ({
     flexDirection: 'column',
     marginTop:30,
   },
-  header:{
-    marginTop:20,
-  },
-  flexBox: {
-    display: 'flex',
-    flexDirection: 'column'
+  title: {
+    position: 'relative',
+    marginTop: -20,
+    textAlign: 'left',
+    color:'white',
+    fontFamily: 'unset',
+    fontSize: 33,
+    fontWeight: 100,
+    lineHeight: '31px',
+    fontWeight: '100',
+    letterSpacing: '1px'
   },
   formWrap: {
-    flex: 1,
+    marginTop: 50
   },
   form: {
     display: 'flex',
@@ -24,35 +29,10 @@ const useStyles = makeStyles((theme) => ({
     flexDirection: 'column'
   },
   formControl: {
-    marginBottom: theme.spacing(2),
-  },
-  textfield:{
-    
-    '& label':{
-      color:'white',
-      "&.Mui-focused":{
-        color: 'white',
-      }
-    },
-    
-    "& div":{
-      "&:hover::before":{
-       borderBottom:'1px solid white!important',
-      },
-      "&::before":{
-        borderBottom:'1px solid white'
-      },
-      "&::after":{
-        borderBottom:'1px solid white'
-      },
-    },
-    '& input':{
-      color:'white',
-      
-    }
+    marginBottom: '10px',
   },
   formButton: {
-    marginBottom: theme.spacing(2)
+    marginBottom: '10px'
   },
   fullWidth: {
     width: '100%'

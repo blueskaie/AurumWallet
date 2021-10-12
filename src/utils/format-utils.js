@@ -32,6 +32,23 @@ export function formatDateFromSeconds(dt) {
   return dat.toUTCString();
 }
 
+export function formatOnlyDateFromSeconds(dt) {
+  if(typeof dt === 'string') {
+    dt = parseInt(dt)
+  }
+  const dat = new Date(dt * 1000);
+  return dat.toDateString();
+}
+
+export function formatOnlyTimeFromSeconds(dt) {
+  if(typeof dt === 'string') {
+    dt = parseInt(dt)
+  }
+  const dat = new Date(dt * 1000);
+  return dat.toLocaleTimeString();
+}
+
+
 export function compressAddress(address, toLength = 14) {
   let len = address ? address.length : 0;
   if(len > toLength) {

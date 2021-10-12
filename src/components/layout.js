@@ -1,10 +1,11 @@
 import React from "react";
 import { makeStyles } from '@material-ui/core/styles';
-import { useTheme, Toolbar, Snackbar, Box } from "@material-ui/core";
+import { useTheme, Toolbar, Snackbar, Box, IconButton, Icon } from "@material-ui/core";
 import Typography from "@material-ui/core/Typography";
 import Clipboard from "react-clipboard.js";
-import { useRecoilValue , useRecoilState} from "recoil";
-import { currentWallet, refreshCalled } from "../store/atoms";
+import { useRecoilValue } from "recoil";
+import { currentWallet } from "../store/atoms";
+import { useHistory } from 'react-router-dom';
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import MuiAlert from '@material-ui/lab/Alert';
@@ -76,13 +77,21 @@ const useStyles = makeStyles((theme)=>({
       fontSize: 10,
     }
   },
+  backBtn: {
+    padding: 0
+  },
+  backIcon: {
+    width: 60,
+    height: 60,
+    color: 'white'
+  },
 }));
 
 function Alert(props) {
   return <MuiAlert elevation={6} variant="filled" {...props} />;
 }
 
-export default function Layout({isShownHeader=true, isShownWallet = true, isShownNetworkSelector = true, children}) {
+export default function Layout({isShownHeader=true, isShownWallet = true, isShownNetworkSelector = true, isShownBackButton = false, varient='primary', children}) {
   const classes = useStyles(useTheme());
   const loggedIn = true;
   // const [refresh, setRefresh] = useRecoilState(refreshCalled);
@@ -95,6 +104,15 @@ export default function Layout({isShownHeader=true, isShownWallet = true, isShow
   // React.useEffect(()=>{
   //   handleRefresh();
   // },[])
+  const history = useHistory();
+
+  const handleBackClick = () => {
+    if(history.length) {
+      history.goBack();
+    } else {
+      history.push('/');
+    }
+  }
   
   const wallet = useRecoilValue(currentWallet);
   const shortWalletAddress =  wallet 
@@ -107,7 +125,15 @@ export default function Layout({isShownHeader=true, isShownWallet = true, isShow
       {isShownHeader && <Box className={classes.topmenu}>
         <Box>
           <Toolbar className={classes.toolbar}>
-              <MenuOptions loggedIn={loggedIn} />
+              {
+                isShownBackButton 
+                ? <IconButton className={classes.backBtn} onClick={handleBackClick}>
+                  <Icon className={classes.backIcon}>
+                    <img src="images/back-arrow.svg" alt="AurumWallet" className="back-image" style={{height: '100%'}} />
+                  </Icon>
+                </IconButton>
+                : <MenuOptions loggedIn={loggedIn} />
+              }
               {isShownNetworkSelector && <NetworkSelector />}
           </Toolbar>
           {isShownWallet && <Box className={classes.clipboard}>
@@ -127,14 +153,15 @@ export default function Layout({isShownHeader=true, isShownWallet = true, isShow
       <Box className={classes.content}>
         {children}
       </Box>
-      <img
-        src="images/wave.png"
-        className={classes.bottomimg}
-        alt="bottom_image"
-      />
-      <div className={classes.termofservice}>
+      {
+        varient == 'primary'
+        ? <img src="images/wave.png" className={classes.bottomimg} alt="bottom_image"/>
+        : <img src="images/wave1.png" className={classes.bottomimg} alt="bottom_image"/>
+      }
+      
+      <Box className={classes.termofservice}>
         <p>Terms of service</p>
-      </div>
+      </Box>
       <Snackbar open={openSuccess} autoHideDuration={6000} onClose={() => setOpenSuccess(false)}>
         <Alert onClose={() => setOpenSuccess(false)} severity="success">
           Address copied

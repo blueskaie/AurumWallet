@@ -28,12 +28,11 @@ const useStyles = makeStyles((theme) => ({
   selectmenu:{
     left: '30px !important',
     maxHeight: ITEM_HEIGHT * 6.5,
-    width: '20ch',
+    width: 150,
     background:'#222121',
-    // color:'white'
   },
   listItemIcon: {
-    minWidth: 40
+    minWidth: 50
   },
   menuItemIcon: {
     width: 25,
@@ -61,9 +60,9 @@ const KEY_ACTIVITY = 5;
 // const KEY_DEPLOY_CONTRACT = 7;
 
 const options = [
-  {id: KEY_HOME, name: 'Home', icon: 'swap.svg'},
+  {id: KEY_HOME, name: 'Wallet', icon: 'wallet.svg'},
   {id: KEY_SWAP, name: 'Swap', icon: 'swap.svg'},
-  {id: KEY_SEND, name: 'Send', icon: 'wallet.svg'},
+  {id: KEY_SEND, name: 'Send', icon: 'send.svg'},
   {id: KEY_EXPORT, name: 'Reveal', icon: 'reveal.svg'},
   {id: KEY_ACTIVITY, name: 'Activity', icon: 'activity.svg'},
   {id: KEY_LOGOUT, name: 'Logout', icon: 'logout.svg'}

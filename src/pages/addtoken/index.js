@@ -1,7 +1,9 @@
 import React,{useEffect} from 'react'
 import { getTokenInfoByAddress } from '../../utils/token-utils';
 import Layout from "../../components/layout";
-import {  Button, Box, TextField, FormControl, FormHelperText, Snackbar } from '@material-ui/core'
+
+import {  Button, Box, FormControl, FormHelperText, Snackbar } from '@material-ui/core'
+import { ARUBaseInput } from '../../components/fields';
 import MuiAlert from '@material-ui/lab/Alert';
 
 import { useSetRecoilState,useRecoilValue} from 'recoil';
@@ -42,6 +44,14 @@ export default function AddCustomToken() {
     getTokenInfo();
   },[contract])
 
+  const pasteFromClipboard = async () => {
+    try {
+      const text = await navigator.clipboard.readText();
+      setContract(text);
+    } catch (e) {
+    }
+  }
+  
   const handleSubmit = (event) => {
     event.preventDefault();
 
@@ -74,45 +84,36 @@ export default function AddCustomToken() {
   }
 
   return (
-    <Layout isShownWallet={false} isShownNetworkSelector={false}>
+    <Layout isShownWallet={false} isShownBackButton={true} varient="secondary">
       <Box className={classes.root}>
+        <Box className={classes.title}>
+          Add Token
+        </Box>
         <Box className={classes.formWrap}>
           <form method="post" onSubmit={handleSubmit} className={classes.form} >
 
             <FormControl error={helpers.contract} className={classes.formControl}>
-              <TextField id="main" value={contract} onChange={e => setContract(e.target.value)}
-                type="text" label="Token Contract Address" className={classes.textfield}/>
+              <ARUBaseInput id="main" value={contract} onChange={e => setContract(e.target.value)}
+                type="text" placeholder="Token Contract Address"/>
+              <Button style={{backgroundColor: '#161616', color: '#ffffff', position: 'absolute', right: 5, top: 2}} onClick={pasteFromClipboard}>Paste</Button>
               <FormHelperText >{helpers.contract}</FormHelperText>
             </FormControl>
 
             <FormControl className={classes.formControl}>
-              <TextField id="title" value={vals.title}
-                type="text" label="Token Name"  inputProps={{ readOnly: true, }} className={classes.textfield}/>
+              <ARUBaseInput id="title" value={vals.title}
+                type="text" placeholder="Token Name" inputProps={{ readOnly: true, }} />
             </FormControl>
 
             <FormControl className={classes.formControl}>
-              <TextField id="code" value={vals.code}
-                type="text" label="Token Symbol" inputProps={{ readOnly: true, }} className={classes.textfield}/>
+              <ARUBaseInput id="code" value={vals.code}
+                type="text" placeholder="Token Symbol" inputProps={{ readOnly: true, }} />
             </FormControl>
 
             <FormControl className={classes.formControl}>
-              <TextField id="decimals" value={vals.decimals}   type="text" label="Decimals"
-                inputProps={{ readOnly: true, }} className={classes.textfield}/>
+              <ARUBaseInput id="decimals" value={vals.decimals}
+                type="text" placeholder="Decimals" inputProps={{ readOnly: true, }} />
             </FormControl>
-
-            {/* <FormControl error={error.main} className={classes.formControl}>
-              <TextField id="main" value={vals.main} onChange={e => setVals((vals) => { return {...vals, main:e.target.value}})}
-              type="text" label="Contract Mainnet address" className={classes.textfield}/>
-              <FormHelperText>{helpers.main}</FormHelperText>
-            </FormControl> */}
-
-            {/* <FormControl error={error.test} className={classes.formControl}>
-              <TextField id="test" value={vals.test} onChange={e => setVals((vals) => { return {...vals, test:e.target.value}})}
-              type="text" label="Contract Testnet address" className={classes.textfield}/>
-              <FormHelperText>{helpers.test}</FormHelperText>
-            </FormControl> */}
-
-            <Button variant="contained" type="submit" style={{marginTop: 50, background: 'white', color: 'black', borderRadius: '15px'}}>Save</Button>
+            <Button variant="contained" type="submit" style={{background: 'white', color: 'black', borderRadius: 8}}>ADD TOKEN</Button>
           </form>
         </Box>
 

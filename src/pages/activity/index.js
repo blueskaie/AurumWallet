@@ -10,9 +10,12 @@ export default function Activity() {
   const classes = useStyles( );
 
   return (
-    <Layout isShownWallet={false} isShownNetworkSelector={false}>
+    <Layout isShownWallet={false} varient="secondary">
       <Box className={classes.root}>
-        <Transactions/>
+        <Box className={classes.title}>
+          Activity
+        </Box>
+        <Transactions height={400}/>
       </Box>
     </Layout>
   )

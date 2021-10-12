@@ -6,35 +6,47 @@ const useStyles = makeStyles((theme) => ({
     display: 'flex',
     flexDirection: 'column'
   },
-  form: {
-    display: 'flex',
-    flexDirection: 'column'
+  title: {
+    position: 'relative',
+    marginTop: -20,
+    textAlign: 'left',
+    color:'white',
+    fontFamily: 'unset',
+    fontSize: 33,
+    fontWeight: 100,
+    lineHeight: '31px',
+    letterSpacing: '1px'
   },
-  formrow: {
-    marginBottom: theme.spacing(2),
-    "& input": {
-      padding: "12px 10px",
-      color: "white",
-      border: "1px solid #ffffff",
-      marginBottom: 10,
-      marginTop: 15,
-      background: "transparent",
-      "&::placeholder": {
-        color: "#ffffff",
-      },
-      "&:focus": {
-        border: "1px solid #ffffff",
-      },
-      "&::before":{
-        display:'none',
-      }
-    },
+  searchInput: {
+    marginTop: 40,
   },
-  submitWrapper: {
-    display: 'flex',
-    flexDirection: 'column',
-    marginTop: 20
-  },
+  tokenList: {
+    marginTop: 10,
+    height: 315,
+    overflowY: 'auto',
+    /* width */
+    // "&::-webkit-scrollbar": {
+    //   width: 10
+    // },
+
+    // /* Track */
+    // "&::-webkit-scrollbar-track": {
+    //   boxShadow: 'inset 0 0 5px grey', 
+    //   borderRadius: 5
+    // },
+    
+    // /* Handle */
+    // "&::-webkit-scrollbar-thumb": {
+    //   background: '#ffffff', 
+    //   borderRadius: 5
+    // },
+
+    // /* Handle on hover */
+    // "&::-webkit-scrollbar-thumb:hover": {
+    //   background: "#f1f1f1"
+
+    // }
+  }
 }));
 
 export default useStyles;

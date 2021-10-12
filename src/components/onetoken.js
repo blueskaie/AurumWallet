@@ -11,12 +11,13 @@ import callAPI from "../utils/api-utils";
 import ReactApexChart from 'react-apexcharts';
 import { faCaretDown, faCaretUp } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import HiddenText from "./hidden-text";
 
 const OneToken = (props) => {
 
   const classes = useStyles(useTheme());
   const history = useHistory();
-  const { code, balance, coinId, decimals, contract, trade } = props;
+  const { code, balance, coinId, decimals, contract, trade, showInfo } = props;
 
   const network = useRecoilValue( currentNetwork );
   const [chartData, setChartData] = useState([]);
@@ -70,7 +71,7 @@ const OneToken = (props) => {
           speed: 350
       }
     },
-    colors: ['#222121'],
+    colors: ['#272626'],
     fill: {
       type: 'gradient',
       gradient: {
@@ -122,11 +123,11 @@ const OneToken = (props) => {
       <Box className={classes.tokeninfo}>
         <Box style={{display: 'flex', flexDirection: 'row', justifyContent: 'space-between'}}>
           <p className={classes.tokenname}>{code}</p>
-          <p className={classes.tokenname}>{parseFloat(LatomicNumber.toDecimal(balance,decimals)).toFixed(4).toLocaleString()}</p>
+          <p className={classes.tokenname}><HiddenText show={showInfo} text={parseFloat(LatomicNumber.toDecimal(balance,decimals)).toFixed(4).toLocaleString()}/></p>
         </Box>
         <Box style={{display: 'flex', flexDirection: 'row', justifyContent: 'space-between'}}>
-          <p className={classes.tokenprice}>{parseFloat(LatomicNumber.toDecimal(balance,decimals)).toFixed(4).toLocaleString()}</p>
-          <p className={classes.tokenprice}>${(parseFloat(LatomicNumber.toDecimal(balance,decimals)) * trade).toFixed(4).toLocaleString()}</p>
+          <p className={classes.tokenprice}>${parseFloat(LatomicNumber.toDecimal(balance,decimals)).toFixed(4).toLocaleString()}</p>
+          <p className={classes.tokenprice}><HiddenText show={showInfo} text={(parseFloat(LatomicNumber.toDecimal(balance,decimals)) * trade).toFixed(4).toLocaleString()}/></p>
         </Box>
         <Box style={{color: up > 0?'green':'red'}} >
           {up > 0 ? <FontAwesomeIcon icon={faCaretUp} /> : <FontAwesomeIcon icon={faCaretDown} /> }
@@ -152,7 +153,8 @@ const useStyles = makeStyles((theme) => ({
     boxShadow: '0px 3px 3px #000000c2',
     padding: 10,
     borderRadius: 10,
-    background: "#1e1d1d",
+    // background: "#1e1d1d",
+    background: 'linear-gradient(to bottom, #1e1d1d 0%,#1e1d1d 60px,#000000 50%,#272626 60px,#272626 70px)',
     alignItems: 'center'
 
   },

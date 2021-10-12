@@ -4,12 +4,12 @@ import { tokenList } from '../store/atoms';
 import OneToken from "./onetoken";
 
 
-export default function TokenList() {
+export default function TokenList(props) {
   const list = useRecoilValue(tokenList);
   return (
     <>
       {list.map((item, index) => {
-        return <OneToken {...item} key={`oneToken-${index}`} />;
+        return <OneToken {...props} {...item} key={`oneToken-${index}`} />;
       })}
     </>
   )

@@ -286,19 +286,19 @@ export const tokenLoader = selectorFamily({
     const trade = await getCurrencyPerToken(network, token.code, currency);
     const {balance, allowance} = await loadSingle(network, token, address);
 
-    return {...token, balance, allowance, coinId: coingekoCoinIds[token.code.toLowerCase()], trade, trade};
+    return {...token, balance, allowance, coinId: coingekoCoinIds[token.code.toLowerCase()], trade: trade};
   }
 })
 
 
 export const transactionDetails = selectorFamily({
   key: 'transactionDetails',
-  get: ({hash}) => async ({get}) => {
+  get: ({hash, from, to}) => async ({get}) => {
     try {
       const allToks = await get(networkTransactions(0));
       for(let i = 0; i < allToks.length; i++) {
         let single = allToks[i];
-        if(single.hash === hash) {
+        if(single.hash === hash && single.from === from && single.to === to) {
           console.log(single);
           return single;
         }

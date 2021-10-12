@@ -7,6 +7,7 @@ import Signin from './pages/signin'
 import Home from './pages/home'
 import AboutUs from './pages/about-us'
 import Send from './pages/send'
+import SendToken from './pages/send-token'
 import Receive from './pages/receive'
 import TransactionDetail from './pages/transaction-details';
 import WalletDetail from './pages/wallet-details';
@@ -82,6 +83,8 @@ function App() {
               </PrivateRoute>
               <PrivateRoute path="/send">
                 <Send />
+              </PrivateRoute>
+              <PrivateRoute path="/send-token/:code" component={SendToken}>
               </PrivateRoute>
               <PrivateRoute path="/settings">
                 <Settings />

@@ -8,19 +8,19 @@ export const getProvider = (network) => {
 }
 
 export const getSwapRouter = (network, service="pancake") => {
-  if (network.type == 'mainnet') {
-      if (service == 'pancake') {
+  if (network.type === 'mainnet') {
+      if (service === 'pancake') {
           return "0x10ED43C718714eb63d5aA57B78B54704E256024E";
       } else {
           return "0xcF0feBd3f17CEf5b47b0cD257aCf6025c5BFf3b7";
       }
   } else {
       return "0x9Ac64Cc6e4415144C455BD8E4837Fea55603e5c3";
-      if (service == 'pancake') {
-          return "0x9Ac64Cc6e4415144C455BD8E4837Fea55603e5c3";
-      } else {
-          return "0x3380ae82e39e42ca34ebed69af67faa0683bb5c1";
-      }
+      // if (service === 'pancake') {
+      //     return "0x9Ac64Cc6e4415144C455BD8E4837Fea55603e5c3";
+      // } else {
+      //     return "0x3380ae82e39e42ca34ebed69af67faa0683bb5c1";
+      // }
   }
 }
 
@@ -161,7 +161,7 @@ export const deployContract = async ( network, privateKey, abi, bytecode ) => {
 }
 
 export const getTokenInfoByAddress = async (network,address) => {
-  if(address == '')
+  if(address === '')
     return null;
 
   try{

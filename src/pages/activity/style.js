@@ -6,6 +6,18 @@ const useStyles = makeStyles((theme) => ({
     display: 'flex',
     flexDirection: 'column'
   },
+  title: {
+    position: 'relative',
+    marginTop: -20,
+    textAlign: 'left',
+    color:'white',
+    fontFamily: 'unset',
+    fontSize: 33,
+    fontWeight: 100,
+    lineHeight: '31px',
+    fontWeight: '100',
+    letterSpacing: '1px'
+  },
 }));
 
 export default useStyles;

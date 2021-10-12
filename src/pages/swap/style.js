@@ -10,9 +10,8 @@ const useStyles = makeStyles((theme) => ({
     color:'white',
     fontFamily: 'unset',
     fontSize: 33,
-    fontWeight: 700,
+    fontWeight: 100,
     lineHeight: '31px',
-    fontWeight: '100',
     letterSpacing: '1px'
   },
   swapcontent: {
@@ -173,7 +172,6 @@ const useStyles = makeStyles((theme) => ({
     height: 30,
     background: 'transparent',
     outline: 'none',
-    color:  'white'
   },
   amountSection: {
     width: 150,
@@ -181,7 +179,6 @@ const useStyles = makeStyles((theme) => ({
     flexDirection: "column",
     alignItems: 'flex-end',
     justifyContent: 'center',
-    justifyContent: 'space-evenly',
     height: 'calc(100% - 10px);'
   },
   balanceAmount: {
