@@ -27,8 +27,8 @@ const useStyles = makeStyles((theme) => ({
   },
   selectmenu:{
     left: '30px !important',
-    maxHeight: ITEM_HEIGHT * 6.5,
-    width: 150,
+    maxHeight: ITEM_HEIGHT * 7.5,
+    width: 160,
     background:'#222121',
   },
   listItemIcon: {
@@ -55,6 +55,7 @@ const KEY_SEND = 3;
 // const KEY_RECEIVE = 2;
 const KEY_EXPORT = 4;
 const KEY_ACTIVITY = 5;
+const KEY_ACCOUNTS = 6;
 // const KEY_SETTINGS = 4;
 // const KEY_ABOUT_US = 5;
 // const KEY_DEPLOY_CONTRACT = 7;
@@ -65,6 +66,7 @@ const options = [
   {id: KEY_SEND, name: 'Send', icon: 'send.svg'},
   {id: KEY_EXPORT, name: 'Reveal', icon: 'reveal.svg'},
   {id: KEY_ACTIVITY, name: 'Activity', icon: 'activity.svg'},
+  {id: KEY_ACCOUNTS, name: 'Accounts', icon: 'accounts.svg'},
   {id: KEY_LOGOUT, name: 'Logout', icon: 'logout.svg'}
 ];
 
@@ -120,6 +122,9 @@ export default function MenuOptions({loggedIn}) {
       // case KEY_ABOUT_US:
       //   history.push('/about-us')
       //   break;
+      case KEY_ACCOUNTS:
+        history.push('/accounts');
+        break;
       case KEY_LOGOUT:
         doLogout();
         break;

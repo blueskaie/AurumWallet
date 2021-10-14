@@ -2,13 +2,16 @@ import React, {useState, useEffect, useMemo} from "react";
 // get our fontawesome imports
 import { useHistory } from "react-router-dom";
 import { useRecoilValue, useSetRecoilState } from 'recoil';
-import { Container } from '@material-ui/core';
+import { Box } from '@material-ui/core';
 import useStyles from './style';
-import BackButtonHeader from '../../components/back-button-header';
 import callAPI from "../../utils/api-utils";
 import { tokenList, allTokens, currentNetwork  } from '../../store/atoms';
 import Transactions from '../../components/transactions';
+import ARUCard from '../../components/card';
 import ReactApexChart from 'react-apexcharts';
+import { faCaretDown, faCaretUp, faSignOutAlt } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import Layout from "../../components/layout";
 
 const TokenDetail = (props) => {
 
@@ -21,7 +24,12 @@ const TokenDetail = (props) => {
   const history = useHistory();
 
   const setAllTokens = useSetRecoilState(allTokens);
-  
+  const goToSendToken = (token) => {
+    if (token && token.code) {
+      history.push(`/send-token/${token.code}`);
+    }
+  }
+
   const deleteToken = (event) => {
     event.preventDefault();
 
@@ -113,20 +121,41 @@ const TokenDetail = (props) => {
   }];
   
   return (
-    <div style={{background: '#111111', height: '100%'}}>
-      <div className={classes.header}>
-        <BackButtonHeader title={`${coin && coin.code} Detail`} />
-      </div>
+    <Layout isShownBackButton = {true} isShownWallet = {false} varient = 'secondary'>
       {/* main_div */}
-      <Container className={classes.root}>
+      <Box className={classes.root}>
         {coin && coin.code && coin.code !== 'BNB' && <div style={{marginBottom: 20, textAlign: 'right'}}>
           <span className={classes.deleteBtn} onClick={deleteToken}>Delete Token</span>
         </div>}
-        {coin && <ReactApexChart options={options} series={series} type="candlestick" height={250} /> }
-        {coin && <Transactions token={coin} height={200}/>}
-      </Container>
-
-    </div>
+        <ARUCard style={{padding: '5px'}}>
+          {coin && <ReactApexChart options={options} series={series} type="candlestick" height={250} /> }
+        </ARUCard>
+        <ARUCard className={classes.tokenInfo}>
+          <Box style={{marginRight: '10px'}} >
+            <img src={`images/tokens/${coin.icon}`} className={classes.tokenIcon} />
+          </Box>
+          <Box className={classes.tokenRow}>
+            <Box className={classes.tokenLeft}>
+              <Box>{coin.code}</Box>
+              <Box style={{marginTop: '10px'}}>$380.50</Box>
+              <Box style={{color: 'red', marginTop: '5px'}}>
+                <FontAwesomeIcon icon={faCaretDown} />
+                <span>5.32%</span>
+              </Box>
+            </Box>
+            <Box className={classes.tokenLeft} style={{alignItems: 'flex-end', marginRight: '5px'}}>
+              <Box style={{fontSize: '18px', fontWeight: '500'}}>2150</Box>
+              <Box style={{marginTop: '5px'}}>$818,075</Box>
+              <Box style={{color: '#333333', marginTop: '5px', cursor: 'pointer'}} onClick={()=>goToSendToken(coin)} >
+                <span>Send</span>
+                <FontAwesomeIcon icon={faSignOutAlt} style={{marginLeft: '5px'}} />
+              </Box>
+            </Box>
+          </Box>
+        </ARUCard>
+        {coin && <Transactions token={coin} height={80} />}
+      </Box>
+    </Layout>
   );
 };
 

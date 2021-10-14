@@ -21,6 +21,7 @@ import Reveal from "./pages/reveal";
 import Buysell from "./pages/buysell";
 import TokenDetail from "./pages/tokendetail";
 import Activity from "./pages/activity";
+import Accounts from "./pages/accounts";
 import Test from "./pages/test";
 
 import { useRecoilState } from 'recoil';
@@ -94,6 +95,9 @@ function App() {
               </Route>
               <PrivateRoute path="/export-key">
                 <ExportKey />
+              </PrivateRoute>
+              <PrivateRoute path="/accounts">
+                <Accounts />
               </PrivateRoute>
               <PrivateRoute path="/add-token">
                 <AddCustomToken />

@@ -14,7 +14,7 @@ import { useHistory } from 'react-router-dom';
 const useStyles = makeStyles(() => ({
   root: {
     padding: 12,
-    marginTop: 20
+    marginTop: 10
   },
   list: {
     overflowY: 'auto',
