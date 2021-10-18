@@ -1,7 +1,7 @@
 import React from 'react'
 
 import { useHistory } from 'react-router-dom'
-import { ethers } from 'ethers';
+
 import {Button, Box, TextField, FormControl, FormHelperText} from '@material-ui/core';
 import {Alert} from '@material-ui/lab'
 import { makeStyles, useTheme } from '@material-ui/core/styles';
@@ -28,11 +28,6 @@ export default function CreateWallet() {
 
   const [pass, setPass] = React.useState("");
   const [repass, setRepass] = React.useState("");
-  const [mnemonic, setMnemonic] = React.useState(null);
-  const [step, setStep] = React.useState(1);
-  // step = 1: password confirmation
-  // step = 2: menmonic confirmation
-  // step = 3: create wallet
 
   const [passwordError, setPasswordError] = React.useState(false);
   const [helperText, setHelperText] = React.useState("");
@@ -51,7 +46,6 @@ export default function CreateWallet() {
       history.push("/home");
     }
   }, [cWallet]); //eslint-disable-line react-hooks/exhaustive-deps
-
   const copyConfirmed = (event) => {
     event.preventDefault();
     const keystore = encryptKeyStore(provider,  wallet.privateKey, pass);
@@ -92,20 +86,9 @@ export default function CreateWallet() {
         setPasswordError(false);
       }
     }
-
-    const randomBytes = ethers.utils.randomBytes(16);
-    const mnemonic =  ethers.utils.HDNode.entropyToMnemonic(randomBytes);
-    setMnemonic(mnemonic);
-    setStep(2);
-  };
-
-  const handleCreateWallet = async (event) => {
-    event.preventDefault();
-    let mnemonicWallet = ethers.Wallet.fromMnemonic(mnemonic);
-    setWallet(mnemonicWallet);
+    setWallet(provider.eth.accounts.create());
     setCurrentTokens(ALL_TOKENS);
-    setStep(3);
-  }
+  };
   
   const handleBackClick = () => {
     if(history.length) {
@@ -121,7 +104,7 @@ export default function CreateWallet() {
         <h1 className={classes.wallettitle}>
           Create <br /> Wallet
         </h1>
-        {step == 1 && (
+        {!wallet && (
           <form
             method="post"
             autoComplete="off"
@@ -168,29 +151,25 @@ export default function CreateWallet() {
             </Button>
           </form>
         )}
-        { step == 2 &&
+        { wallet &&
           <Box className={classes.flexBox}>
-              <Alert severity="error" className={classes.important}>
-                SAVE YOUR SECRET PHARSES
-              </Alert>
-
-              <Box className={classes.copyGroup}>
-                <textarea type="text" rows="3" readOnly value={mnemonic}></textarea>
-                <Clipboard component="button" button-href="#" data-clipboard-text={mnemonic}>
-                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" className="icon"><path d="M6 6V2c0-1.1.9-2 2-2h10a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2h-4v4a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V8c0-1.1.9-2 2-2h4zm2 0h4a2 2 0 0 1 2 2v4h4V2H8v4zM2 8v10h10V8H2z"/></svg>
-                </Clipboard>
-              </Box>
-
-              <Button variant="contained" color="primary" onClick={handleCreateWallet} style={{marginTop: 30}}>Create Wallet</Button>
-          </Box>
-        }
-        {
-          step == 3 && 
-          <Box>
-            <Alert severity="success" className={classes.important}>
-              CONGULATELATIONS
+            <Alert severity="error" className={classes.important}>
+              SAVE YOUR PRIVATE KEY
             </Alert>
-            <Button variant="contained" color="primary" onClick={copyConfirmed} style={{marginTop: 30}}>Done</Button>
+
+            <Box className={classes.copyGroup}>
+              <textarea type="text" rows="3" readOnly value={wallet.privateKey}></textarea>
+              <Clipboard component="button" button-href="#" data-clipboard-text={wallet.privateKey}>
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" className="icon"><path d="M6 6V2c0-1.1.9-2 2-2h10a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2h-4v4a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V8c0-1.1.9-2 2-2h4zm2 0h4a2 2 0 0 1 2 2v4h4V2H8v4zM2 8v10h10V8H2z"/></svg>
+              </Clipboard>
+            </Box>
+
+            <Box className={classes.keyInfo}>
+              <p><strong>Do not lose it!</strong> It can't be recovered if you lose it.</p>
+              <p><strong>Do not share it!</strong> Your funds will be stolen if you use it on a malicious site.</p>
+              <p><strong>Make a backup!</strong> Just in case your laptop is set on fire.</p>
+            </Box>
+            <Button variant="contained" color="primary" onClick={copyConfirmed}>I've copied it somewhere safe</Button>
           </Box>
         }
       </Box>
