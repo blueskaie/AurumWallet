@@ -6,7 +6,7 @@ const useStyles = makeStyles((theme) => ({
     color: '#ffffff'
   },
   wallettitle: {
-    margin: "30px 0",
+    margin: "20px 0",
     fontWeight: "200",
     fontSize: 33,
     lineHeight: 0.98,
@@ -25,13 +25,12 @@ const useStyles = makeStyles((theme) => ({
     display: 'flex',
     flexDirection: 'row',
     justifyContent: 'center',
-    alignItems: 'center',
-    padding: '3px 15px',
+    padding: 15,
     marginTop: 8,
     "& p": {
+      margin: '0 0 0 12px',
       color: '#ffffff',
       fontSize: 14,
-      marginLeft: 12,
       lineHeight: '18px'
     }
   },
@@ -47,37 +46,67 @@ const useStyles = makeStyles((theme) => ({
     display: 'flex',
     flexDirection: 'column'
   },
-  important: {
-    marginBottom: theme.spacing(2)
+  secretPharse: {
+    border: '1px solid red',
+    marginTop: 12,
+    color: '#ffffff',
+    lineHeight: '20px',
+    padding: 12,
+    fontSize: 14
   },
-  keyInfo: {
-    textAlign: 'left'
+  hideSecretPharseBtn: {
+    marginTop: 12,
+    border: '1px solid red'
   },
-  copyGroup: {
-    display: 'flex',
-    '& textarea': {
-      width: '100%',
-      border: '1px solid #ccc',
-      borderRight: 'none',
-      background: '#fafafa',
-      borderRadius: '2px 0 0 2px',
-      '&:focus': {
-        outline: 'none',
-        background: '#f3f3f3'
-      }
-    },
-    '& button': {
-      cursor: 'pointer',
-      width: '50px',
-      background: '#f1f1f1',
-      border: '1px solid #ccc',
-      borderLeft: 'none',
-      borderRadius: '0 2px 2px 0',
-      '& svg': {
-        width: '15px'
-      }
-    }
+  wroteDownBtn: {
+    marginTop: 12
   },
+  confirmSecretPharse: {
+    border: '1px solid white',
+    borderRadius: 8,
+    padding: '10px 20px',
+    lineHeight: '18px',
+    fontSize: 14,
+    height: 55
+  },
+  confirmPharseDescription: {
+    marginTop: 10,
+    padding: '10px 20px',
+    fontSize: 14,
+    color: 'gray',
+    lineHeight: '18px'
+  },
+  createWalletBtn: {
+    marginTop: 12
+  },
+  congulatelations: {
+    marginBottom: 12
+  }
+  // copyGroup: {
+  //   display: 'flex',
+  //   '& textarea': {
+  //     width: '100%',
+  //     border: '1px solid #ccc',
+  //     borderRight: 'none',
+  //     background: '#fafafa',
+  //     borderRadius: '2px 0 0 2px',
+  //     '&:focus': {
+  //       outline: 'none',
+  //       background: '#f3f3f3'
+  //     }
+  //   },
+  //   '& button': {
+  //     cursor: 'pointer',
+  //     width: '50px',
+  //     background: '#f1f1f1',
+  //     border: '1px solid #ccc',
+  //     borderLeft: 'none',
+  //     borderRadius: '0 2px 2px 0',
+  //     '& svg': {
+  //       width: '15px'
+  //     }
+  //   }
+  // },
 }));
 
 export default useStyles;

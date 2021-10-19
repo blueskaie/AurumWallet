@@ -21,14 +21,14 @@ export default function SetupWallet() {
       <Box className={classes.groupbutton}>
         <ARUButton
           className={classes.linkbtn}
-          varient="secondary"
+          mode="outline"
           onClick={()=>history.push('/create-wallet')}
         >
           Create a New Wallet
         </ARUButton>
         <ARUButton
           className={classes.linkbtn}
-          varient="secondary"
+          mode="outline"
           onClick={()=>history.push('/import-wallet')}
         >
           Import using Secret Recovery Phrase

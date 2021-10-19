@@ -80,7 +80,7 @@ function ActualDetails({hash, from, to, tokensMap, network}) {
         <Box className={classes.label}>{di.nonce}</Box>
       </Box>
     </ARUCard>
-    <ARUButton href={`${network.explore}/tx/${di.hash}`} target="_blank" variant="contained">View on bscscan</ARUButton>
+    <ARUButton href={`${network.explore}/tx/${di.hash}`} target="_blank" variant="contained" mode="filled">View on bscscan</ARUButton>
   </>)
 }
 
