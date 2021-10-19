@@ -3,8 +3,8 @@ import { useHistory } from "react-router-dom";
 import { decryptKeyStore } from "../../utils/keystore";
 import Layout from "../../components/layout";
 import { networkProvider, currentWallet, allWallets } from "../../store/atoms";
-import { ARUButton } from '../../components/buttons';
-import CustomButton from '../../components/btn';
+import { ARUBaseInput } from '../../components/fields';
+import ARUButton from '../../components/buttons';
 
 import { useRecoilState, useRecoilValue } from "recoil";
 import {
@@ -55,7 +55,7 @@ export default function Signin() {
       });
     } catch (e) {
       console.error(e);
-      setHelperText("Unable to unlock valid, please try again");
+      setHelperText("Unable to unlock valid");
       setError(true);
     }
 
@@ -80,8 +80,8 @@ export default function Signin() {
           onSubmit={handleSubmit}
           className={classes.form}
         >
-          <FormControl error={error}>
-            <TextField
+          <FormControl className={classes.formARU} error={error}>
+            {/* <TextField
               value={pass}
               onChange={(event) => {
                 setPass(event.target.value);
@@ -91,24 +91,12 @@ export default function Signin() {
               aria-describedby="password_helper"
               type="password"
               placeholder="Password"
-            />
-            <FormHelperText style={{marginLeft:30}}>{helperText}</FormHelperText>
+            /> */}
+            <ARUBaseInput id="main" value={pass} onChange={e => setPass(e.target.value)} type="password" placeholder="Password" />
+            {helperText && <FormHelperText>{helperText}</FormHelperText>}
           </FormControl>
-          <CustomButton
-            bgcolor='transparent'
-            color='white'
-            caption='Sign In'
-            type='submit'
-          />
-          <CustomButton
-            bgcolor='transparent'
-            color='white'
-            caption='Wallet Setup'
-            event='/setup-wallet'
-          />
-          {/* <p onClick={() => history.push('/create-wallet')} variant="contained" color="default" className={classes.walletbutton} style={{width:'78%'}}>Create New Wallet</p>
-          <p onClick={() => history.push('/import-wallet')} variant="contained" color="default" className={classes.walletbutton} style={{width:"100%"}}>Import Wallet from Private Key</p> */}
-
+          <ARUButton className={classes.formARU} varient="secondary" type={'submit'}>Sign In</ARUButton>
+          <ARUButton className={classes.formARU} varient="secondary" onClick={()=>history.push('/create-wallet')}>Wallet Setup</ARUButton>
         </form>
       </Box>
     </Layout>

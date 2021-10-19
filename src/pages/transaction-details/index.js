@@ -18,7 +18,7 @@ import { precisionFormat, compressAddress, formatOnlyDateFromSeconds, formatOnly
 // import Clipboard from 'react-clipboard.js';
 import useStyles from './style';
 import ARUCard from '../../components/card';
-import { ARUButton } from '../../components/buttons';
+import ARUButton from '../../components/buttons';
 
 function ActualDetails({hash, from, to, tokensMap, network}) {
   const classes = useStyles( );

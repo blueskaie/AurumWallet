@@ -1,8 +1,7 @@
 import React from 'react'
 
 import Layout from "../../components/layout";
-import { ARUButton } from '../../components/buttons';
-import CustomButton from '../../components/btn';
+import ARUButton from '../../components/buttons';
 import useStyles from "./style";
 import { useHistory } from 'react-router-dom';
 import {Box} from "@material-ui/core";
@@ -23,20 +22,16 @@ export default function SetupWallet() {
         </Box>
       </Box>
       <Box className={classes.groupbutton}>
-        <CustomButton
-          bgcolor='transparent'
-          color='white'
-          caption='Create a New Wallet'
+        <ARUButton
+          varient="secondary"
           event='create-wallet'
           padding='30px'
-        />
-        <CustomButton
-          bgcolor='transparent'
-          color='white'
-          caption='Import using Secret Recovery Phrase'
+        >Create a New Wallet</ARUButton>
+        <ARUButton
+          varient="secondary"
           event='import-wallet'
           padding='30px'
-        />
+        >Import using Secret Recovery Phrase</ARUButton>
       </Box>
     </Layout>
   )

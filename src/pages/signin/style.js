@@ -7,15 +7,19 @@ const useStyles = makeStyles((theme) => ({
   },
 
   form: {
+    margin: "40px auto 0 auto",
+    width: 200,
     display: "flex",
     flexDirection: "column",
     position:'relative',
     zIndex:3
   },
+
   formARU: {
-    margin: theme.spacing(2),
-    marginBottom: theme.spacing(1),
+    margin: 5,
+    marginBottom: 5,
   },
+
   fieldPassword: {
     padding: '3px 10px',
     marginBottom: theme.spacing(1),

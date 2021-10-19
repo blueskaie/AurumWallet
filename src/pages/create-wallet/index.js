@@ -14,7 +14,7 @@ import Clipboard from 'react-clipboard.js';
 import { encryptKeyStore } from '../../utils/keystore';
 import { allWallets, currentWallet, networkProvider,allTokens } from '../../store/atoms';
 import ALL_TOKENS from '../../config/tokens';
-import CustomButton from '../../components/btn';
+import ARUButton from '../../components/buttons';
 import ARUCard from '../../components/card';
 
 import useStyles from "./style";
@@ -177,11 +177,7 @@ export default function CreateWallet() {
             >
               OK
             </Button> */}
-            <CustomButton
-              caption='CREATE PASSWORD'
-              type='submit'
-              margin='0px'
-            />
+            <ARUButton type='submit' margin='0px'>CREATE PASSWORD</ARUButton>
           </form>
         )}
         { step == 2 &&

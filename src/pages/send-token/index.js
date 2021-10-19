@@ -5,7 +5,7 @@ import OneToken from "./components/onetoken";
 import {FormControl, Dialog, FormHelperText, LinearProgress, Button, Box, Snackbar, IconButton, Icon} from '@material-ui/core';
 import { ARUBaseInput } from '../../components/fields';
 import ARUNumberInput from '../../components/number';
-import { ARUButton } from '../../components/buttons';
+import ARUButton from '../../components/buttons';
 import { useRecoilValue } from 'recoil';
 import { networkProvider, currentWallet, currentNetwork, tokenList } from '../../store/atoms'
 import { decryptKeyStore } from '../../utils/keystore'
