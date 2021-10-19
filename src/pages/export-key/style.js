@@ -17,13 +17,11 @@ const useStyles = makeStyles((theme) => ({
         // color: 'white'
         marginTop: theme.spacing(2),
         "& input": {
-          textAlign: 'center',
           padding: "12px 10px",
           color: "white",
           border: "1px solid #ffffff",
           marginBottom: 10,
           marginTop: 15,
-          borderRadius: '5px',
           background: "transparent",
           "&::placeholder": {
             color: "#ffffff",
@@ -44,13 +42,11 @@ const useStyles = makeStyles((theme) => ({
         flexDirection: 'column'
     },
     important: {
-        marginBottom: theme.spacing(2),
-        background: '#222222',
+        marginBottom: theme.spacing(2)
     },
     copyGroup: {
         display: 'flex',
-        flexDirection: 'column',
-        '& text': {
+        '& textarea': {
             width: '100%',
             border: '1px solid #ffffff',
             borderRight: 'none',
