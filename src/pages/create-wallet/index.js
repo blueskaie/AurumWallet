@@ -2,7 +2,7 @@ import React from 'react'
 
 import { useHistory } from 'react-router-dom'
 import { ethers } from 'ethers';
-import {Button, Box, TextField, FormControl, FormHelperText} from '@material-ui/core';
+import {Button, Box, Icon, FormControl, FormHelperText} from '@material-ui/core';
 import {Alert} from '@material-ui/lab'
 import { makeStyles, useTheme } from '@material-ui/core/styles';
 import { useRecoilState, useRecoilValue } from 'recoil';
@@ -16,6 +16,7 @@ import { allWallets, currentWallet, networkProvider,allTokens } from '../../stor
 import ALL_TOKENS from '../../config/tokens';
 import ARUButton from '../../components/buttons';
 import ARUCard from '../../components/card';
+import { ARUBaseInput } from '../../components/fields';
 
 import useStyles from "./style";
 
@@ -136,48 +137,34 @@ export default function CreateWallet() {
               className={classes.passwordinput}
               error={passwordError}
             >
-              <TextField
-                id="password"
+              <ARUBaseInput
+                id="password" 
                 value={pass}
-                onChange={(e) => setPass(e.target.value)}
-                aria-describedby="password_helper"
+                onChange={e => setPass(e.target.value)}
                 type="password"
                 placeholder="Password"
-                InputProps={{ disableUnderline: true }}
-                className={classes.passwordinput}
               />
             </FormControl>
             <FormControl
               className={classes.repasswordinput}
               error={passwordError}
             >
-              <TextField
-                id="re_password"
+              <ARUBaseInput
+                id="re_password" 
                 value={repass}
-                onChange={(e) => setRepass(e.target.value)}
-                aria-describedby="password_helper"
+                onChange={e => setRepass(e.target.value)}
                 type="password"
                 placeholder="Re Password"
-                InputProps={{ disableUnderline: true }}
-                className={classes.passwordinput}
               />
               <FormHelperText>{helperText}</FormHelperText>
             </FormControl>
-            <ARUCard className={classes.alarmfield}>
-              {/* <img src="images/check.svg" alt="" /> */}
-              <FontAwesomeIcon icon={faCheckCircle} style={{color: 'green', width: '25px', height: '25px'}} />
-              <span>I understand that Aurum cannot recover this password.</span>
+            <ARUCard className={classes.alarmCard}>
+              <Icon className={classes.checkIcon}>
+                <img src="images/checked-circle.svg" alt="AurumWallet" className="logo-image" style={{height: '100%'}} />
+              </Icon>
+              <p>I understand that Aurum cannot recover this password.</p>
             </ARUCard>
-            {/* <Button
-              variant="contained"
-              color="primary"
-              type="submit"
-              className={classes.submit}
-              disableRipple
-            >
-              OK
-            </Button> */}
-            <ARUButton type='submit' margin='0px'>CREATE PASSWORD</ARUButton>
+            <ARUButton className={classes.submitPassword} type='submit'>CREATE PASSWORD</ARUButton>
           </form>
         )}
         { step == 2 &&

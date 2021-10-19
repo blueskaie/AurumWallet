@@ -15,73 +15,32 @@ const useStyles = makeStyles((theme) => ({
     display: "flex",
     flexDirection: "column",
   },
-  alarmfield: {
+  passwordinput: {
+    marginTop: 12
+  },
+  repasswordinput:{
+    marginTop: 12
+  },
+  alarmCard: {
     display: 'flex',
     flexDirection: 'row',
     justifyContent: 'center',
     alignItems: 'center',
-    padding: '10px',
-    marginBottom: '20px',
-    "& img": {
-      color: 'green',
-    },
-    "& span": {
-      marginLeft: '15px',
-      color: 'white',
-      fontSize: '16px',
+    padding: '3px 15px',
+    marginTop: 8,
+    "& p": {
+      color: '#ffffff',
+      fontSize: 14,
+      marginLeft: 12,
+      lineHeight: '18px'
     }
   },
-  passwordinput: {
-
-    "& input": {
-      textAlign: 'center',
-      borderRadius: '5px',
-      padding: "12px 10px",
-      color: "white",
-      border: "1px solid #ffffff",
-      marginBottom: 10,
-      marginTop: 15,
-      background: "transparent",
-      "&::placeholder": {
-        color: "#ffffff",
-      },
-      "&:focus": {
-        border: "1px solid #ffffff",
-      },
-      "&::before":{
-        display:'none',
-      }
-    },
+  checkIcon: {
+    width: 30,
+    height: 30
   },
-  repasswordinput:{
-    height:92,
-    "& input": {
-      padding: "12px 10px",
-      color: "white",
-      border: "1px solid #ffffff",
-      marginBottom: 10,
-      marginTop: 15,
-      background: "transparent",
-      "&::placeholder": {
-        color: "#ffffff",
-      },
-      "&:focus": {
-        border: "1px solid #ffffff",
-      },
-      "&::before":{
-        display:'none',
-      }
-    },
-  },
-  submit: {
-    padding: "8px 0px",
-    color: "#000000",
-    fontSize: 14,
-    borderRadius: 20,
-    background: "#ffffff",
-    width: "70%",
-    margin: 'auto',
-    marginTop: 30,
+  submitPassword: {
+    marginTop: 10
   },
 
   flexBox: {
