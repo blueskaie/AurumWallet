@@ -8,9 +8,7 @@ import ARUButton from '../../components/buttons';
 
 import { useRecoilState, useRecoilValue } from "recoil";
 import {
-  Button,
   Box,
-  TextField,
   FormControl,
   FormHelperText,
 } from "@material-ui/core";
@@ -81,22 +79,11 @@ export default function Signin() {
           className={classes.form}
         >
           <FormControl className={classes.formARU} error={error}>
-            {/* <TextField
-              value={pass}
-              onChange={(event) => {
-                setPass(event.target.value);
-              }}
-              className={classes.fieldPassword}
-              id="password"
-              aria-describedby="password_helper"
-              type="password"
-              placeholder="Password"
-            /> */}
             <ARUBaseInput id="main" value={pass} onChange={e => setPass(e.target.value)} type="password" placeholder="Password" />
             {helperText && <FormHelperText>{helperText}</FormHelperText>}
           </FormControl>
-          <ARUButton className={classes.formARU} varient="secondary" type={'submit'}>Sign In</ARUButton>
-          <ARUButton className={classes.formARU} varient="secondary" onClick={()=>history.push('/create-wallet')}>Wallet Setup</ARUButton>
+          <ARUButton className={classes.formARU} varient="secondary" type={'submit'}>SIGN IN</ARUButton>
+          <ARUButton className={classes.formARU} varient="secondary" onClick={()=>history.push('/setup-wallet')}>WALLET SETUP</ARUButton>
         </form>
       </Box>
     </Layout>

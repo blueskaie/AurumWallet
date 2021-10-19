@@ -7,10 +7,11 @@ const useStyles = makeStyles({
     background: (props) => props.varient === 'primary' ? '#ffffff' : 'transparent',
     color: (props) => props.varient === 'primary' ? '#000000' : '#ffffff',
     boxShadow: '0px 3px 3px #000000c2',
-    border: '1px solid #bbbbbb',
+    border: '1px solid #ffffff',
     borderRadius: 8,
-    height: 40,
+    minHeight: 40,
     fontSize: 16,
+    textTransform: 'none'
   }
 });
 

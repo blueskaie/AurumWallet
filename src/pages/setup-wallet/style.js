@@ -22,10 +22,8 @@ const useStyles = makeStyles((theme) => ({
     flexDirection: 'column',
     justifyContent: 'center',
   },
-  formARU: {
-    margin: theme.spacing(2),
-    marginBottom: theme.spacing(1),
-    padding: '30px'
+  linkbtn: {
+    marginTop: 12
   },
 }));
 

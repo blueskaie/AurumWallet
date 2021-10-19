@@ -15,23 +15,24 @@ export default function SetupWallet() {
     <Layout isShownBackButton={true} isShownWallet={false} isShownNetworkSelector={false} varient="secondary">
       <Box className={classes.root}>
         <Box className={classes.title}>
-          Wallet
-        </Box>
-        <Box className={classes.title}>
-          Setup
+          Wallet <br/> Setup
         </Box>
       </Box>
       <Box className={classes.groupbutton}>
         <ARUButton
+          className={classes.linkbtn}
           varient="secondary"
-          event='create-wallet'
-          padding='30px'
-        >Create a New Wallet</ARUButton>
+          onClick={()=>history.push('/create-wallet')}
+        >
+          Create a New Wallet
+        </ARUButton>
         <ARUButton
+          className={classes.linkbtn}
           varient="secondary"
-          event='import-wallet'
-          padding='30px'
-        >Import using Secret Recovery Phrase</ARUButton>
+          onClick={()=>history.push('/import-wallet')}
+        >
+          Import using Secret Recovery Phrase
+        </ARUButton>
       </Box>
     </Layout>
   )
