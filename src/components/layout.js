@@ -55,6 +55,11 @@ const useStyles = makeStyles((theme)=>({
     position: 'relative',
     zIndex: 1,
   },
+  content1: {
+    marginTop: 55,
+    position: 'relative',
+    zIndex: 1,
+  },
   bottomimg: {
     position: "absolute",
     bottom: 0,
@@ -91,7 +96,7 @@ function Alert(props) {
   return <MuiAlert elevation={6} variant="filled" {...props} />;
 }
 
-export default function Layout({isShownHeader=true, isShownWallet = true, isShownNetworkSelector = true, isShownBackButton = false, varient='primary', children}) {
+export default function Layout({isNarrowMargin=false, isShownHeader=true, isShownWallet = true, isShownNetworkSelector = true, isShownBackButton = false, varient='primary', children}) {
   const classes = useStyles(useTheme());
   const loggedIn = true;
   // const [refresh, setRefresh] = useRecoilState(refreshCalled);
@@ -150,9 +155,18 @@ export default function Layout({isShownHeader=true, isShownWallet = true, isShow
           </Box>}
         </Box>
       </Box>}
-      <Box className={classes.content}>
-        {children}
-      </Box>
+      {
+        !isNarrowMargin && 
+        <Box className={classes.content}>
+          {children}
+        </Box>
+      }
+      {
+        isNarrowMargin && 
+        <Box className={classes.content1}>
+          {children}
+        </Box>
+      }
       {
         varient == 'primary'
         ? <img src="images/wave.png" className={classes.bottomimg} alt="bottom_image"/>

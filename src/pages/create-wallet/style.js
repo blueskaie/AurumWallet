@@ -15,9 +15,27 @@ const useStyles = makeStyles((theme) => ({
     display: "flex",
     flexDirection: "column",
   },
+  alarmfield: {
+    display: 'flex',
+    flexDirection: 'row',
+    justifyContent: 'center',
+    alignItems: 'center',
+    padding: '10px',
+    marginBottom: '20px',
+    "& img": {
+      color: 'green',
+    },
+    "& span": {
+      marginLeft: '15px',
+      color: 'white',
+      fontSize: '16px',
+    }
+  },
   passwordinput: {
 
     "& input": {
+      textAlign: 'center',
+      borderRadius: '5px',
       padding: "12px 10px",
       color: "white",
       border: "1px solid #ffffff",

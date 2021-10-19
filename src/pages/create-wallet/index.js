@@ -7,11 +7,15 @@ import {Alert} from '@material-ui/lab'
 import { makeStyles, useTheme } from '@material-ui/core/styles';
 import { useRecoilState, useRecoilValue } from 'recoil';
 import Layout from "../../components/layout";
+import { faCheckCircle } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 import Clipboard from 'react-clipboard.js';
 import { encryptKeyStore } from '../../utils/keystore';
 import { allWallets, currentWallet, networkProvider,allTokens } from '../../store/atoms';
 import ALL_TOKENS from '../../config/tokens';
+import CustomButton from '../../components/btn';
+import ARUCard from '../../components/card';
 
 import useStyles from "./style";
 
@@ -116,10 +120,10 @@ export default function CreateWallet() {
   }
 
   return (
-    <Layout isShownHeader={false}>
+    <Layout isShownBackButton={true} isShownWallet={false} isShownNetworkSelector={false} varient="secondary">
       <Box className={classes.root}>
         <h1 className={classes.wallettitle}>
-          Create <br /> Wallet
+          Create <br /> Password
         </h1>
         {step == 1 && (
           <form
@@ -140,6 +144,7 @@ export default function CreateWallet() {
                 type="password"
                 placeholder="Password"
                 InputProps={{ disableUnderline: true }}
+                className={classes.passwordinput}
               />
             </FormControl>
             <FormControl
@@ -154,10 +159,16 @@ export default function CreateWallet() {
                 type="password"
                 placeholder="Re Password"
                 InputProps={{ disableUnderline: true }}
+                className={classes.passwordinput}
               />
               <FormHelperText>{helperText}</FormHelperText>
             </FormControl>
-            <Button
+            <ARUCard className={classes.alarmfield}>
+              {/* <img src="images/check.svg" alt="" /> */}
+              <FontAwesomeIcon icon={faCheckCircle} style={{color: 'green', width: '25px', height: '25px'}} />
+              <span>I understand that Aurum cannot recover this password.</span>
+            </ARUCard>
+            {/* <Button
               variant="contained"
               color="primary"
               type="submit"
@@ -165,7 +176,12 @@ export default function CreateWallet() {
               disableRipple
             >
               OK
-            </Button>
+            </Button> */}
+            <CustomButton
+              caption='CREATE PASSWORD'
+              type='submit'
+              margin='0px'
+            />
           </form>
         )}
         { step == 2 &&

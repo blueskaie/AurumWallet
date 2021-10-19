@@ -3,6 +3,8 @@ import { useHistory } from "react-router-dom";
 import { decryptKeyStore } from "../../utils/keystore";
 import Layout from "../../components/layout";
 import { networkProvider, currentWallet, allWallets } from "../../store/atoms";
+import { ARUButton } from '../../components/buttons';
+import CustomButton from '../../components/btn';
 
 import { useRecoilState, useRecoilValue } from "recoil";
 import {
@@ -61,7 +63,7 @@ export default function Signin() {
   };
 
   return (
-    <Layout isShownHeader={false}>
+    <Layout isShownHeader={false} varient='secondary' >
       <Box className={classes.root}>
         <Box className="auth-logo">
           <img src="images/logo.png" alt="AurumWallet" className="logo-image" />
@@ -92,18 +94,20 @@ export default function Signin() {
             />
             <FormHelperText style={{marginLeft:30}}>{helperText}</FormHelperText>
           </FormControl>
-          <Button
-            variant="contained"
-            color="primary"
-            type="submit"
-            className={classes.formButton}
-            disableRipple
-            style={{background: 'white', color: 'black', borderRadius: '15px'}}
-          >
-            Sign In
-          </Button>
-          <p onClick={() => history.push('/create-wallet')} variant="contained" color="default" className={classes.walletbutton} style={{width:'78%'}}>Create New Wallet</p>
-          <p onClick={() => history.push('/import-wallet')} variant="contained" color="default" className={classes.walletbutton} style={{width:"100%"}}>Import Wallet from Private Key</p>
+          <CustomButton
+            bgcolor='transparent'
+            color='white'
+            caption='Sign In'
+            type='submit'
+          />
+          <CustomButton
+            bgcolor='transparent'
+            color='white'
+            caption='Wallet Setup'
+            event='/setup-wallet'
+          />
+          {/* <p onClick={() => history.push('/create-wallet')} variant="contained" color="default" className={classes.walletbutton} style={{width:'78%'}}>Create New Wallet</p>
+          <p onClick={() => history.push('/import-wallet')} variant="contained" color="default" className={classes.walletbutton} style={{width:"100%"}}>Import Wallet from Private Key</p> */}
 
         </form>
       </Box>

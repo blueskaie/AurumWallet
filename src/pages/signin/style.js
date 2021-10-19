@@ -12,18 +12,24 @@ const useStyles = makeStyles((theme) => ({
     position:'relative',
     zIndex:3
   },
+  formARU: {
+    margin: theme.spacing(2),
+    marginBottom: theme.spacing(1),
+  },
   fieldPassword: {
     padding: '3px 10px',
     marginBottom: theme.spacing(1),
     marginTop: 50,
     width: "90%",
     margin: "auto",
-    height:91,
+    marginBottom: '5px',
+    // height:91,
     "& input": {
       border: "1px solid white",
-      borderRadius: 10,
+      borderRadius: 5,
       padding: '10px 20px',
       color: "white",
+      textAlign: 'center'
     },
     "& div::before": {
       display: "none",
