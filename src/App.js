@@ -8,6 +8,7 @@ import Home from './pages/home'
 import AboutUs from './pages/about-us'
 import Send from './pages/send'
 import SendToken from './pages/send-token'
+import SetupWallet from './pages/setup-wallet'
 import Receive from './pages/receive'
 import TransactionDetail from './pages/transaction-details';
 import WalletDetail from './pages/wallet-details';
@@ -115,6 +116,9 @@ function App() {
               </Route>
               <PrivateRoute path="/wallet/:address/:index" component={WalletDetail}>
               </PrivateRoute>
+              <Route path="/setup-wallet">
+                <SetupWallet />
+              </Route>
               <Route path="/create-wallet">
                 <CreateWallet />
               </Route>

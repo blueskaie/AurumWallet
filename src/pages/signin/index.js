@@ -3,12 +3,12 @@ import { useHistory } from "react-router-dom";
 import { decryptKeyStore } from "../../utils/keystore";
 import Layout from "../../components/layout";
 import { networkProvider, currentWallet, allWallets } from "../../store/atoms";
+import { ARUBaseInput } from '../../components/fields';
+import ARUButton from '../../components/buttons';
 
 import { useRecoilState, useRecoilValue } from "recoil";
 import {
-  Button,
   Box,
-  TextField,
   FormControl,
   FormHelperText,
 } from "@material-ui/core";
@@ -53,7 +53,7 @@ export default function Signin() {
       });
     } catch (e) {
       console.error(e);
-      setHelperText("Unable to unlock valid, please try again");
+      setHelperText("Unable to unlock valid");
       setError(true);
     }
 
@@ -61,7 +61,7 @@ export default function Signin() {
   };
 
   return (
-    <Layout isShownHeader={false}>
+    <Layout isShownHeader={false} varient='secondary' >
       <Box className={classes.root}>
         <Box className="auth-logo">
           <img src="images/logo.png" alt="AurumWallet" className="logo-image" />
@@ -78,33 +78,12 @@ export default function Signin() {
           onSubmit={handleSubmit}
           className={classes.form}
         >
-          <FormControl error={error}>
-            <TextField
-              value={pass}
-              onChange={(event) => {
-                setPass(event.target.value);
-              }}
-              className={classes.fieldPassword}
-              id="password"
-              aria-describedby="password_helper"
-              type="password"
-              placeholder="Password"
-            />
-            <FormHelperText style={{marginLeft:30}}>{helperText}</FormHelperText>
+          <FormControl className={classes.formARU} error={error}>
+            <ARUBaseInput id="main" value={pass} onChange={e => setPass(e.target.value)} type="password" placeholder="Password" />
+            {helperText && <FormHelperText>{helperText}</FormHelperText>}
           </FormControl>
-          <Button
-            variant="contained"
-            color="primary"
-            type="submit"
-            className={classes.formButton}
-            disableRipple
-            style={{background: 'white', color: 'black', borderRadius: '15px'}}
-          >
-            Sign In
-          </Button>
-          <p onClick={() => history.push('/create-wallet')} variant="contained" color="default" className={classes.walletbutton} style={{width:'78%'}}>Create New Wallet</p>
-          <p onClick={() => history.push('/import-wallet')} variant="contained" color="default" className={classes.walletbutton} style={{width:"100%"}}>Import Wallet from Private Key</p>
-
+          <ARUButton className={classes.formARU} mode="outline" type={'submit'}>SIGN IN</ARUButton>
+          <ARUButton className={classes.formARU} mode="outline" onClick={()=>history.push('/setup-wallet')}>WALLET SETUP</ARUButton>
         </form>
       </Box>
     </Layout>

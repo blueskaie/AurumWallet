@@ -1,54 +1,23 @@
 import { makeStyles} from "@material-ui/core/styles";
 
-const useStyles = makeStyles((theme) => ({
+const useStyles = makeStyles(() => ({
   root: {
     textAlign: "center",
     marginTop: -50
   },
 
   form: {
+    margin: "40px auto 0 auto",
+    width: 220,
     display: "flex",
     flexDirection: "column",
     position:'relative',
     zIndex:3
   },
-  fieldPassword: {
-    padding: '3px 10px',
-    marginBottom: theme.spacing(1),
-    marginTop: 50,
-    width: "90%",
-    margin: "auto",
-    height:91,
-    "& input": {
-      border: "1px solid white",
-      borderRadius: 10,
-      padding: '10px 20px',
-      color: "white",
-    },
-    "& div::before": {
-      display: "none",
-    },
-    "& div::after": {
-      display: "none",
-    },
-    "& div:focus": {
-      border: "1px solid white",
-    },
-  },
-  formButton: {
-    marginBottom: theme.spacing(2),
-    padding: "8px 0px",
-    fontSize: 14,
-    width: "70%",
-    margin: "auto",
-  },
-  walletbutton:{
-    color: 'white',
-    textAlign: 'center',
-    margin: '5px auto',
-    fontSize: 15,
-    cursor:'pointer',
-    userSelect:'none',
+
+  formARU: {
+    margin: 5,
+    marginBottom: 5,
   }
 }));
 

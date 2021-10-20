@@ -5,7 +5,7 @@ import OneToken from "./components/onetoken";
 import {FormControl, Dialog, FormHelperText, LinearProgress, Button, Box, Snackbar, IconButton, Icon} from '@material-ui/core';
 import { ARUBaseInput } from '../../components/fields';
 import ARUNumberInput from '../../components/number';
-import { ARUButton } from '../../components/buttons';
+import ARUButton from '../../components/buttons';
 import { useRecoilValue } from 'recoil';
 import { networkProvider, currentWallet, currentNetwork, tokenList } from '../../store/atoms'
 import { decryptKeyStore } from '../../utils/keystore'
@@ -195,7 +195,7 @@ export default function SendToken(props) {
             </FormControl>
 
             <Box className={classes.submitWrapper}>
-              <ARUButton variant="contained" type="submit" disabled={formSubmitting}>Send</ARUButton>
+              <ARUButton mode="filled" type="submit" disabled={formSubmitting}>Send</ARUButton>
             </Box>
           </form>
         </Box>}
@@ -235,8 +235,8 @@ export default function SendToken(props) {
             </Grid>
           </ARUCard>
           <Grid container spacing={1}>
-            <Grid item xs={6}><ARUButton variant="contained" style={{width: '100%'}} onClick={handleSendToken}>Confirm</ARUButton></Grid>
-            <Grid item xs={6}><ARUButton variant="contained" style={{width: '100%', background: '#1d1d1d', color: '#ffffff'}} onClick={()=>setStep(1)}>Cancel</ARUButton></Grid>
+            <Grid item xs={6}><ARUButton variant="contained" mode="filled" style={{width: '100%'}} onClick={handleSendToken}>Confirm</ARUButton></Grid>
+            <Grid item xs={6}><ARUButton variant="contained" mode="filled" style={{width: '100%', background: '#1d1d1d', color: '#ffffff'}} onClick={()=>setStep(1)}>Cancel</ARUButton></Grid>
             <Grid item xs={12}>{formSubmitting && <LinearProgress />}</Grid>
           </Grid>
         </Box>}
@@ -278,7 +278,7 @@ export default function SendToken(props) {
             </FormControl>
 
             <div className={classes.submitWrapper}>
-              <ARUButton variant="contained" type="submit">Save</ARUButton>
+              <ARUButton variant="contained" mode="filled" type="submit">Save</ARUButton>
             </div>
           </form>
         </Dialog>
