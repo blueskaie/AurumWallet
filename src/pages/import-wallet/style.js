@@ -2,20 +2,39 @@ import { makeStyles } from "@material-ui/core/styles";
 
 const useStyles = makeStyles((theme) => ({
   root: {
-    textAlign: 'center',
-    marginTop: -60
+    flexGrow: 1,
+    color: '#ffffff'
   },
   logo: {
     width: 150,
     margin: '0 auto',
     marginTop: 15
   },
-  logoTitle: {
-    color: 'white',
-    fontWeight: 'bold',
-    fontSize: 30,
-    margin: 0,
-    userSelect: 'none'
+  wallettitle: {
+    margin: "20px 0",
+    fontWeight: "200",
+    fontSize: 33,
+    lineHeight: 0.98,
+  },
+  alarmCard: {
+    display: 'flex',
+    flexDirection: 'row',
+    justifyContent: 'center',
+    padding: 15,
+    marginTop: 0,
+    "& p": {
+      margin: '0 0 0 12px',
+      color: '#ffffff',
+      fontSize: 14,
+      lineHeight: '18px'
+    }
+  },
+  checkIcon: {
+    width: 30,
+    height: 30
+  },
+  submitPassword: {
+    marginTop: 10
   },
   flexBox: {
     display: 'flex',
@@ -35,13 +54,33 @@ const useStyles = makeStyles((theme) => ({
     width: "100%",
     margin: "auto",
   },
-  passwordinput: {
+  phraseinput: {
     "& input": {
       padding: "12px 10px",
       color: "white",
       border: "1px solid #ffffff",
       marginBottom: 10,
       marginTop: 15,
+      height: '70px',
+      background: "transparent",
+      "&::placeholder": {
+        color: "#ffffff",
+      },
+      "&:focus": {
+        border: "1px solid #ffffff",
+      },
+      "&::before":{
+        display:'none',
+      }
+    },
+  },
+  passwordinput: {
+    "& input": {
+      padding: "12px 10px",
+      color: "white",
+      border: "1px solid #ffffff",
+      marginBottom: 10,
+      // marginTop: 15,
       background: "transparent",
       "&::placeholder": {
         color: "#ffffff",
@@ -60,7 +99,7 @@ const useStyles = makeStyles((theme) => ({
       color: "white",
       border: "1px solid #ffffff",
       marginBottom: 10,
-      marginTop: 15,
+      // marginTop: 15,
       background: "transparent",
       "&::placeholder": {
         color: "#ffffff",
