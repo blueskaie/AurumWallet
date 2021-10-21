@@ -35,7 +35,20 @@ const useStyles = makeStyles((theme) => ({
     height:292,
     overflowY:'scroll',
     userSelect:'none'
-  }
+  },
+  clipboard: {
+    textAlign: 'right',
+    '& button':{
+      background:'transparent',
+      border:'none',
+    }
+  },
+  title:{
+    cursor:'pointer',
+    color:'#ffffff',
+    flexGrow: 1,
+    fontSize: '1rem',
+  },
 }));
 
 export default useStyles;
