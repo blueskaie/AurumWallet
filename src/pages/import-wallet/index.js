@@ -14,6 +14,7 @@ import { useRecoilState, useRecoilValue } from 'recoil';
 import Header from '../../components/header';
 import { encryptKeyStore } from '../../utils/keystore';
 import { allWallets, networkProvider, currentWallet } from '../../store/atoms';
+import { ethers } from 'ethers';
 
 import useStyles from './style';
 
@@ -38,11 +39,9 @@ export default function ImportWallet() {
   const [phrase, setPhrase] = React.useState("");
   const [passwordError, setPasswordError] = React.useState(false);
   const [keyError, setKeyError] = React.useState(false);
-  const [helperText, setHelperText] = React.useState(helperTextString)
-
-  const [helperKeyText, setHelperKeyText] = React.useState('');
-  const [mnemonic, setMnemonic] = React.useState(null);
-  const [confirmMnemonic, setConfirmMnemonic] = React.useState(null);
+  const [helperKeyText, setHelperKeyText] = React.useState(helperTextString)
+  const [helperPwdText, setHelperPwdText] = React.useState(helperTextString)
+  const [helperRepwdText, setHelperRepwdText] = React.useState(helperTextString);
 
   const history = useHistory();
 
@@ -56,22 +55,22 @@ export default function ImportWallet() {
     event.preventDefault();
     let hasError = false;
     if(!pass || pass.length < 8) {
-      setHelperText(helperErrorString)
+      setHelperPwdText(helperErrorString)
       setPasswordError(true)
       hasError = true;
     } else {
       if (pass !== repass) {
-        setHelperText(helpermatchString);
+        setHelperRepwdText(helpermatchString);
         setPasswordError(true);
         return false;
       } else {
-        setHelperText("");
+        setHelperRepwdText("");
         setPasswordError(false);
       }
     }
 
     if(!key ) {
-      setHelperKeyText('Key invalid');
+      setHelperKeyText('Invalid Secret Recovery Phrase!');
       setKeyError(true)
       hasError = true;
     } else {
@@ -112,20 +111,23 @@ export default function ImportWallet() {
   return (
     <Layout isShownBackButton={true} isShownWallet={false} isShownNetworkSelector={false} varient="secondary">
       <Box className={classes.root}>
-        <h1 className={classes.wallettitle}>
+        <h1 className={classes.logoTitle}>
           Import<br/>From Seed
         </h1>
         <form method="post" autoComplete="off" onSubmit={handleSubmit} className={classes.form}>
-          <FormControl className={classes.phraseinput}>
+          <FormControl className={classes.phraseinput} error={keyError}>
             <ARUBaseTextArea
               id="phrase" 
               value={phrase}
               onChange={e => setPhrase(e.target.value)}
               type="text"
+              multiline="true"
+              rows="3"
               placeholder="Enter your Secret Recovery Phrase"
+              // value=""
             />
             <FormHelperText classes={{root:classes.helptext}}>
-              {helperText}
+              {helperKeyText}
             </FormHelperText>
           </FormControl>
           <FormControl className={classes.passwordinput} error={keyError}>
@@ -136,6 +138,9 @@ export default function ImportWallet() {
               type="password"
               placeholder="New Password"
             />
+            <FormHelperText classes={{root:classes.helptext}}>
+              {helperPwdText}
+            </FormHelperText>
           </FormControl>
           <FormControl className={classes.repasswordinput} error={passwordError}>
             <ARUBaseInput
@@ -145,6 +150,9 @@ export default function ImportWallet() {
               type="password"
               placeholder="Confirm Password"
             />
+            <FormHelperText classes={{root:classes.helptext}}>
+              {helperRepwdText}
+            </FormHelperText>
           </FormControl>
           <ARUCard className={classes.alarmCard}>
             <Icon className={classes.checkIcon}>

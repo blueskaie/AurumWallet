@@ -85,8 +85,6 @@ export default function CreateWallet() {
   }
 
   const handleSubmit = (event) => {
-    let mnemonicWallet = ethers.Wallet.fromMnemonic(mnemonic);
-    console.log(mnemonicWallet)
     event.preventDefault();
     if (!pass || pass.length < 8) {
       setHelperText(helperErrorString);

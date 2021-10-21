@@ -37,6 +37,7 @@ export const ARUBaseTextArea = withStyles((theme) => ({
     border: '1px solid #ffffff',
     fontSize: 16,
     width: '100%',
+    height: '70px',
     padding: '10px 12px',
     color: '#ffffff',
     transition: theme.transitions.create(['border-color', 'box-shadow']),
