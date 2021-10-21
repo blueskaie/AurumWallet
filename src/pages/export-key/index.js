@@ -72,14 +72,16 @@ export default function ExportKey() {
     return false;
   }
 
-  return (<Layout isShownWallet={false}>
-      <Box className={classes.root}>
-        <h1 className={classes.wallettitle}>
-          <Box>Reveal</Box>
-          <Box>Recovery Phrase</Box>
-        </h1>
-        {
-        !passValid && 
+  return (
+    <>
+    {
+    !passValid && 
+      <Layout isShownWallet={false} varient='secondary'>
+        <Box className={classes.root}>
+          <h1 className={classes.wallettitle}>
+            <Box>Reveal</Box>
+            <Box>Recovery Phrase</Box>
+          </h1>
           <form method="post" autoComplete="off" onSubmit={handleSubmit} className={classes.form}>
             <ARUCard className={classes.card}>
               <Box style={{color: 'red'}}>
@@ -103,13 +105,20 @@ export default function ExportKey() {
                 {helperText}
               </FormHelperText>
             </FormControl>
-
             <ARUButton className={classes.formButton} type='submit'>REVEAL</ARUButton>
           </form>
-        }
+        </Box>
+      </Layout>
+    }
 
-        {
-          passValid && 
+    {
+    passValid && 
+      <Layout isShownBackButton={true} isShownWallet={false} varient='secondary'>
+        <Box className={classes.root}>
+          <h1 className={classes.wallettitle}>
+            <Box>Reveal</Box>
+            <Box>Recovery Phrase</Box>
+          </h1>
           <Box className={classes.flexBox}>
             <ARUCard className={classes.card}>
               <Box style={{color: 'red'}}>
@@ -123,7 +132,9 @@ export default function ExportKey() {
             <ARUButton className={classes.formButton} type='submit'>CANCEL</ARUButton>
             {/* <Button variant="contained" color="primary" onClick={copyConfirmed} style={{background: 'white', color: 'black', borderRadius: '15px'}}>I've copied it somewhere safe</Button> */}
           </Box>
-        }
-      </Box>
-  </Layout>)
+        </Box>
+      </Layout>
+    }
+  </>
+  )
 }
