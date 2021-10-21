@@ -4,7 +4,7 @@ import { useHistory } from 'react-router-dom'
 import Layout from "../../components/layout";
 import {Button, Box, Icon, TextField, FormControl, FormHelperText } from '@material-ui/core';
 import ARUButton from '../../components/buttons';
-import { ARUBaseInput } from '../../components/fields';
+import { ARUBaseInput, ARUBaseTextArea } from '../../components/fields';
 import ARUCard from '../../components/card';
 
 import { useTheme } from '@material-ui/core/styles';
@@ -117,7 +117,7 @@ export default function ImportWallet() {
         </h1>
         <form method="post" autoComplete="off" onSubmit={handleSubmit} className={classes.form}>
           <FormControl className={classes.phraseinput}>
-            <ARUBaseInput
+            <ARUBaseTextArea
               id="phrase" 
               value={phrase}
               onChange={e => setPhrase(e.target.value)}
@@ -129,8 +129,6 @@ export default function ImportWallet() {
             </FormHelperText>
           </FormControl>
           <FormControl className={classes.passwordinput} error={keyError}>
-            {/* <TextField id="key" value={key} onChange={e => setKey(e.target.value)}
-              aria-describedby="password_helper" type="text" placeholder="Private Key" InputProps={{ disableUnderline: true }}/> */}
             <ARUBaseInput
               id="password" 
               value={pass}
@@ -138,13 +136,8 @@ export default function ImportWallet() {
               type="password"
               placeholder="New Password"
             />
-            {/* <FormHelperText classes={{root:classes.helptext}}>
-              {helperKeyText}
-            </FormHelperText> */}
           </FormControl>
           <FormControl className={classes.repasswordinput} error={passwordError}>
-            {/* <TextField id="password" value={pass} onChange={e => setPass(e.target.value)}
-              aria-describedby="password_helper" type="password" placeholder="New Password(min 8 chars)" InputProps={{ disableUnderline: true }}/> */}
             <ARUBaseInput
               id="re_password" 
               value={repass}
