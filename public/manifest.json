@@ -11,7 +11,9 @@
     "128": "images/icon128.png"
   },
   "permissions": [
-    "storage"
+    "storage",
+    "clipboardRead",
+    "clipboardWrite"
   ],
   "content_scripts": [
     {
