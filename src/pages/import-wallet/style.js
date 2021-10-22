@@ -12,10 +12,10 @@ const useStyles = makeStyles((theme) => ({
   },
   logoTitle: {
     color: 'white',
-    // fontWeight: 'bold',
-    fontSize: 30,
-    // margin: 0,
-    userSelect: 'none'
+    fontWeight: '200',
+    fontSize: 33,
+    userSelect: 'none',
+    lineHeight: 0.98,
   },
   flexBox: {
     display: 'flex',

@@ -1,20 +1,19 @@
 import React from 'react'
-
+import { ethers } from 'ethers';
 import { useHistory } from 'react-router-dom'
 import Layout from "../../components/layout";
-import {Button, Box, Icon, TextField, FormControl, FormHelperText } from '@material-ui/core';
+import {Box, Icon, FormControl, FormHelperText } from '@material-ui/core';
 import ARUButton from '../../components/buttons';
-import { ARUBaseInput, ARUBaseTextArea } from '../../components/fields';
+import { ARUBaseInput } from '../../components/fields';
 import ARUCard from '../../components/card';
 
 import { useTheme } from '@material-ui/core/styles';
 
 
 import { useRecoilState, useRecoilValue } from 'recoil';
-import Header from '../../components/header';
 import { encryptKeyStore } from '../../utils/keystore';
 import { allWallets, networkProvider, currentWallet } from '../../store/atoms';
-import { ethers } from 'ethers';
+
 
 import useStyles from './style';
 
@@ -27,19 +26,17 @@ export default function ImportWallet() {
 
   const classes = useStyles( useTheme() );
 
-  const [, setWalletAtom] = useRecoilState(allWallets)
+  const [, setWalletAtom] = useRecoilState(allWallets);
 
-  const web3 = useRecoilValue(networkProvider)
-  const cWallet = useRecoilValue(currentWallet)
-
-  const [key, setKey] = React.useState('');
+  const web3 = useRecoilValue(networkProvider);
+  const cWallet = useRecoilValue(currentWallet);
 
   const [pass, setPass] = React.useState('');
   const [repass, setRepass] = React.useState("");
-  const [phrase, setPhrase] = React.useState("");
+  const [mnemonic, setMnemonic] = React.useState("");
   const [passwordError, setPasswordError] = React.useState(false);
-  const [keyError, setKeyError] = React.useState(false);
-  const [helperKeyText, setHelperKeyText] = React.useState(helperTextString)
+  const [mnemonicError, setMnemonicError] = React.useState(false);
+  const [helperMnemonicText, setHelperMnemonicText] = React.useState(helperTextString)
   const [helperPwdText, setHelperPwdText] = React.useState(helperTextString)
   const [helperRepwdText, setHelperRepwdText] = React.useState(helperTextString);
 
@@ -69,19 +66,24 @@ export default function ImportWallet() {
       }
     }
 
-    if(!key ) {
-      setHelperKeyText('Invalid Secret Recovery Phrase!');
-      setKeyError(true)
+    if(!mnemonic ) {
+      setHelperMnemonicText('Invalid Secret Recovery Phrase!');
+      setMnemonicError(true)
       hasError = true;
     } else {
-      setHelperKeyText('')
-      setKeyError(false)
+      setHelperMnemonicText('')
+      setMnemonicError(false)
     }
 
     if(!hasError) {
       try {
-        const account = web3.eth.accounts.privateKeyToAccount(key);
-        const keystore = encryptKeyStore(web3, key, pass);
+        // get account from private key
+        // const account = web3.eth.accounts.privateKeyToAccount(key);
+        // const keystore = encryptKeyStore(web3, key, pass);
+
+        // get account from mnemonic
+        const account = ethers.Wallet.fromMnemonic(mnemonic);
+        const keystore = encryptKeyStore(web3, account.privateKey, pass);
 
         setWalletAtom((item) => {
           let all = [...item];
@@ -100,9 +102,8 @@ export default function ImportWallet() {
         });
 
       } catch(error) {
-        console.error(error)
-        setHelperKeyText(error.message);
-        setKeyError(true)
+        setHelperMnemonicText(error.message);
+        setMnemonicError(true)
       }
     }
     return false;
@@ -115,22 +116,21 @@ export default function ImportWallet() {
           Import<br/>From Seed
         </h1>
         <form method="post" autoComplete="off" onSubmit={handleSubmit} className={classes.form}>
-          <FormControl className={classes.phraseinput} error={keyError}>
-            <ARUBaseTextArea
-              id="phrase" 
-              value={phrase}
-              onChange={e => setPhrase(e.target.value)}
+          <FormControl className={classes.phraseinput} error={mnemonicError}>
+            <ARUBaseInput
+              id="mnemonic" 
+              value={mnemonic}
+              onChange={e => setMnemonic(e.target.value)}
               type="text"
               multiline="true"
               rows="3"
               placeholder="Enter your Secret Recovery Phrase"
-              // value=""
             />
             <FormHelperText classes={{root:classes.helptext}}>
-              {helperKeyText}
+              {helperMnemonicText}
             </FormHelperText>
           </FormControl>
-          <FormControl className={classes.passwordinput} error={keyError}>
+          <FormControl className={classes.passwordinput} error={passwordError}>
             <ARUBaseInput
               id="password" 
               value={pass}
