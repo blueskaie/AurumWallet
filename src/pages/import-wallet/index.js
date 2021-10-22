@@ -1,41 +1,44 @@
 import React from 'react'
-
+import { ethers } from 'ethers';
 import { useHistory } from 'react-router-dom'
 import Layout from "../../components/layout";
-import {Button, Box, TextField, FormControl, FormHelperText } from '@material-ui/core';
+import {Box, Icon, FormControl, FormHelperText } from '@material-ui/core';
+import ARUButton from '../../components/buttons';
+import { ARUBaseInput } from '../../components/fields';
+import ARUCard from '../../components/card';
 
 import { useTheme } from '@material-ui/core/styles';
 
 
 import { useRecoilState, useRecoilValue } from 'recoil';
-import Header from '../../components/header';
 import { encryptKeyStore } from '../../utils/keystore';
 import { allWallets, networkProvider, currentWallet } from '../../store/atoms';
+
 
 import useStyles from './style';
 
 
-const helperTextString = 'This password encrypts your private key. Make sure to remember this password as you will need it to unlock your wallet.';
+const helperTextString = '';
 const helperErrorString = 'Invalid Password, should be atleast 8 characters long';
-
+const helpermatchString = 'Invalid Password, should match confirm password';
 
 export default function ImportWallet() {
 
   const classes = useStyles( useTheme() );
 
-  const [, setWalletAtom] = useRecoilState(allWallets)
+  const [, setWalletAtom] = useRecoilState(allWallets);
 
-  const web3 = useRecoilValue(networkProvider)
-  const cWallet = useRecoilValue(currentWallet)
-
-  const [key, setKey] = React.useState('');
+  const web3 = useRecoilValue(networkProvider);
+  const cWallet = useRecoilValue(currentWallet);
 
   const [pass, setPass] = React.useState('');
+  const [repass, setRepass] = React.useState("");
+  const [mnemonic, setMnemonic] = React.useState("");
   const [passwordError, setPasswordError] = React.useState(false);
-  const [keyError, setKeyError] = React.useState(false);
-  const [helperText, setHelperText] = React.useState(helperTextString)
-
-  const [helperKeyText, setHelperKeyText] = React.useState('');
+  const [mnemonicError, setMnemonicError] = React.useState(false);
+  const [helperMnemonicText, setHelperMnemonicText] = React.useState(helperTextString)
+  const [helperPwdText, setHelperPwdText] = React.useState(helperTextString)
+  const [helperRepwdText, setHelperRepwdText] = React.useState(helperTextString);
 
   const history = useHistory();
 
@@ -49,27 +52,38 @@ export default function ImportWallet() {
     event.preventDefault();
     let hasError = false;
     if(!pass || pass.length < 8) {
-      setHelperText(helperErrorString)
+      setHelperPwdText(helperErrorString)
       setPasswordError(true)
       hasError = true;
     } else {
-      setHelperText(helperTextString)
-      setPasswordError(false);
+      if (pass !== repass) {
+        setHelperRepwdText(helpermatchString);
+        setPasswordError(true);
+        return false;
+      } else {
+        setHelperRepwdText("");
+        setPasswordError(false);
+      }
     }
 
-    if(!key ) {
-      setHelperKeyText('Key invalid');
-      setKeyError(true)
+    if(!mnemonic ) {
+      setHelperMnemonicText('Invalid Secret Recovery Phrase!');
+      setMnemonicError(true)
       hasError = true;
     } else {
-      setHelperKeyText('')
-      setKeyError(false)
+      setHelperMnemonicText('')
+      setMnemonicError(false)
     }
 
     if(!hasError) {
       try {
-        const account = web3.eth.accounts.privateKeyToAccount(key);
-        const keystore = encryptKeyStore(web3, key, pass);
+        // get account from private key
+        // const account = web3.eth.accounts.privateKeyToAccount(key);
+        // const keystore = encryptKeyStore(web3, key, pass);
+
+        // get account from mnemonic
+        const account = ethers.Wallet.fromMnemonic(mnemonic);
+        const keystore = encryptKeyStore(web3, account.privateKey, pass);
 
         setWalletAtom((item) => {
           let all = [...item];
@@ -88,42 +102,66 @@ export default function ImportWallet() {
         });
 
       } catch(error) {
-        console.error(error)
-        setHelperKeyText(error.message);
-        setKeyError(true)
+        setHelperMnemonicText(error.message);
+        setMnemonicError(true)
       }
     }
     return false;
   }
 
   return (
-    <Layout isShownHeader={false}>
+    <Layout isShownBackButton={true} isShownWallet={false} isShownNetworkSelector={false} varient="secondary">
       <Box className={classes.root}>
-        <div className={classes.logo}>
-          <img src="images/logo.png" alt="AurumWallet" className="wallet-image"/>
-        </div>
-
-        <h1 className={classes.logoTitle}>AurumWallet</h1>
-
+        <h1 className={classes.logoTitle}>
+          Import<br/>From Seed
+        </h1>
         <form method="post" autoComplete="off" onSubmit={handleSubmit} className={classes.form}>
-          <FormControl className={classes.passwordinput} error={keyError}>
-            <TextField id="key" value={key} onChange={e => setKey(e.target.value)}
-              aria-describedby="password_helper" type="text" placeholder="Private Key" InputProps={{ disableUnderline: true }}/>
+          <FormControl className={classes.phraseinput} error={mnemonicError}>
+            <ARUBaseInput
+              id="mnemonic" 
+              value={mnemonic}
+              onChange={e => setMnemonic(e.target.value)}
+              type="text"
+              multiline="true"
+              rows="3"
+              placeholder="Enter your Secret Recovery Phrase"
+            />
             <FormHelperText classes={{root:classes.helptext}}>
-              {helperKeyText}
+              {helperMnemonicText}
+            </FormHelperText>
+          </FormControl>
+          <FormControl className={classes.passwordinput} error={passwordError}>
+            <ARUBaseInput
+              id="password" 
+              value={pass}
+              onChange={e => setPass(e.target.value)}
+              type="password"
+              placeholder="New Password"
+            />
+            <FormHelperText classes={{root:classes.helptext}}>
+              {helperPwdText}
             </FormHelperText>
           </FormControl>
           <FormControl className={classes.repasswordinput} error={passwordError}>
-            <TextField id="password" value={pass} onChange={e => setPass(e.target.value)}
-              aria-describedby="password_helper" type="password" placeholder="New Password(min 8 chars)" InputProps={{ disableUnderline: true }}/>
+            <ARUBaseInput
+              id="re_password" 
+              value={repass}
+              onChange={e => setRepass(e.target.value)}
+              type="password"
+              placeholder="Confirm Password"
+            />
             <FormHelperText classes={{root:classes.helptext}}>
-              {helperText}
+              {helperRepwdText}
             </FormHelperText>
           </FormControl>
-          <Button variant="contained" type="submit" className={classes.button}>Import private key</Button>
+          <ARUCard className={classes.alarmCard}>
+            <Icon className={classes.checkIcon}>
+              <img src="images/checked-circle.svg" alt="AurumWallet" className="logo-image" style={{height: '100%'}} />
+            </Icon>
+            <p>I understand that Aurum cannot recover this password.</p>
+          </ARUCard>
+          <ARUButton className={classes.submitPassword} type='submit'>IMPORT WALLET</ARUButton>
         </form>
-        <Button onClick={() => { history.push('/'); }} variant="contained" className={classes.button}>Cancel</Button>
-
       </Box>
     </Layout>
   )

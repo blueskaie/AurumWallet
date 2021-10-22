@@ -185,7 +185,7 @@ export default function MenuOptions({loggedIn}) {
                 <img src={`images/${option.icon}`} alt="AurumWallet" className="logo-image" style={{height: '100%'}} />
               </Icon>
             </ListItemIcon>
-            <ListItemText primary={option.name} />
+            <ListItemText primary={option.name} style={{height: '20px'}} />
           </MenuItem>
         ))}
       </Menu>

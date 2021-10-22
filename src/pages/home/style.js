@@ -3,6 +3,7 @@ import { makeStyles } from "@material-ui/core/styles";
 const useStyles = makeStyles((theme) => ({
   root: {
     flexGrow: 1,
+    marginTop: -40
   },
   mywallet: {
     marginTop: 10,
@@ -35,7 +36,20 @@ const useStyles = makeStyles((theme) => ({
     height:292,
     overflowY:'scroll',
     userSelect:'none'
-  }
+  },
+  clipboard: {
+    textAlign: 'right',
+    '& button':{
+      background:'transparent',
+      border:'none',
+    }
+  },
+  title:{
+    cursor:'pointer',
+    color:'#ffffff',
+    flexGrow: 1,
+    fontSize: '1rem',
+  },
 }));
 
 export default useStyles;
