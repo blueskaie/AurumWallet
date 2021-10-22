@@ -164,7 +164,7 @@ export default function SendToken(props) {
                 value={vals.address}
                 onChange={(e) => setVals(val => { return {...val, address:e.target.value}; })}
                 type="text" 
-                placeholder="Receipient Address"
+                placeholder="Recipient Address"
                 aria-describedby="address_helper"
               />
               <Button className={classes.inputBtn} onClick={pasteFromClipboard}>Paste</Button>
