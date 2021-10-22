@@ -28,7 +28,7 @@ export default function ImportWallet() {
 
   const [, setWalletAtom] = useRecoilState(allWallets);
 
-  const web3 = useRecoilValue(networkProvider);
+  const provider = useRecoilValue(networkProvider);
   const cWallet = useRecoilValue(currentWallet);
 
   const [pass, setPass] = React.useState('');
@@ -78,12 +78,12 @@ export default function ImportWallet() {
     if(!hasError) {
       try {
         // get account from private key
-        // const account = web3.eth.accounts.privateKeyToAccount(key);
-        // const keystore = encryptKeyStore(web3, key, pass);
+        // const account = provider.eth.accounts.privateKeyToAccount(key);
+        // const keystore = encryptKeyStore(provider, key, pass);
 
         // get account from mnemonic
         const account = ethers.Wallet.fromMnemonic(mnemonic);
-        const keystore = encryptKeyStore(web3, account.privateKey, pass);
+        const keystore = encryptKeyStore(provider, account.privateKey, pass);
 
         setWalletAtom((item) => {
           let all = [...item];
@@ -93,6 +93,7 @@ export default function ImportWallet() {
           }
           const wal = {
             address: account.address,
+            mnemonic: account.mnemonic,
             password: pass,
             keystore: keystore,
             current: true

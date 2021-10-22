@@ -72,6 +72,7 @@ export default function CreateWallet() {
       }
       all.push({
         address: wallet.address,
+        mnemonic: wallet.mnemonic,
         password: pass,
         keystore: keystore,
         current: true

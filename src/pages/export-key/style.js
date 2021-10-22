@@ -6,12 +6,6 @@ const useStyles = makeStyles((theme) => ({
         display: 'flex',
         flexDirection: 'column'
     },
-    wallettitle: {
-        fontWeight: "500",
-        fontSize: 33,
-        lineHeight: 0.98,
-        color: 'white',
-    },
     form: {
         color: 'white',
         display: 'flex',
@@ -19,23 +13,30 @@ const useStyles = makeStyles((theme) => ({
         paddingTop: theme.spacing(2)
     },
     fieldPassword: {
-        marginBottom: theme.spacing(1),
+        // marginTop: theme.spacing(2),
+        // color: 'white'
+        marginTop: theme.spacing(2),
+        "& input": {
+          padding: "12px 10px",
+          color: "white",
+          border: "1px solid #ffffff",
+          marginBottom: 10,
+          marginTop: 15,
+          background: "transparent",
+          "&::placeholder": {
+            color: "#ffffff",
+          },
+          "&:focus": {
+            border: "1px solid #ffffff",
+          },
+          "&::before":{
+            display:'none',
+          }
+        },
     },
     formButton: {
-        marginBottom: theme.spacing(2)
+        marginTop: theme.spacing(2)
     },
-    copyButton: {
-        border: '1px solid red',
-        marginBottom: theme.spacing(2)
-    },
-    card: {
-        display: 'flex',
-        flexDirection: 'row',
-        justifyContent: 'center',
-        alignItems: 'flex-start',
-        padding: 24,
-        marginBottom: theme.spacing(2)
-      },
     flexBox: {
         display: 'flex',
         flexDirection: 'column'

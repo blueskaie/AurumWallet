@@ -1,59 +1,77 @@
 import { makeStyles } from "@material-ui/core/styles";
 
 const useStyles = makeStyles((theme) => ({
-  root: {
-    flexGrow: 1,
-    background: "linear-gradient(#0d0f11,#14161a,#2b2f38)",
-    color: "white",
-    padding: 30,
-  },
-  lock:{
-    marginTop:'25%',
-    height:'60%',
-    background:'linear-gradient(#1c1d23,#111114)',
-    borderRadius:20,
-    width:'100%',
-    position:'relative',
-    zIndex:2
-  },
-  lockimage:{
-    marginBottom:20,
-    height:140,
-    maxHeight:140,
-    textAlign:'center',
-    padding:40,
-    '& img':{
-      height:'100%',
+    root: {
+        flex:1,
+        display: 'flex',
+        flexDirection: 'column'
+    },
+    wallettitle: {
+        margin: 0,
+        fontWeight: 200,
+        fontSize: 33,
+        lineHeight: 0.98,
+        color: 'white',
+    },
+    warningIcon: {
+        width: 30,
+        height: 30
+    },
+    warningMessage: {
+        marginLeft: 15, 
+        color: 'white', 
+        fontSize: 14, 
+        fontWeight: 400, 
+        lignHeight: '20px'
+    },
+    form: {
+        color: 'white',
+        display: 'flex',
+        flexDirection: 'column',
+        paddingTop: 10
+    },
+    fieldPassword: {
+        marginBottom: 10,
+    },
+    formButton: {
+        marginBottom: 10
+    },
+    copyButton: {
+        border: '1px solid red',
+        marginBottom: 10
+    },
+    card: {
+        display: 'flex',
+        flexDirection: 'row',
+        justifyContent: 'center',
+        alignItems: 'flex-start',
+        padding: 18,
+        marginBottom: 10
+    },
+    secretPhraseSection: {
+        paddingTop: 10,
+        display: 'flex',
+        flexDirection: 'column'
+    },
+    secretPhrase: {
+        border: '1px solid red',
+        marginBottom: 10,
+        borderRadius: 8,
+        padding: 12,
+        color: 'white',
+        fontSize: 14
+    },
+    clipboardButton: {
+        background: 'transparent',
+        border: '1px solid red',
+        borderRadius: 10,
+        color: 'white',
+        padding: 12,
+        fontSize: 14,
+        fontWeight: 700,
+        cursor: 'pointer',
+        marginBottom: 10
     }
-  },
-  reveal:{
-    borderRadius:'20px',
-    padding:'10px 40px',
-    fontSize:15,
-    left:'50%',
-    transform:'translate(-50%,-50%)',
-    border:'1px solid #959597',
-    color:'white',
-    margin:'auto',
-    position:'absolute',
-    bottom:40,
-    whiteSpace:'nowrap',
-    cursor:'pointer'
-  },
-  footer:{
-    position:'absolute',
-    left:'50%',
-    transform:'translate(-50%,-50%)',
-    bottom:10,
-  },
-  bottomimg:{
-    position:'absolute',
-    bottom:'-36px',
-    left:'-30px',
-    width:447,
-    maxWidth:'inherit',
-    zIndex:1
-  }
 }));
 
 export default useStyles;

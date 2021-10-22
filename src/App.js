@@ -97,6 +97,9 @@ function App() {
               <PrivateRoute path="/export-key">
                 <ExportKey />
               </PrivateRoute>
+              <PrivateRoute path="/reveal">
+                <Reveal />
+              </PrivateRoute>
               <PrivateRoute path="/accounts">
                 <Accounts />
               </PrivateRoute>
@@ -137,9 +140,6 @@ function App() {
               </PrivateRoute>
               <PrivateRoute path="/mynft">
                 <Nft />
-              </PrivateRoute>
-              <PrivateRoute path="/lock">
-                <Reveal />
               </PrivateRoute>
               <PrivateRoute path="/buysell">
                 <Buysell />

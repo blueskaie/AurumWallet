@@ -11,11 +11,6 @@ import { currentWallet, networkProvider } from '../../store/atoms';
 import {Alert} from '@material-ui/lab';
 import Clipboard from 'react-clipboard.js';
 import { useHistory } from 'react-router-dom';
-import { ARUBaseInput } from '../../components/fields';
-import ARUButton from '../../components/buttons';
-import ARUCard from '../../components/card';
-import { faExclamationCircle } from "@fortawesome/free-solid-svg-icons";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 import useStyles from "./style";
 
@@ -25,7 +20,6 @@ export default function ExportKey() {
   const [passValid, setPassValid] = React.useState(false);
   const [error, setError] = React.useState();
   const [pass, setPass] = React.useState('');
-  const [repass, setRepass] = React.useState('');
   const [helperText, setHelperText] = React.useState('');
   const [privateKey, setPrivateKey] = React.useState('');
 
@@ -67,74 +61,57 @@ export default function ExportKey() {
   const copyConfirmed = (event) => {
     event.preventDefault();
   
-    // history.push('/');
+    history.push('/');
 
     return false;
   }
 
-  return (
-    <>
-    {
-    !passValid && 
-      <Layout isShownWallet={false} varient='secondary'>
-        <Box className={classes.root}>
-          <h1 className={classes.wallettitle}>
-            <Box>Reveal</Box>
-            <Box>Recovery Phrase</Box>
-          </h1>
+  return (<Layout isShownWallet={false} isShownNetworkSelector={false}>
+      <Box className={classes.root}>
+        {
+        !passValid && 
           <form method="post" autoComplete="off" onSubmit={handleSubmit} className={classes.form}>
-            <ARUCard className={classes.card}>
-              <Box style={{color: 'red'}}>
-                <FontAwesomeIcon icon={faExclamationCircle} style={{marginRight: '10px', width: '32px', height: '32px'}} />
-              </Box>
-              <Box style={{color: 'white', fontSize: '16px', fontWeight: 'normal'}}>
-                DO NOT SHARE this phrase with anyone! These words can be used to steal funds from ALL OF YOUR ACCOUNTS.
-              </Box>
-            </ARUCard>
-            <FormControl className={classes.fieldPassword} error={error}>
-              <ARUBaseInput id="password" value={pass} onChange={e => setPass(e.target.value)}
-                type="password" placeholder="Password"/>
-              <FormHelperText>
-                {helperText}
-              </FormHelperText>
-            </FormControl>
-            <FormControl className={classes.fieldPassword} error={error}>
-              <ARUBaseInput id="repassword" value={repass} onChange={e => setRepass(e.target.value)}
-                type="password" placeholder="Confirm Password"/>
-              <FormHelperText>
-                {helperText}
-              </FormHelperText>
-            </FormControl>
-            <ARUButton className={classes.formButton} type='submit'>REVEAL</ARUButton>
-          </form>
-        </Box>
-      </Layout>
-    }
+            
+            <Typography as="body1">
+              Please enter your password to export the private key.
+            </Typography>
 
-    {
-    passValid && 
-      <Layout isShownBackButton={true} isShownWallet={false} varient='secondary'>
-        <Box className={classes.root}>
-          <h1 className={classes.wallettitle}>
-            <Box>Reveal</Box>
-            <Box>Recovery Phrase</Box>
-          </h1>
+            <FormControl className={classes.fieldPassword} error={error}>
+              <TextField id="password" value={pass} onChange={e => setPass(e.target.value)}
+                aria-describedby="password_helper" type="password" placeholder="Password"
+                InputProps={{ disableUnderline: true }}
+              />
+              <FormHelperText>
+                {helperText}
+              </FormHelperText>
+            </FormControl>
+
+            <Button variant="contained" color="primary" type="submit" className={classes.formButton} style={{background: 'white', color: 'black', borderRadius: '15px'}}>Submit</Button>
+          </form>
+        }
+
+        {
+          passValid && 
           <Box className={classes.flexBox}>
-            <ARUCard className={classes.card}>
-              <Box style={{color: 'red'}}>
-                <FontAwesomeIcon icon={faExclamationCircle} style={{marginRight: '10px', width: '32px', height: '32px'}} />
-              </Box>
-              <Box style={{color: 'white', fontSize: '16px', fontWeight: 'normal'}}>
-                DO NOT SHARE this phrase with anyone! These words can be used to steal funds from ALL OF YOUR ACCOUNTS.
-              </Box>
-            </ARUCard>
-            <ARUButton className={classes.copyButton} mode='trans' onClick={copyConfirmed} type='submit'>COPY TO CLIPBOARD</ARUButton>
-            <ARUButton className={classes.formButton} type='submit'>CANCEL</ARUButton>
-            {/* <Button variant="contained" color="primary" onClick={copyConfirmed} style={{background: 'white', color: 'black', borderRadius: '15px'}}>I've copied it somewhere safe</Button> */}
+            <Alert severity="error" className={classes.important}>
+              SAVE YOUR PRIVATE KEY
+            </Alert>
+
+            <Box className={classes.copyGroup}>
+              <textarea type="text" rows="3" readOnly value={privateKey}></textarea>
+              <Clipboard component="button" button-href="#" data-clipboard-text={privateKey}>
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" className="icon"><path d="M6 6V2c0-1.1.9-2 2-2h10a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2h-4v4a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V8c0-1.1.9-2 2-2h4zm2 0h4a2 2 0 0 1 2 2v4h4V2H8v4zM2 8v10h10V8H2z"/></svg>
+              </Clipboard>
+            </Box>
+
+            <Box className={classes.keyInfo}>
+              <p><strong>Do not lose it!</strong> It can't be recovered if you lose it.</p>
+              <p><strong>Do not share it!</strong> Your funds will be stolen if you use it on a malicious site.</p>
+              <p><strong>Make a backup!</strong> Just in case your laptop is set on fire.</p>
+            </Box>
+            <Button variant="contained" color="primary" onClick={copyConfirmed} style={{background: 'white', color: 'black', borderRadius: '15px'}}>I've copied it somewhere safe</Button>
           </Box>
-        </Box>
-      </Layout>
-    }
-  </>
-  )
+        }
+      </Box>
+  </Layout>)
 }
