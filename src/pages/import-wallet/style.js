@@ -2,8 +2,8 @@ import { makeStyles } from "@material-ui/core/styles";
 
 const useStyles = makeStyles((theme) => ({
   root: {
-    textAlign: 'center',
-    marginTop: -60
+    // textAlign: 'center',
+    marginTop: -30
   },
   logo: {
     width: 150,
@@ -12,10 +12,10 @@ const useStyles = makeStyles((theme) => ({
   },
   logoTitle: {
     color: 'white',
-    fontWeight: 'bold',
-    fontSize: 30,
-    margin: 0,
-    userSelect: 'none'
+    fontWeight: '200',
+    fontSize: 33,
+    userSelect: 'none',
+    lineHeight: 0.98,
   },
   flexBox: {
     display: 'flex',
@@ -35,43 +35,14 @@ const useStyles = makeStyles((theme) => ({
     width: "100%",
     margin: "auto",
   },
+  phraseinput: {
+    marginBottom: 4,
+  },
   passwordinput: {
-    "& input": {
-      padding: "12px 10px",
-      color: "white",
-      border: "1px solid #ffffff",
-      marginBottom: 10,
-      marginTop: 15,
-      background: "transparent",
-      "&::placeholder": {
-        color: "#ffffff",
-      },
-      "&:focus": {
-        border: "1px solid #ffffff",
-      },
-      "&::before":{
-        display:'none',
-      }
-    },
+    marginBottom: 12,
   },
   repasswordinput:{
-    "& input": {
-      padding: "12px 10px",
-      color: "white",
-      border: "1px solid #ffffff",
-      marginBottom: 10,
-      marginTop: 15,
-      background: "transparent",
-      "&::placeholder": {
-        color: "#ffffff",
-      },
-      "&:focus": {
-        border: "1px solid #ffffff",
-      },
-      "&::before":{
-        display:'none',
-      }
-    },
+    marginBottom: 12
   },
   helptext:{
     color:'white',
@@ -93,7 +64,27 @@ const useStyles = makeStyles((theme) => ({
     width:'100%',
     display: 'block',
     marginTop: theme.spacing(2)
-  }
+  },
+  alarmCard: {
+    display: 'flex',
+    flexDirection: 'row',
+    justifyContent: 'center',
+    padding: 15,
+    // marginTop: 8,
+    "& p": {
+      margin: '0 0 0 12px',
+      color: '#ffffff',
+      fontSize: 14,
+      lineHeight: '18px'
+    }
+  },
+  checkIcon: {
+    width: 30,
+    height: 30
+  },
+  submitPassword: {
+    marginTop: 10
+  },
 }));
 
 export default useStyles;
