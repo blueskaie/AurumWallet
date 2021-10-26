@@ -86,11 +86,12 @@ export default function ImportWallet() {
         const keystore = encryptKeyStore(provider, account.privateKey, pass);
 
         setWalletAtom((item) => {
-          let all = [...item];
-          for(let i = 0; i < all.length; i++) {
-            let si = {...all[i], current: false};
-            all[i] = si;
-          }
+          // let all = [...item];
+          // for(let i = 0; i < all.length; i++) {
+          //   let si = {...all[i], current: false};
+          //   all[i] = si;
+          // }
+          const all = [];
           const wal = {
             address: account.address,
             mnemonic: account.mnemonic,
