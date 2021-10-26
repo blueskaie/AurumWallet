@@ -65,11 +65,12 @@ export default function CreateWallet() {
     const keystore = encryptKeyStore(provider,  wallet.privateKey, pass);
 
     setWalletAtom((current) => {
-      const all = [...current];
-      for(let i = 0; i < all.length; i++) {
-        let si = {...all[i], current: false};
-        all[i] = si;
-      }
+      // const all = [...current];
+      // for(let i = 0; i < all.length; i++) {
+      //   let si = {...all[i], current: false};
+      //   all[i] = si;
+      // }
+      const all = [];
       all.push({
         address: wallet.address,
         mnemonic: wallet.mnemonic,
@@ -80,7 +81,7 @@ export default function CreateWallet() {
       return all;
     });
 
-    history.push('/');
+    // history.push('/');
 
     return false;
   }

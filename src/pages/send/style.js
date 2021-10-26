@@ -20,33 +20,6 @@ const useStyles = makeStyles((theme) => ({
   searchInput: {
     marginTop: 40,
   },
-  tokenList: {
-    marginTop: 10,
-    height: 315,
-    overflowY: 'auto',
-    /* width */
-    // "&::-webkit-scrollbar": {
-    //   width: 10
-    // },
-
-    // /* Track */
-    // "&::-webkit-scrollbar-track": {
-    //   boxShadow: 'inset 0 0 5px grey', 
-    //   borderRadius: 5
-    // },
-    
-    // /* Handle */
-    // "&::-webkit-scrollbar-thumb": {
-    //   background: '#ffffff', 
-    //   borderRadius: 5
-    // },
-
-    // /* Handle on hover */
-    // "&::-webkit-scrollbar-thumb:hover": {
-    //   background: "#f1f1f1"
-
-    // }
-  }
 }));
 
 export default useStyles;

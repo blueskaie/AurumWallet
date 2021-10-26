@@ -1,35 +1,30 @@
-// import React from 'react';
-// import OneAccount from "./oneaccount";
-import React, {useState, useEffect, useMemo} from "react";
+import React from "react";
 import { useHistory } from "react-router-dom";
-import { Box } from "@material-ui/core";
+import { Box, Icon } from "@material-ui/core";
 import { makeStyles, useTheme } from "@material-ui/core/styles";
-import * as LatomicNumber from '../../utils/big.number'
-import { faCheckCircle } from "@fortawesome/free-solid-svg-icons";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import HiddenText from "../../components/hidden-text";
 
 const OneAccount = (props) => {
 
   const classes = useStyles(useTheme());
   const history = useHistory();
-  const { name, balance, address, decimals, showAccountInfo, index, onClick, visible } = props;
+  const { name, account, visible, onClick } = props;
 
-  const clicked = () => {
-    onClick(index);
-  }
+  const shortWalletAddress =  account && account.address 
+    ? account.address.slice(0, 8) + "..." + account.address.substr(-6)
+    : "";
 
   return (
-    <Box className={classes.oneaccount} onClick={clicked}>
+    <Box className={classes.oneaccount} onClick={()=>onClick(account)}>
       <Box className={classes.accountinfo}>
         <Box style={{display: 'flex', flexDirection: 'column', justifyContent: 'space-between'}}>
-          <p className={classes.accountname} style={{fontSize: '18px', fontWeight: '500'}}>{name}</p>
-          <p className={classes.accountname}>$<HiddenText show={showAccountInfo} text={parseFloat(LatomicNumber.toDecimal(balance,decimals)).toFixed(4).toLocaleString()}/></p>
-          <p className={classes.accountname} style={{color: '#555555'}}><HiddenText show={showAccountInfo} text={address}/></p>
+          <p className={classes.name}>{name}</p>
+          {/* <p className={classes.balance}>$<HiddenText show={visible} text={parseFloat(LatomicNumber.toDecimal(balance,decimals)).toFixed(4).toLocaleString()}/></p> */}
+          <p className={classes.address}><HiddenText show={visible} text={shortWalletAddress}/></p>
         </Box>
-        <Box>
-          {visible && <FontAwesomeIcon icon={faCheckCircle} style={{color: 'green', width: '25px', height: '25px'}} /> }
-        </Box>
+        {account.current && <Icon className={classes.checkIcon}>
+          <img src="images/checked-circle.svg" alt="AurumWallet" className="logo-image" style={{height: '100%'}} />
+        </Icon>}
       </Box>
     </Box>
   );
@@ -61,44 +56,40 @@ const useStyles = makeStyles((theme) => ({
     width: '100%',
     zIndex: 3
   },
-  accountname: {
+  name: {
+    color: "white",
+    margin: 0,
+    fontSize: 18,
+    fontWeight: 300
+  },
+  balance: {
     color: "white",
     margin: 0,
     fontSize: 14,
+    fontWeight: 300
+  },
+  address: {
+    color: "#555555",
+    margin: 0,
+    fontSize: 14,
+    fontWeight: 300
+  },
+  checkIcon: {
+    width: 30,
+    height: 30
   },
 }));
 
-const accountList = [
-  {
-  "name": "Account1",
-  "balance": 2000,
-  "address": "0xhk12j3h4vj12h34g1k2h3j"
-  },
-  {
-  "name": "Account2",
-  "balance": 1000,
-  "address": "0xhk12j3h4vj12h34g1k2h3j"
-  },
-  {
-  "name": "Account3",
-  "balance": 3000,
-  "address": "0xhk12j3h4vj12h34g1k2h3j"
-  }
-];
-
 export default function AccountList(props) {
-  const [visibleId, setVisible] = useState(-1);
-  const onClick = (index) => () => {
-    setVisible(index);
-  }
   return (
     <>
-      {accountList.map((item, index) => {
-        return <OneAccount {...props} {...item} 
-                          key={`oneToken-${index}`} 
-                          index = {index} 
-                          onClick={onClick(index)}
-                          visible={visibleId === index}
+      {props.list && props.list.map((item, index) => {
+        return <OneAccount
+                  key={`oneToken-${index}`} 
+                  name={`Account-${index+1}`}
+                  account={item}
+                  visible={props.showAccountInfo}
+                  onClick={props.onSelectWallet}
               />;
       })}
     </>
