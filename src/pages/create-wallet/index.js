@@ -103,11 +103,28 @@ export default function CreateWallet() {
       }
     }
 
-    const randomBytes = ethers.utils.randomBytes(16);
-    const mnemonic =  ethers.utils.HDNode.entropyToMnemonic(randomBytes);
+    const mnemonic =  genMnemonic();
     setMnemonic(mnemonic);
     setStep(2);
   };
+
+  const genMnemonic = () => {
+    while (true) {
+      let isOkay = true;
+      const randomBytes = ethers.utils.randomBytes(16);
+      const result = ethers.utils.HDNode.entropyToMnemonic(randomBytes);
+      let words = result.split(' ');
+      words.forEach(element => {
+        let first = words.indexOf(element);
+        let last = words.lastIndexOf(element);
+        if (first != last) {
+          isOkay = false;
+        }
+      });
+      if (isOkay)
+        return result;
+    }
+  }
 
   const handleCreateWallet = async (event) => {
     event.preventDefault();
