@@ -22,6 +22,7 @@ import ARUMnemonic from './mnemonic';
 import useStyles from "./style";
 
 const helpermatchString = "Password doesn't match.";
+const helperchecking = "Please check If understand.";
 const helperErrorString =
   "Invalid Password, should be atleast 8 characters long";
 
@@ -88,6 +89,12 @@ export default function CreateWallet() {
 
   const handleSubmit = (event) => {
     event.preventDefault();
+    if (!checking) {
+      setHelperText(helperchecking);
+      setPasswordError(true);
+      return false;
+    }
+
     if (!pass || pass.length < 8) {
       setHelperText(helperErrorString);
       setPasswordError(true);
@@ -127,6 +134,14 @@ export default function CreateWallet() {
     } else {
       history.push('/');
     }
+  }
+
+  const [checking, setChecking] = React.useState(false);
+
+  const onClickNext = () => {
+    if (showSecretPharse)
+      history.push('/');
+    setStep(3);
   }
 
   return (
@@ -169,10 +184,12 @@ export default function CreateWallet() {
               />
               <FormHelperText>{helperText}</FormHelperText>
             </FormControl>
-            <ARUCard className={classes.alarmCard}>
-              <Icon className={classes.checkIcon}>
+            <ARUCard className={classes.alarmCard} onClick={() => setChecking(!checking)}>
+              {!checking && <div className={classes.circleIcon}>
+              </div>}
+              {checking && <Icon className={classes.checkIcon}>
                 <img src="images/checked-circle.svg" alt="AurumWallet" className="logo-image" style={{height: '100%'}} />
-              </Icon>
+              </Icon>}
               <p>I understand that Aurum cannot recover this password.</p>
             </ARUCard>
             <ARUButton className={classes.submitPassword} type='submit'>CREATE PASSWORD</ARUButton>
@@ -185,7 +202,7 @@ export default function CreateWallet() {
                 <img src="images/warning.svg" alt="AurumWallet" className="logo-image" style={{height: '100%'}} />
               </Icon>
               <p>
-                This is your Secret Recovery Pharse. Write it down and keep it in a safe place.
+                This is your Secret Recovery Phrase. Write it down and keep it in a safe place.
                 You'll be asked to re-enter this phrase in the next step - in the same order.
               </p>
             </ARUCard>
@@ -195,10 +212,11 @@ export default function CreateWallet() {
               </Box>
             </ARUCard>
             <ARUButton className={classes.hideSecretPharseBtn} mode='outline' onClick={()=>{setToggleSecretPharse(!showSecretPharse)}}>
-              <strong> {showSecretPharse ? 'Hide' : 'Show'}</strong> <span style={{marginLeft: 5}}>my Secret Recovery Pharse</span>
+              <strong> {showSecretPharse ? 'Hide' : 'Show'}</strong> <span style={{marginLeft: 5}}>my Secret Recovery Phrase</span>
             </ARUButton>
-            <ARUButton className={classes.wroteDownBtn} mode='filled' onClick={()=>setStep(3)}>
-              I WROTE DOWN MY PHRASE
+            <ARUButton className={classes.wroteDownBtn} mode='filled' onClick={()=>onClickNext()}>
+              {!showSecretPharse && <span>I WROTE DOWN MY PHRASE</span>}
+              {showSecretPharse && <span>CANCEL</span>}
             </ARUButton>
               {/* <Box className={classes.copyGroup}>
                 <textarea type="text" rows="3" readOnly value={mnemonic}></textarea>
@@ -225,7 +243,7 @@ export default function CreateWallet() {
           step == 4 && 
           <Box className={classes.flexBox}>
             <Alert severity="success" className={classes.congulatelations}>
-              CONGULATELATIONS
+              CONGRATULATIONS
             </Alert>
             <ARUButton onClick={goToWallet}>My Wallet</ARUButton>
           </Box>
