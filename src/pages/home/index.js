@@ -45,7 +45,7 @@ export default function Home() {
             onClick={()=>setOpenSuccess(true)}
           >
             <Typography variant="h6" className={classes.title}>
-              <Box><HiddenText show={showInfo} text={shortWalletAddress}/></Box>
+              <Box><HiddenText show={showInfo}>{shortWalletAddress}</HiddenText></Box>
             </Typography>
           </Clipboard>
         </Box>

@@ -123,11 +123,11 @@ const OneToken = (props) => {
       <Box className={classes.tokeninfo}>
         <Box style={{display: 'flex', flexDirection: 'row', justifyContent: 'space-between'}}>
           <p className={classes.tokenname}>{code}</p>
-          <p className={classes.tokenname}><HiddenText show={showInfo} text={parseFloat(LatomicNumber.toDecimal(balance,decimals)).toFixed(4).toLocaleString()}/></p>
+          <p className={classes.tokenname}><HiddenText show={showInfo}>{parseFloat(LatomicNumber.toDecimal(balance,decimals)).toFixed(4).toLocaleString()}</HiddenText></p>
         </Box>
         <Box style={{display: 'flex', flexDirection: 'row', justifyContent: 'space-between'}}>
           <p className={classes.tokenprice}>${parseFloat(LatomicNumber.toDecimal(balance,decimals)).toFixed(4).toLocaleString()}</p>
-          <p className={classes.tokenprice}><HiddenText show={showInfo} text={(parseFloat(LatomicNumber.toDecimal(balance,decimals)) * trade).toFixed(4).toLocaleString()}/></p>
+          <p className={classes.tokenprice}><HiddenText show={showInfo}>{(parseFloat(LatomicNumber.toDecimal(balance,decimals)) * trade).toFixed(4).toLocaleString()}</HiddenText></p>
         </Box>
         <Box style={{color: up > 0?'green':'red'}} >
           {up > 0 ? <FontAwesomeIcon icon={faCaretUp} /> : <FontAwesomeIcon icon={faCaretDown} /> }

@@ -18,10 +18,10 @@ export const getCurrencyPerToken = async (network, tokenCode, pairCode='USD') =>
             res = await priceFeed.methods.latestRoundData().call();
             res = parseFloat(LatomicNumber.toDecimal(res["answer"], matched.decimal));
         } catch (error) {
-            res = 0;
+            res = 1;
         }
     } else {
-        res = 0;
+        res = 1;
     }
     return res;
 }
