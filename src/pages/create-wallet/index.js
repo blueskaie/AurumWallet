@@ -110,18 +110,12 @@ export default function CreateWallet() {
 
   const genMnemonic = () => {
     while (true) {
-      let isOkay = true;
       const randomBytes = ethers.utils.randomBytes(16);
       const result = ethers.utils.HDNode.entropyToMnemonic(randomBytes);
       let words = result.split(' ');
-      words.forEach(element => {
-        let first = words.indexOf(element);
-        let last = words.lastIndexOf(element);
-        if (first != last) {
-          isOkay = false;
-        }
-      });
-      if (isOkay)
+      const duplicates = words.filter((word, index) => index !== words.indexOf(word));
+      console.log(words);
+      if (duplicates.length === 0)
         return result;
     }
   }
