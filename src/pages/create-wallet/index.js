@@ -2,15 +2,12 @@ import React from 'react'
 
 import { useHistory } from 'react-router-dom'
 import { ethers } from 'ethers';
-import {Button, Box, Icon, FormControl, FormHelperText} from '@material-ui/core';
+import {Box, Icon, FormControl, FormHelperText} from '@material-ui/core';
 import {Alert} from '@material-ui/lab'
-import { makeStyles, useTheme } from '@material-ui/core/styles';
+import { useTheme } from '@material-ui/core/styles';
 import { useRecoilState, useRecoilValue } from 'recoil';
 import Layout from "../../components/layout";
-import { faCheckCircle } from "@fortawesome/free-solid-svg-icons";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
-import Clipboard from 'react-clipboard.js';
 import { encryptKeyStore } from '../../utils/keystore';
 import { allWallets, currentWallet, networkProvider,allTokens } from '../../store/atoms';
 import ALL_TOKENS from '../../config/tokens';
@@ -38,6 +35,7 @@ export default function CreateWallet() {
   const [mnemonic, setMnemonic] = React.useState(null);
   const [confirmMnemonic, setConfirmMnemonic] = React.useState(null);
   const [showSecretPharse, setToggleSecretPharse] = React.useState(false);
+  const [checking, setChecking] = React.useState(false);
   const [step, setStep] = React.useState(1);
   // step = 1: password confirmation
   // step = 2: menmonic confirmation
@@ -127,16 +125,6 @@ export default function CreateWallet() {
       console.log('not matched');
     }
   }
-  
-  const handleBackClick = () => {
-    if(history.length) {
-      history.goBack();
-    } else {
-      history.push('/');
-    }
-  }
-
-  const [checking, setChecking] = React.useState(false);
 
   const onClickNext = () => {
     if (showSecretPharse)
@@ -185,8 +173,9 @@ export default function CreateWallet() {
               <FormHelperText>{helperText}</FormHelperText>
             </FormControl>
             <ARUCard className={classes.alarmCard} onClick={() => setChecking(!checking)}>
-              {!checking && <div className={classes.circleIcon}>
-              </div>}
+              {!checking && <Icon className={classes.checkIcon}>
+                <img src="images/unchecked-circle.svg" alt="AurumWallet" className="logo-image" style={{height: '100%'}} />
+              </Icon>}
               {checking && <Icon className={classes.checkIcon}>
                 <img src="images/checked-circle.svg" alt="AurumWallet" className="logo-image" style={{height: '100%'}} />
               </Icon>}

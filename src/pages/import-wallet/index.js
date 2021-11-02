@@ -21,6 +21,7 @@ import useStyles from './style';
 const helperTextString = '';
 const helperErrorString = 'Invalid Password, should be atleast 8 characters long';
 const helpermatchString = 'Invalid Password, should match confirm password';
+const helperCheckingString = "Please check If understand.";
 
 export default function ImportWallet() {
 
@@ -39,6 +40,8 @@ export default function ImportWallet() {
   const [helperMnemonicText, setHelperMnemonicText] = React.useState(helperTextString)
   const [helperPwdText, setHelperPwdText] = React.useState(helperTextString)
   const [helperRepwdText, setHelperRepwdText] = React.useState(helperTextString);
+  const [helperText, setHelperText] = React.useState("");
+  const [checking, setChecking] = React.useState(false);
 
   const history = useHistory();
 
@@ -51,6 +54,13 @@ export default function ImportWallet() {
   const handleSubmit = (event) => {
     event.preventDefault();
     let hasError = false;
+
+    if (!checking) {
+      setHelperText(helperCheckingString);
+      setPasswordError(true);
+      return false;
+    }
+
     if(!pass || pass.length < 8) {
       setHelperPwdText(helperErrorString)
       setPasswordError(true)
@@ -156,12 +166,20 @@ export default function ImportWallet() {
               {helperRepwdText}
             </FormHelperText>
           </FormControl>
-          <ARUCard className={classes.alarmCard}>
-            <Icon className={classes.checkIcon}>
+          <ARUCard className={classes.alarmCard} onClick={() => setChecking(!checking)}>
+            {!checking && <Icon className={classes.checkIcon}>
+                <img src="images/unchecked-circle.svg" alt="AurumWallet" className="logo-image" style={{height: '100%'}} />
+              </Icon>}
+            {checking && <Icon className={classes.checkIcon}>
               <img src="images/checked-circle.svg" alt="AurumWallet" className="logo-image" style={{height: '100%'}} />
-            </Icon>
+            </Icon>}
             <p>I understand that Aurum cannot recover this password.</p>
           </ARUCard>
+          <FormControl error={passwordError}>
+            <FormHelperText classes={{root:classes.helptext}}>
+              {!checking && helperText}
+            </FormHelperText>
+          </FormControl>
           <ARUButton className={classes.submitPassword} type='submit'>IMPORT WALLET</ARUButton>
         </form>
       </Box>
