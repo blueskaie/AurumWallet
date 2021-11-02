@@ -127,8 +127,8 @@ const TokenDetail = (props) => {
         {coin && coin.code && coin.code !== 'BNB' && <div style={{marginBottom: 20, textAlign: 'right'}}>
           <span className={classes.deleteBtn} onClick={deleteToken}>Delete Token</span>
         </div>}
-        <ARUCard style={{padding: '5px'}}>
-          {coin && <ReactApexChart options={options} series={series} type="candlestick" height={250} /> }
+        <ARUCard>
+          {coin && <ReactApexChart options={options} series={series} type="candlestick" height={250} style={{margin: '10px'}} /> }
         </ARUCard>
         <ARUCard className={classes.tokenInfo}>
           <Box style={{marginRight: '10px'}} >
@@ -146,7 +146,7 @@ const TokenDetail = (props) => {
             <Box className={classes.tokenLeft} style={{alignItems: 'flex-end', marginRight: '5px'}}>
               <Box style={{fontSize: '18px', fontWeight: '500'}}>2150</Box>
               <Box style={{marginTop: '5px'}}>$818,075</Box>
-              <Box style={{color: '#333333', marginTop: '5px', cursor: 'pointer'}} onClick={()=>goToSendToken(coin)} >
+              <Box style={{color: '#999999', marginTop: '5px', cursor: 'pointer'}} onClick={()=>goToSendToken(coin)} >
                 <span>Send</span>
                 <FontAwesomeIcon icon={faSignOutAlt} style={{marginLeft: '5px'}} />
               </Box>

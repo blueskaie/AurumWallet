@@ -25,6 +25,7 @@ const useStyles = makeStyles((theme) => ({
     display: 'flex',
     flexDirection: 'row',
     justifyContent: 'center',
+    alignItems: 'center',
     padding: 15,
     marginTop: 8,
     "& p": {
@@ -33,6 +34,13 @@ const useStyles = makeStyles((theme) => ({
       fontSize: 14,
       lineHeight: '18px'
     }
+  },
+  circleIcon: {
+    width: 26,
+    height: 18,
+    borderRadius: 15,
+    margin: 3,
+    border: '3px solid white',
   },
   checkIcon: {
     width: 30,
