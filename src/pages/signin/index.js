@@ -53,7 +53,7 @@ export default function Signin() {
       });
     } catch (e) {
       console.error(e);
-      setHelperText("Unable to unlock valid");
+      setHelperText("Invalid password");
       setError(true);
     }
 

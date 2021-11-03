@@ -2,15 +2,12 @@ import React from 'react'
 
 import { useHistory } from 'react-router-dom'
 import { ethers } from 'ethers';
-import {Button, Box, Icon, FormControl, FormHelperText} from '@material-ui/core';
+import {Box, Icon, FormControl, FormHelperText} from '@material-ui/core';
 import {Alert} from '@material-ui/lab'
-import { makeStyles, useTheme } from '@material-ui/core/styles';
+import { useTheme } from '@material-ui/core/styles';
 import { useRecoilState, useRecoilValue } from 'recoil';
 import Layout from "../../components/layout";
-import { faCheckCircle } from "@fortawesome/free-solid-svg-icons";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
-import Clipboard from 'react-clipboard.js';
 import { encryptKeyStore } from '../../utils/keystore';
 import { allWallets, currentWallet, networkProvider,allTokens } from '../../store/atoms';
 import ALL_TOKENS from '../../config/tokens';
@@ -22,6 +19,7 @@ import ARUMnemonic from './mnemonic';
 import useStyles from "./style";
 
 const helpermatchString = "Password doesn't match.";
+const helperchecking = "Please check If understand.";
 const helperErrorString =
   "Invalid Password, should be atleast 8 characters long";
 
@@ -37,6 +35,7 @@ export default function CreateWallet() {
   const [mnemonic, setMnemonic] = React.useState(null);
   const [confirmMnemonic, setConfirmMnemonic] = React.useState(null);
   const [showSecretPharse, setToggleSecretPharse] = React.useState(false);
+  const [checking, setChecking] = React.useState(false);
   const [step, setStep] = React.useState(1);
   // step = 1: password confirmation
   // step = 2: menmonic confirmation
@@ -88,6 +87,12 @@ export default function CreateWallet() {
 
   const handleSubmit = (event) => {
     event.preventDefault();
+    if (!checking) {
+      setHelperText(helperchecking);
+      setPasswordError(true);
+      return false;
+    }
+
     if (!pass || pass.length < 8) {
       setHelperText(helperErrorString);
       setPasswordError(true);
@@ -103,11 +108,22 @@ export default function CreateWallet() {
       }
     }
 
-    const randomBytes = ethers.utils.randomBytes(16);
-    const mnemonic =  ethers.utils.HDNode.entropyToMnemonic(randomBytes);
+    const mnemonic =  genMnemonic();
     setMnemonic(mnemonic);
     setStep(2);
   };
+
+  const genMnemonic = () => {
+    while (true) {
+      const randomBytes = ethers.utils.randomBytes(16);
+      const result = ethers.utils.HDNode.entropyToMnemonic(randomBytes);
+      let words = result.split(' ');
+      const duplicates = words.filter((word, index) => index !== words.indexOf(word));
+      console.log(words);
+      if (duplicates.length === 0)
+        return result;
+    }
+  }
 
   const handleCreateWallet = async (event) => {
     event.preventDefault();
@@ -120,13 +136,11 @@ export default function CreateWallet() {
       console.log('not matched');
     }
   }
-  
-  const handleBackClick = () => {
-    if(history.length) {
-      history.goBack();
-    } else {
+
+  const onClickNext = () => {
+    if (showSecretPharse)
       history.push('/');
-    }
+    setStep(3);
   }
 
   return (
@@ -169,10 +183,13 @@ export default function CreateWallet() {
               />
               <FormHelperText>{helperText}</FormHelperText>
             </FormControl>
-            <ARUCard className={classes.alarmCard}>
-              <Icon className={classes.checkIcon}>
+            <ARUCard className={classes.alarmCard} onClick={() => setChecking(!checking)}>
+              {!checking && <Icon className={classes.checkIcon}>
+                <img src="images/unchecked-circle.svg" alt="AurumWallet" className="logo-image" style={{height: '100%'}} />
+              </Icon>}
+              {checking && <Icon className={classes.checkIcon}>
                 <img src="images/checked-circle.svg" alt="AurumWallet" className="logo-image" style={{height: '100%'}} />
-              </Icon>
+              </Icon>}
               <p>I understand that Aurum cannot recover this password.</p>
             </ARUCard>
             <ARUButton className={classes.submitPassword} type='submit'>CREATE PASSWORD</ARUButton>
@@ -185,7 +202,7 @@ export default function CreateWallet() {
                 <img src="images/warning.svg" alt="AurumWallet" className="logo-image" style={{height: '100%'}} />
               </Icon>
               <p>
-                This is your Secret Recovery Pharse. Write it down and keep it in a safe place.
+                This is your Secret Recovery Phrase. Write it down and keep it in a safe place.
                 You'll be asked to re-enter this phrase in the next step - in the same order.
               </p>
             </ARUCard>
@@ -195,10 +212,11 @@ export default function CreateWallet() {
               </Box>
             </ARUCard>
             <ARUButton className={classes.hideSecretPharseBtn} mode='outline' onClick={()=>{setToggleSecretPharse(!showSecretPharse)}}>
-              <strong> {showSecretPharse ? 'Hide' : 'Show'}</strong> <span style={{marginLeft: 5}}>my Secret Recovery Pharse</span>
+              <strong> {showSecretPharse ? 'Hide' : 'Show'}</strong> <span style={{marginLeft: 5}}>my Secret Recovery Phrase</span>
             </ARUButton>
-            <ARUButton className={classes.wroteDownBtn} mode='filled' onClick={()=>setStep(3)}>
-              I WROTE DOWN MY PHRASE
+            <ARUButton className={classes.wroteDownBtn} mode='filled' onClick={()=>onClickNext()}>
+              {!showSecretPharse && <span>I WROTE DOWN MY PHRASE</span>}
+              {showSecretPharse && <span>CANCEL</span>}
             </ARUButton>
               {/* <Box className={classes.copyGroup}>
                 <textarea type="text" rows="3" readOnly value={mnemonic}></textarea>
@@ -225,7 +243,7 @@ export default function CreateWallet() {
           step == 4 && 
           <Box className={classes.flexBox}>
             <Alert severity="success" className={classes.congulatelations}>
-              CONGULATELATIONS
+              CONGRATULATIONS
             </Alert>
             <ARUButton onClick={goToWallet}>My Wallet</ARUButton>
           </Box>

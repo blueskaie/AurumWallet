@@ -17,6 +17,7 @@ const useStyles = makeStyles((theme) => ({
   },
   tokenInfo: {
     marginTop: '10px',
+    height: '50px',
     padding: '10px',
     display: 'flex',
     flexDirection: 'row',
@@ -38,8 +39,8 @@ const useStyles = makeStyles((theme) => ({
     marginLeft: '5px',
   },
   tokenIcon: {
-    width:'50px', 
-    height: '50px',
+    width:'40px', 
+    height: '40px',
     margin: '5px',
   }
 }));
