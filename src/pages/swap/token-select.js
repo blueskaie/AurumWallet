@@ -4,7 +4,8 @@ import { makeStyles, useTheme } from "@material-ui/core/styles";
 import {tokenLogos} from "../../config/token-info";
 import Jazzicon from 'react-jazzicon';
 import { useRecoilValue } from 'recoil';
-import { networkProvider, currentWallet, currentNetwork, tokenList  } from '../../store/atoms'
+import { currentNetwork, tokenList  } from '../../store/atoms'
+import { Box } from '@material-ui/core';
 
 const TokenSelect = (props) => {
     const network = useRecoilValue( currentNetwork );
@@ -37,10 +38,10 @@ const TokenSelect = (props) => {
         return result;
     }, [search, exceptToken, availableTokenList])
 
-  return (isShown && <div className={classes.tokenSelect}>
-        <div className={classes.searchBox}>
+  return (isShown && <Box className={classes.tokenSelect}>
+        <Box className={classes.searchBox}>
             <input placeholder="Search for a token" onChange={onSearchChange}></input>
-        </div>
+        </Box>
         { filteredTokenList && filteredTokenList.length 
             ? <ul className={classes.tokenList}>
                 {filteredTokenList.map((token, index)=>(
@@ -53,9 +54,9 @@ const TokenSelect = (props) => {
                     </li>
                 ))}
             </ul>  
-            : <div className={classes.noTokenList}> No Token List </div> 
+            : <Box className={classes.noTokenList}> No Token List </Box> 
         }     
-    </div>);
+    </Box>);
 };
 
 const useStyles = makeStyles((theme) => ({

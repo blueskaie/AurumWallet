@@ -5,7 +5,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useRecoilValue, useRecoilState } from 'recoil';
 
 import { withStyles } from '@material-ui/core/styles';
-import { Button, Switch, FormControl, FormHelperText, LinearProgress, Dialog, CircularProgress, Snackbar, Slider, Box } from '@material-ui/core';
+import { Button, Switch, FormControl, FormHelperText, LinearProgress, Dialog, CircularProgress, Snackbar, Slider } from '@material-ui/core';
 import MuiAlert from '@material-ui/lab/Alert';
 
 import useStyles from './style';
@@ -19,13 +19,11 @@ import { decryptKeyStore } from '../../utils/keystore'
 import { getExpectedAmounts, getGasInfo, doSwap } from '../../utils/swap-utils';
 import { approve } from '../../utils/token-utils';
 
-import { networkProvider, currentWallet, currentNetwork, tokenList, currentGasOptions  } from '../../store/atoms'
+import { networkProvider, currentWallet, currentNetwork, currentGasOptions  } from '../../store/atoms'
 
 import { DEFAULT_TOKEN } from "../../config/tokens";
 import {tokenLogos} from "../../config/token-info";
 import Jazzicon from 'react-jazzicon';
-
-// import AurumIcon128 from '../../../public/images/icon128.png';
 
 function Alert(props) {
   return <MuiAlert elevation={6} variant="filled" {...props} />;
@@ -75,7 +73,6 @@ const Swap = () => {
   const classes = useStyles();
   const network = useRecoilValue( currentNetwork );
   const provider = useRecoilValue( networkProvider );
-  // const availableTokenList = useRecoilValue(tokenList);
   const wallet = useRecoilValue(currentWallet);
   const shortWalletAddress = wallet.address.slice(0, 5) + "..." + wallet.address.substr(-4);
 
@@ -196,22 +193,6 @@ const Swap = () => {
       }
     }
   }
-
-  // const filteredFromTokenList = useMemo(()=>{
-  //   if (toToken && availableTokenList) {
-  //     return availableTokenList.filter(item=>item.code!==toToken.code);
-  // } else {
-  //     return availableTokenList;
-  // }
-  // }, [availableTokenList, toToken])
-
-  // const filteredToTokenList = useMemo(()=>{
-  //   if (fromToken && availableTokenList) {
-  //     return availableTokenList.filter(item=>item.code!==fromToken.code);
-  // } else {
-  //     return availableTokenList;
-  // }
-  // }, [availableTokenList, fromToken])
 
   const onMaxAmount = () => {
     if (fromToken) {
