@@ -77,6 +77,14 @@ const useStyles = makeStyles((theme) => ({
     display: 'flex',
     flexDirection: 'column'
   },
+  filpButton: {
+    margin: '5px 0px', 
+    display: 'flex', 
+    flexDirection: 'row', 
+    justifyContent: 'center', 
+    alignItems: 'center',
+    cursor: 'pointer'
+  },
   comfirmModal: {
     borderRadius: 10,
     textAlign: 'center',
