@@ -5,13 +5,14 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useRecoilValue, useRecoilState } from 'recoil';
 
 import { withStyles } from '@material-ui/core/styles';
-import { Button, Switch, FormControl, FormHelperText, LinearProgress, Dialog, CircularProgress, Snackbar, Slider } from '@material-ui/core';
+import { Button, Switch, FormControl, FormHelperText, LinearProgress, Dialog, CircularProgress, Snackbar, Slider, Box } from '@material-ui/core';
 import MuiAlert from '@material-ui/lab/Alert';
 
 import useStyles from './style';
 
 import Layout from "../../components/layout";
-import TokenSelect from '../../components/token-select';
+import TokenSelect from './token-select';
+import TokenSelectSkeleton from './token-select-skeleton';
 
 import * as LatomicNumber from '../../utils/big.number'
 import { decryptKeyStore } from '../../utils/keystore'
@@ -74,7 +75,7 @@ const Swap = () => {
   const classes = useStyles();
   const network = useRecoilValue( currentNetwork );
   const provider = useRecoilValue( networkProvider );
-  const availableTokenList = useRecoilValue(tokenList);
+  // const availableTokenList = useRecoilValue(tokenList);
   const wallet = useRecoilValue(currentWallet);
   const shortWalletAddress = wallet.address.slice(0, 5) + "..." + wallet.address.substr(-4);
 
@@ -196,21 +197,21 @@ const Swap = () => {
     }
   }
 
-  const filteredFromTokenList = useMemo(()=>{
-    if (toToken && availableTokenList) {
-      return availableTokenList.filter(item=>item.code!==toToken.code);
-  } else {
-      return availableTokenList;
-  }
-  }, [availableTokenList, toToken])
+  // const filteredFromTokenList = useMemo(()=>{
+  //   if (toToken && availableTokenList) {
+  //     return availableTokenList.filter(item=>item.code!==toToken.code);
+  // } else {
+  //     return availableTokenList;
+  // }
+  // }, [availableTokenList, toToken])
 
-  const filteredToTokenList = useMemo(()=>{
-    if (fromToken && availableTokenList) {
-      return availableTokenList.filter(item=>item.code!==fromToken.code);
-  } else {
-      return availableTokenList;
-  }
-  }, [availableTokenList, fromToken])
+  // const filteredToTokenList = useMemo(()=>{
+  //   if (fromToken && availableTokenList) {
+  //     return availableTokenList.filter(item=>item.code!==fromToken.code);
+  // } else {
+  //     return availableTokenList;
+  // }
+  // }, [availableTokenList, fromToken])
 
   const onMaxAmount = () => {
     if (fromToken) {
@@ -309,7 +310,9 @@ const Swap = () => {
                       </div>
                     </div>
                   </div>}
-                  <TokenSelect data={filteredFromTokenList} onChange={onFromChange} isShown={fromSelect}/>
+                  <React.Suspense fallback={<TokenSelectSkeleton/>}>
+                    <TokenSelect onChange={onFromChange} isShown={fromSelect} exceptToken={toToken}/>
+                  </React.Suspense>
                   <FormHelperText id="address_helper">
                     {helper.fromToken}
                   </FormHelperText>
@@ -340,7 +343,9 @@ const Swap = () => {
                       </div>
                     </div>
                   </div>}
-                  <TokenSelect data={filteredToTokenList} onChange={onToChange} isShown={toSelect}/>
+                  <React.Suspense fallback={<TokenSelectSkeleton/>}>
+                    <TokenSelect onChange={onToChange} isShown={toSelect} exceptToken={fromToken}/>
+                  </React.Suspense>
                   <FormHelperText id="address_helper">
                     {helper.toToken}
                   </FormHelperText>
