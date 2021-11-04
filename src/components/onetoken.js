@@ -1,4 +1,4 @@
-import React, {useState, useEffect, useMemo} from "react";
+import React from "react";
 import { useHistory } from "react-router-dom";
 import { Box } from "@material-ui/core";
 import { makeStyles, useTheme } from "@material-ui/core/styles";
@@ -6,8 +6,7 @@ import * as LatomicNumber from '../utils/big.number'
 import {tokenLogos} from "../config/token-info"
 import Jazzicon from 'react-jazzicon';
 import { useRecoilValue } from 'recoil';
-import { currentNetwork  } from '../store/atoms'
-import callAPI from "../utils/api-utils";
+import { currentNetwork, currentCurrencyCode  } from '../store/atoms'
 import ReactApexChart from 'react-apexcharts';
 import { faCaretDown, faCaretUp } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -17,35 +16,18 @@ const OneToken = (props) => {
 
   const classes = useStyles(useTheme());
   const history = useHistory();
-  const { code, balance, coinId, decimals, contract, trade, showInfo } = props;
+  const { code, balance, coinId, decimals, contract, trade, coingecko, showInfo } = props;
 
   const network = useRecoilValue( currentNetwork );
-  const [chartData, setChartData] = useState([]);
+  const currency = useRecoilValue( currentCurrencyCode );
 
   const goToDetail = () => { history.push(`/token-detail/${code}`); }
 
-  const fetchData = async () => {
-    let data = { index: [], price: [], volumes: [] };
-    if (coinId) {
-      let result = await callAPI(`https://api.coingecko.com/api/v3/coins/${coinId}/market_chart?vs_currency=usd&days=1&interval=1m`);
-      for (const item of result.prices) {
-          data.index.push(item[0]);
-          data.price.push(item[1]);
-      }
-      for (const item of result.total_volumes) data.volumes.push(item[1]);
-    }
-    return data;
-  };
-
-  useEffect(() => {
-		fetchData().then((res) => {
-      setChartData(res)
-		});
-	}, []);
-
-  const series = useMemo(()=>{
-    return [{data: chartData.price}]
-  }, [chartData])
+  const series = [{data: coingecko && coingecko.market.price}]
+  const curPrice = coingecko ? coingecko.market.price[coingecko.market.price.length - 1] : 0
+  const curVolumn = coingecko ? coingecko.market.volumes[coingecko.market.volumes.length - 1] : 0
+  const prevVolumn = coingecko ? coingecko.market.volumes[0] : 0
+  const percent = (curVolumn - prevVolumn) / prevVolumn * 100;
 
   const options = {
     chart: {
@@ -110,8 +92,6 @@ const OneToken = (props) => {
     }
   };
 
-  const up = Math.random() * 20 - 10;
-
   return (
     <Box className={classes.onetoken} onClick={goToDetail}>
       <Box className={classes.tokenimg}>
@@ -123,15 +103,26 @@ const OneToken = (props) => {
       <Box className={classes.tokeninfo}>
         <Box style={{display: 'flex', flexDirection: 'row', justifyContent: 'space-between'}}>
           <p className={classes.tokenname}>{code}</p>
-          <p className={classes.tokenname}><HiddenText show={showInfo} text={parseFloat(LatomicNumber.toDecimal(balance,decimals)).toFixed(4).toLocaleString()}/></p>
+          <p className={classes.tokenname}>
+            <HiddenText show={showInfo}>
+              {parseFloat(LatomicNumber.toDecimal(balance,decimals)).toFixed(4).toLocaleString()}
+            </HiddenText>
+          </p>
         </Box>
         <Box style={{display: 'flex', flexDirection: 'row', justifyContent: 'space-between'}}>
-          <p className={classes.tokenprice}>${parseFloat(LatomicNumber.toDecimal(balance,decimals)).toFixed(4).toLocaleString()}</p>
-          <p className={classes.tokenprice}><HiddenText show={showInfo} text={(parseFloat(LatomicNumber.toDecimal(balance,decimals)) * trade).toFixed(4).toLocaleString()}/></p>
+          <p className={classes.tokenprice}>
+            {curPrice.toFixed(4).toLocaleString()}
+          </p>
+          <p className={classes.tokenprice}>
+            <HiddenText show={showInfo}>
+              {currency == 'USD' ? '$' : '€'}
+              {(parseFloat(LatomicNumber.toDecimal(balance, decimals)) * trade.abs * trade.cmp).toFixed(4).toLocaleString()}
+            </HiddenText>
+          </p>
         </Box>
-        <Box style={{color: up > 0?'green':'red'}} >
-          {up > 0 ? <FontAwesomeIcon icon={faCaretUp} /> : <FontAwesomeIcon icon={faCaretDown} /> }
-          <span style={{marginLeft: 5}}>{Math.abs(up.toFixed(2))}%</span>
+        <Box style={{color: percent > 0?'green':'red'}} >
+          {percent > 0 ? <FontAwesomeIcon icon={faCaretUp} /> : <FontAwesomeIcon icon={faCaretDown} /> }
+          <span style={{marginLeft: 5}}>{percent.toFixed(2)}%</span>
         </Box>
       </Box>
       <Box className={classes.pricechart}>

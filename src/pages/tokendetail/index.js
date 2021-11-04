@@ -4,14 +4,14 @@ import { useHistory } from "react-router-dom";
 import { useRecoilValue, useSetRecoilState } from 'recoil';
 import { Box } from '@material-ui/core';
 import useStyles from './style';
-import callAPI from "../../utils/api-utils";
-import { tokenList, allTokens, currentNetwork  } from '../../store/atoms';
+import { tokenList, allTokens, currentNetwork, currentCurrencyCode  } from '../../store/atoms';
 import Transactions from '../../components/transactions';
 import ARUCard from '../../components/card';
 import ReactApexChart from 'react-apexcharts';
 import { faCaretDown, faCaretUp, faSignOutAlt } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import Layout from "../../components/layout";
+import * as LatomicNumber from '../../utils/big.number'
 
 const TokenDetail = (props) => {
 
@@ -19,8 +19,8 @@ const TokenDetail = (props) => {
   const {code} = props.match.params;
 
   const network = useRecoilValue( currentNetwork );
+  const currency = useRecoilValue( currentCurrencyCode );
   const list = useRecoilValue(tokenList);
-  const [ohlc, setOhlcData] = useState(null);
   const history = useHistory();
 
   const setAllTokens = useSetRecoilState(allTokens);
@@ -56,27 +56,6 @@ const TokenDetail = (props) => {
     }
     return null;
   }, [list, code]);
-
-  useEffect(async ()=>{
-    const fetchData = async (coinId) => {
-      if (coinId) {
-        let result = await callAPI(`https://api.coingecko.com/api/v3/coins/${coinId}/ohlc?vs_currency=usd&days=30`);
-        result = result.map(item=>{
-          return {
-            x: new Date(item[0]),
-            y: [item[1], item[2], item[3], item[4]]
-          }
-        })
-        return result;
-      }
-      return null;
-    };
-
-    if (coin) {
-      const data = await fetchData(coin.coinId);
-      setOhlcData(data);
-    }
-  }, [coin]);
 
   const options = {
     chart: {
@@ -117,9 +96,14 @@ const TokenDetail = (props) => {
   };
 
   const series = [{
-    data: ohlc
+    data: coin.coingecko && coin.coingecko.ohlc
   }];
-  
+
+  const curPrice = coin && coin.coingecko ? coin.coingecko.market.price[coin.coingecko.market.price.length - 1] : 0
+  const curVolumn = coin && coin.coingecko ? coin.coingecko.market.volumes[coin.coingecko.market.volumes.length - 1] : 0
+  const prevVolumn = coin && coin.coingecko ? coin.coingecko.market.volumes[0] : 0
+  const percent = (curVolumn - prevVolumn) / prevVolumn * 100;
+
   return (
     <Layout isShownBackButton = {true} isShownWallet = {false} varient = 'secondary'>
       {/* main_div */}
@@ -128,7 +112,7 @@ const TokenDetail = (props) => {
           <span className={classes.deleteBtn} onClick={deleteToken}>Delete Token</span>
         </div>}
         <ARUCard>
-          {coin && <ReactApexChart options={options} series={series} type="candlestick" height={250} style={{margin: '10px'}} /> }
+          <ReactApexChart options={options} series={series} type="candlestick" height={250} style={{margin: '10px'}} />
         </ARUCard>
         <ARUCard className={classes.tokenInfo}>
           <Box style={{marginRight: '10px'}} >
@@ -137,15 +121,23 @@ const TokenDetail = (props) => {
           <Box className={classes.tokenRow}>
             <Box className={classes.tokenLeft}>
               <Box>{coin.code}</Box>
-              <Box style={{marginTop: '10px'}}>$380.50</Box>
-              <Box style={{color: 'red', marginTop: '5px'}}>
-                <FontAwesomeIcon icon={faCaretDown} />
-                <span>5.32%</span>
+              <Box style={{marginTop: '10px'}}>
+                {currency == 'USD' ? '$' : '€'}
+                {parseFloat(curPrice * coin.trade.cmp).toFixed(2)}
+              </Box>
+              <Box style={{color: percent > 0?'green':'red'}}>
+                {percent > 0 ? <FontAwesomeIcon icon={faCaretUp} /> : <FontAwesomeIcon icon={faCaretDown} /> }
+                <span>{percent.toFixed(2)}%</span>
               </Box>
             </Box>
             <Box className={classes.tokenLeft} style={{alignItems: 'flex-end', marginRight: '5px'}}>
-              <Box style={{fontSize: '18px', fontWeight: '500'}}>2150</Box>
-              <Box style={{marginTop: '5px'}}>$818,075</Box>
+              <Box style={{fontSize: '18px', fontWeight: '500'}}>
+                {parseFloat(LatomicNumber.toDecimal(coin.balance, coin.decimals)).toFixed(2)}
+              </Box>
+              <Box style={{marginTop: '5px'}}>
+                {currency == 'USD' ? '$' : '€'}
+                {(parseFloat(LatomicNumber.toDecimal(coin.balance, coin.decimals)) * coin.trade.abs * coin.trade.cmp).toFixed(2).toLocaleString()}
+              </Box>
               <Box style={{color: '#999999', marginTop: '5px', cursor: 'pointer'}} onClick={()=>goToSendToken(coin)} >
                 <span>Send</span>
                 <FontAwesomeIcon icon={faSignOutAlt} style={{marginLeft: '5px'}} />

@@ -19,8 +19,7 @@ const OneAccount = (props) => {
       <Box className={classes.accountinfo}>
         <Box style={{display: 'flex', flexDirection: 'column', justifyContent: 'space-between'}}>
           <p className={classes.name}>{name}</p>
-          {/* <p className={classes.balance}>$<HiddenText show={visible} text={parseFloat(LatomicNumber.toDecimal(balance,decimals)).toFixed(4).toLocaleString()}/></p> */}
-          <p className={classes.address}><HiddenText show={visible} text={shortWalletAddress}/></p>
+          <p className={classes.address}><HiddenText show={visible}>{shortWalletAddress}</HiddenText></p>
         </Box>
         {account.current && <Icon className={classes.checkIcon}>
           <img src="images/checked-circle.svg" alt="AurumWallet" className="logo-image" style={{height: '100%'}} />

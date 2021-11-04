@@ -9,6 +9,7 @@ import Networks from '../config/networks'
 import { precisionFormat } from '../utils/format-utils'
 import { getProvider, loadSingle } from '../utils/token-utils'
 import { getCurrencyPerToken } from '../utils/chainlink-utils'
+import { getOHLC, getMarketChart } from '../utils/coingeco-utils'
 import { BNB_CODE } from '../config/tokens';
 import coingekoCoinIds from '../config/coingecko-info';
 
@@ -275,18 +276,42 @@ export const tokenLoader = selectorFamily({
   get: ({token, network, address}) => async ({get}) => {
     get(refreshCalled)
     const currency = get(currentCurrencyCode);
+    
+    let absTrade = 1;
+    let cmpTrade = 1;
+
+    try {
+      absTrade = await getCurrencyPerToken(network, token.code, 'USD');
+    } catch (e) {
+      absTrade = 1;
+    }
+    
+    try {
+      cmpTrade = await getCurrencyPerToken(network, currency, 'USD');
+      cmpTrade = 1 / cmpTrade;
+    } catch (e) {
+      cmpTrade = 1;
+    }
+
+    const trade = {
+      "abs": absTrade,
+      "cmp": cmpTrade
+    }
+
+    const coinId = coingekoCoinIds[token.code.toLowerCase()];
+    const market = await getMarketChart(coinId);
+    const ohlc = await getOHLC(coinId);
+    const coingecko = {ohlc: ohlc, market: market};
+
     if (token.code === BNB_CODE) {
       const wallet = get(currentWallet)
       const web3 = get(networkProvider)
-
       const bal = await web3.eth.getBalance(wallet.address)
-      const trade = await getCurrencyPerToken(network, token.code, currency);
-      return {...token, balance: bal, coinId: coingekoCoinIds[token.code.toLowerCase()], trade: trade};
+      return {...token, balance: bal, coinId: coinId, trade: trade, coingecko: coingecko};
     }
-    const trade = await getCurrencyPerToken(network, token.code, currency);
     const {balance, allowance} = await loadSingle(network, token, address);
 
-    return {...token, balance, allowance, coinId: coingekoCoinIds[token.code.toLowerCase()], trade: trade};
+    return {...token, balance, allowance, coinId: coinId, trade: trade, coingecko: coingecko};
   }
 })
 
