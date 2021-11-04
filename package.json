@@ -74,6 +74,7 @@
     "react-refresh": "^0.8.3",
     "react-router-dom": "5.2.0",
     "react-slick": "^0.28.1",
+    "react-spinners": "^0.11.0",
     "react-window": "1.8.6",
     "recoil": "0.1.2",
     "recoil-persist": "0.8.0",

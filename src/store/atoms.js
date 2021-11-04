@@ -2,6 +2,7 @@ import {
   atom,
   selector,
   selectorFamily,
+  waitForAll,
   waitForNone
 } from 'recoil';
 
@@ -257,17 +258,21 @@ export const tokenList = selector({
 
     console.log("tokenList step3",toUseTokens);
 
-    const tokenLoadables = get(waitForNone(
+    // const tokenLoadables = get(waitForNone(
+    //   toUseTokens.map(token => tokenLoader({token: token, network, address: wallet.address}))
+    // ));
+    const tokenLoadables = get(waitForAll(
       toUseTokens.map(token => tokenLoader({token: token, network, address: wallet.address}))
     ));
 
     console.log("tokenList step4",tokenLoadables);
 
-    return tokenLoadables
-      .filter(({state, contents}) => {
-        return state === 'hasValue'
-      })
-      .map(({contents}) => contents);
+    // return tokenLoadables
+    //   .filter(({state, contents}) => {
+    //     return state === 'hasValue'
+    //   })
+    //   .map(({contents}) => contents);
+    return tokenLoadables;
   }
 });
 

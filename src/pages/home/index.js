@@ -11,10 +11,7 @@ import StatisticInfo from "../../components/statistic-info";
 import { currentWallet } from "../../store/atoms";
 import { useRecoilValue } from "recoil";
 import HiddenText from "../../components/hidden-text";
-
-// import "slick-carousel/slick/slick.css";
-// import "slick-carousel/slick/slick-theme.css";
-// import SliderList from "../../components/slider-list";
+import FadeLoader from "react-spinners/FadeLoader";
 
 import useStyles from "./style";
 
@@ -33,38 +30,33 @@ export default function Home() {
 
   return (
     <Layout isShownWallet={false} >
-      <Box className={classes.root}>
-        {/* <React.Suspense fallback={<Box className="slidebar"></Box>}>
-          <SliderList />
-        </React.Suspense> */}
-        <Box className={classes.clipboard}>
-          <Clipboard
-            component="button"
-            button-href="#"
-            data-clipboard-text={wallet && wallet.address}
-            onClick={()=>setOpenSuccess(true)}
-          >
-            <Typography variant="h6" className={classes.title}>
-              <Box><HiddenText show={showInfo}>{shortWalletAddress}</HiddenText></Box>
-            </Typography>
-          </Clipboard>
-        </Box>
-        <React.Suspense fallback={<Box className="slidebar"></Box>}>
-          <StatisticInfo showInfo={showInfo} setToggleInfo={()=>setToggleInfo(!showInfo)}/>
-        </React.Suspense>
-
-        <Box className={classes.mywallet}>
-          <Box className={classes.description}>
-            <h3>My Wallet</h3>
-            <p onClick={addToken} style={{color: 'white'}}>Add token</p>
+      <React.Suspense fallback={<Box className={classes.loader}><FadeLoader color="#ffffff" height={15} width={5} radius={2}/></Box>}>
+        <Box className={classes.root}>
+          <Box className={classes.clipboard}>
+            <Clipboard
+              component="button"
+              button-href="#"
+              data-clipboard-text={wallet && wallet.address}
+              onClick={()=>setOpenSuccess(true)}
+            >
+              <Typography variant="h6" className={classes.title}>
+                <Box><HiddenText show={showInfo}>{shortWalletAddress}</HiddenText></Box>
+              </Typography>
+            </Clipboard>
           </Box>
-          <ScrollContainer className={classes.tokenlist} vertical={true}>
-            <React.Suspense fallback={<Box>Loading...</Box>}>
+          <StatisticInfo showInfo={showInfo} setToggleInfo={()=>setToggleInfo(!showInfo)}/>
+
+          <Box className={classes.mywallet}>
+            <Box className={classes.description}>
+              <h3>My Wallet</h3>
+              <p onClick={addToken} style={{color: 'white'}}>Add token</p>
+            </Box>
+            <ScrollContainer className={classes.tokenlist} vertical={true}>
               <TokenList showInfo={showInfo}/>
-            </React.Suspense>
-          </ScrollContainer>
+            </ScrollContainer>
+          </Box>
         </Box>
-      </Box>
+      </React.Suspense>
     </Layout>
   );
 }
