@@ -5,6 +5,11 @@ const useStyles = makeStyles((theme) => ({
     flexGrow: 1,
     marginTop: -40
   },
+  loader: {
+    position: 'absolute',
+    top: 130,
+    left: 130,
+  },
   mywallet: {
     marginTop: 10,
     marginBottom: 10,
