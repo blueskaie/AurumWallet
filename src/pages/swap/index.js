@@ -11,20 +11,19 @@ import MuiAlert from '@material-ui/lab/Alert';
 import useStyles from './style';
 
 import Layout from "../../components/layout";
-import TokenSelect from '../../components/token-select';
+import TokenSelect from './token-select';
+import TokenSelectSkeleton from './token-select-skeleton';
 
 import * as LatomicNumber from '../../utils/big.number'
 import { decryptKeyStore } from '../../utils/keystore'
 import { getExpectedAmounts, getGasInfo, doSwap } from '../../utils/swap-utils';
 import { approve } from '../../utils/token-utils';
 
-import { networkProvider, currentWallet, currentNetwork, tokenList, currentGasOptions  } from '../../store/atoms'
+import { networkProvider, currentWallet, currentNetwork, currentGasOptions  } from '../../store/atoms'
 
 import { DEFAULT_TOKEN } from "../../config/tokens";
 import {tokenLogos} from "../../config/token-info";
 import Jazzicon from 'react-jazzicon';
-
-// import AurumIcon128 from '../../../public/images/icon128.png';
 
 function Alert(props) {
   return <MuiAlert elevation={6} variant="filled" {...props} />;
@@ -74,7 +73,6 @@ const Swap = () => {
   const classes = useStyles();
   const network = useRecoilValue( currentNetwork );
   const provider = useRecoilValue( networkProvider );
-  const availableTokenList = useRecoilValue(tokenList);
   const wallet = useRecoilValue(currentWallet);
   const shortWalletAddress = wallet.address.slice(0, 5) + "..." + wallet.address.substr(-4);
 
@@ -196,22 +194,6 @@ const Swap = () => {
     }
   }
 
-  const filteredFromTokenList = useMemo(()=>{
-    if (toToken && availableTokenList) {
-      return availableTokenList.filter(item=>item.code!==toToken.code);
-  } else {
-      return availableTokenList;
-  }
-  }, [availableTokenList, toToken])
-
-  const filteredToTokenList = useMemo(()=>{
-    if (fromToken && availableTokenList) {
-      return availableTokenList.filter(item=>item.code!==fromToken.code);
-  } else {
-      return availableTokenList;
-  }
-  }, [availableTokenList, fromToken])
-
   const onMaxAmount = () => {
     if (fromToken) {
       let swapAmount = fromToken?parseFloat(LatomicNumber.toDecimal(fromToken.balance,fromToken.decimals)):0;
@@ -309,7 +291,9 @@ const Swap = () => {
                       </div>
                     </div>
                   </div>}
-                  <TokenSelect data={filteredFromTokenList} onChange={onFromChange} isShown={fromSelect}/>
+                  <React.Suspense fallback={<TokenSelectSkeleton/>}>
+                    <TokenSelect onChange={onFromChange} isShown={fromSelect} exceptToken={toToken}/>
+                  </React.Suspense>
                   <FormHelperText id="address_helper">
                     {helper.fromToken}
                   </FormHelperText>
@@ -340,7 +324,9 @@ const Swap = () => {
                       </div>
                     </div>
                   </div>}
-                  <TokenSelect data={filteredToTokenList} onChange={onToChange} isShown={toSelect}/>
+                  <React.Suspense fallback={<TokenSelectSkeleton/>}>
+                    <TokenSelect onChange={onToChange} isShown={toSelect} exceptToken={fromToken}/>
+                  </React.Suspense>
                   <FormHelperText id="address_helper">
                     {helper.toToken}
                   </FormHelperText>

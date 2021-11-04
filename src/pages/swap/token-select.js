@@ -1,16 +1,17 @@
 import React, { useState, useMemo } from "react";
 
 import { makeStyles, useTheme } from "@material-ui/core/styles";
-import {tokenLogos} from "../config/token-info";
+import {tokenLogos} from "../../config/token-info";
 import Jazzicon from 'react-jazzicon';
 import { useRecoilValue } from 'recoil';
-import { networkProvider, currentWallet, currentNetwork, tokenList  } from '../store/atoms'
+import { currentNetwork, tokenList  } from '../../store/atoms'
+import { Box } from '@material-ui/core';
 
 const TokenSelect = (props) => {
-    const availableTokenList = props.data ? props.data : [];
     const network = useRecoilValue( currentNetwork );
+    const availableTokenList = useRecoilValue(tokenList);
 
-    const {isShown,onChange} = props;
+    const {isShown,exceptToken,onChange} = props;
     const classes = useStyles(useTheme());
 
     
@@ -27,17 +28,20 @@ const TokenSelect = (props) => {
     }
 
     const filteredTokenList = useMemo(()=>{
+        let result = availableTokenList;
         if (search) {
-            return availableTokenList.filter(item=>item.code.toLocaleLowerCase().includes(search.toLocaleLowerCase()));
-        } else {
-            return availableTokenList;
+            result = result.filter(item=>item.code.toLocaleLowerCase().includes(search.toLocaleLowerCase()));
         }
-    }, [search, availableTokenList])
+        if (exceptToken && exceptToken.code) {
+            result = result.filter(item=>item.code!==exceptToken.code);
+        }
+        return result;
+    }, [search, exceptToken, availableTokenList])
 
-  return (isShown && <div className={classes.tokenSelect}>
-        <div className={classes.searchBox}>
+  return (isShown && <Box className={classes.tokenSelect}>
+        <Box className={classes.searchBox}>
             <input placeholder="Search for a token" onChange={onSearchChange}></input>
-        </div>
+        </Box>
         { filteredTokenList && filteredTokenList.length 
             ? <ul className={classes.tokenList}>
                 {filteredTokenList.map((token, index)=>(
@@ -50,9 +54,9 @@ const TokenSelect = (props) => {
                     </li>
                 ))}
             </ul>  
-            : <div className={classes.noTokenList}> No Token List </div> 
+            : <Box className={classes.noTokenList}> No Token List </Box> 
         }     
-    </div>);
+    </Box>);
 };
 
 const useStyles = makeStyles((theme) => ({
@@ -99,6 +103,7 @@ const useStyles = makeStyles((theme) => ({
         borderRadius: '0 0 16px 16px',
         border: '1px solid white',
         borderTop: 'none',
+        zIndex: 10
     },
     tokenItem: {
         display: 'flex',
