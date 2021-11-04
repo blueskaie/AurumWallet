@@ -5,7 +5,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useRecoilValue, useRecoilState } from 'recoil';
 
 import { withStyles } from '@material-ui/core/styles';
-import { Button, Switch, FormControl, FormHelperText, LinearProgress, Dialog, CircularProgress, Snackbar, Slider } from '@material-ui/core';
+import { Box, Button, Switch, FormControl, FormHelperText, LinearProgress, Dialog, CircularProgress, Snackbar, Slider } from '@material-ui/core';
 import MuiAlert from '@material-ui/lab/Alert';
 
 import useStyles from './style';
@@ -205,6 +205,14 @@ const Swap = () => {
     }
   };
 
+  const filpToken = (e) => {
+    e.preventDefault();
+    const temp = fromToken;
+    setFromToken(toToken);
+    setToToken(temp);
+    setSwapAmount(parseFloat(expectedAmount));
+  }
+
   const isAllowed = useMemo(()=>{
     return !fromToken || fromToken.code === DEFAULT_TOKEN.code || LatomicNumber.toDecimal(fromToken.allowance,fromToken.decimals) > 0 || isAllowToken
   }, [fromToken, isAllowToken])
@@ -251,46 +259,46 @@ const Swap = () => {
 
   return (
     <Layout isShownWallet={false}>
-      <div className={classes.root}>
-        <div className={classes.swaptitle}>
+      <Box className={classes.root}>
+        <Box className={classes.swaptitle}>
           Swap Tokens
-        </div>
-        {/* main_div */}
-        <div className={classes.swapcontent}>
+        </Box>
+        {/* main_Box */}
+        <Box className={classes.swapcontent}>
           <form method="post" autoComplete="off" onSubmit={handleSubmit}>
-            <div className={classes.swaptoken}>
-              <div className={classes.swapOptions} style={{paddingRight: '7px'}}>
+            <Box className={classes.swaptoken}>
+              <Box className={classes.swapOptions} style={{paddingRight: '7px'}}>
                 <select className={classes.swapRouter} onChange={(e)=>setSwapRouter(e.target.value)} value={swapRouter}>
                   <option value="pancake">Apeswap</option>
                   <option value="apeswap">Pancake</option>
                 </select>
-                <div className={classes.setting} onClick={()=>setOpenSettingsDialog(true)}>
+                <Box className={classes.setting} onClick={()=>setOpenSettingsDialog(true)}>
                   <FontAwesomeIcon icon={faCog} style={{width: 15, height: 15, color:'white'}}/>
-                </div>
-              </div>
-              <div >
+                </Box>
+              </Box>
+              <Box >
                 <FormControl error={errors.fromToken} style={{width: '100%'}}>
-                  {!fromSelect && <div className={classes.swapform}>
-                    <div className={classes.fromtokeninfoleft}>
-                      <div>From</div>
-                      <div><input type="number" className={classes.fromtokenamount} placeholder="0.0" value={swapAmount} onChange={onSwapAmount}/></div>
-                    </div>
-                    <div className={classes.amountSection}>
-                      <div className={classes.balanceAmount}>Balance: {fromToken ? parseFloat(LatomicNumber.toDecimal(fromToken.balance, fromToken.decimals)).toFixed(5) : ''}</div>
-                      <div className={classes.fromtokeninfo} onClick={()=>{setFromSelect(true); setToSelect(false);}}>
-                        <div>
+                  {!fromSelect && <Box className={classes.swapform}>
+                    <Box className={classes.fromtokeninfoleft}>
+                      <Box>From</Box>
+                      <Box><input type="number" className={classes.fromtokenamount} placeholder="0.0" value={swapAmount} onChange={onSwapAmount}/></Box>
+                    </Box>
+                    <Box className={classes.amountSection}>
+                      <Box className={classes.balanceAmount}>Balance: {fromToken ? parseFloat(LatomicNumber.toDecimal(fromToken.balance, fromToken.decimals)).toFixed(5) : ''}</Box>
+                      <Box className={classes.fromtokeninfo} onClick={()=>{setFromSelect(true); setToSelect(false);}}>
+                        <Box>
                           { fromToken 
                             ? (tokenLogos[fromToken.code.toUpperCase()]
                               ? <img src={tokenLogos[fromToken.code.toUpperCase()]} alt={fromToken.code} width={20} />
                               : <Jazzicon diameter={20} seed={fromToken.contract[network.id]} /> )
-                            : <div style={{width: 20, height: 20}}></div>
+                            : <Box style={{width: 20, height: 20}}></Box>
                           }
-                        </div>
-                        <div style={{color:'white', marginLeft: '5px'}}>{fromToken?fromToken.code:'From'}</div>
+                        </Box>
+                        <Box style={{color:'white', marginLeft: '5px'}}>{fromToken?fromToken.code:'From'}</Box>
                         <FontAwesomeIcon icon={faCaretDown} style={{color:'white', marginLeft: '5px'}}/>
-                      </div>
-                    </div>
-                  </div>}
+                      </Box>
+                    </Box>
+                  </Box>}
                   <React.Suspense fallback={<TokenSelectSkeleton/>}>
                     <TokenSelect onChange={onFromChange} isShown={fromSelect} exceptToken={toToken}/>
                   </React.Suspense>
@@ -298,32 +306,32 @@ const Swap = () => {
                     {helper.fromToken}
                   </FormHelperText>
                 </FormControl>
-                <div style={{margin: '5px 0px', display: 'flex', flexDirection: 'row', justifyContent: 'center', alignItems: 'center'}}>
+                <Box className={classes.filpButton} onClick={filpToken}>
                   <FontAwesomeIcon icon={faCaretDown} style={{color:'white', marginLeft: '5px'}}/>
                   <FontAwesomeIcon icon={faCaretUp} style={{color:'white', marginLeft: '5px'}}/>
-                </div>
+                </Box>
                 <FormControl error={errors.toToken} style={{width: '100%'}}>
-                  {!toSelect && <div className={classes.swapform}>
-                    <div className={classes.fromtokeninfoleft}>
-                      <div>To</div>
-                      <div><input type="number" className={classes.fromtokenamount} placeholder="0.0" value={expectedAmount} disabled/></div>
-                    </div>
-                    <div className={classes.amountSection}>
-                      <div className={classes.balanceAmount}>Balance: {toToken?parseFloat(LatomicNumber.toDecimal(toToken.balance,toToken.decimals)).toFixed(5) : ''}</div>
-                      <div className={classes.fromtokeninfo} onClick={()=>{setToSelect(true); setFromSelect(false);}}>
-                        <div>
+                  {!toSelect && <Box className={classes.swapform}>
+                    <Box className={classes.fromtokeninfoleft}>
+                      <Box>To</Box>
+                      <Box><input type="number" className={classes.fromtokenamount} placeholder="0.0" value={expectedAmount} disabled/></Box>
+                    </Box>
+                    <Box className={classes.amountSection}>
+                      <Box className={classes.balanceAmount}>Balance: {toToken?parseFloat(LatomicNumber.toDecimal(toToken.balance,toToken.decimals)).toFixed(5) : ''}</Box>
+                      <Box className={classes.fromtokeninfo} onClick={()=>{setToSelect(true); setFromSelect(false);}}>
+                        <Box>
                           { toToken 
                             ? (tokenLogos[toToken.code.toUpperCase()]
                               ? <img src={tokenLogos[toToken.code.toUpperCase()]} alt={toToken.code} width={20} />
                               : <Jazzicon diameter={20} seed={toToken.contract[network.id]} /> )
-                            : <div style={{width: 20, height: 20}}></div>
+                            : <Box style={{width: 20, height: 20}}></Box>
                           }
-                        </div>
-                        <div style={{color:'white', marginLeft: '5px'}}>{toToken?toToken.code:'To'}</div>
+                        </Box>
+                        <Box style={{color:'white', marginLeft: '5px'}}>{toToken?toToken.code:'To'}</Box>
                         <FontAwesomeIcon icon={faCaretDown} style={{color:'white', marginLeft: '5px'}}/>
-                      </div>
-                    </div>
-                  </div>}
+                      </Box>
+                    </Box>
+                  </Box>}
                   <React.Suspense fallback={<TokenSelectSkeleton/>}>
                     <TokenSelect onChange={onToChange} isShown={toSelect} exceptToken={fromToken}/>
                   </React.Suspense>
@@ -331,9 +339,9 @@ const Swap = () => {
                     {helper.toToken}
                   </FormHelperText>
                 </FormControl>
-              </div>
-              <div style={{marginTop: 10, marginBottom: 10, textAlign: 'center', display: 'flex', flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center'}} id='real_slider' className={classes.divslider}>
-                <div style={{color: 'white', marginRight: '20px'}}>0%</div>
+              </Box>
+              <Box style={{marginTop: 10, marginBottom: 10, textAlign: 'center', display: 'flex', flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center'}} id='real_slider' className={classes.Boxslider}>
+                <Box style={{color: 'white', marginRight: '20px'}}>0%</Box>
                 <IOSSlider
                   aria-labelledby="input-slider"
                   step={25}
@@ -343,29 +351,29 @@ const Swap = () => {
                   max={100}
                   color='secondary'
                 />
-                <div style={{color: 'white', marginLeft: '20px'}}>100%</div>
-              </div>
-              <div className={classes.submitWrapper}>
+                <Box style={{color: 'white', marginLeft: '20px'}}>100%</Box>
+              </Box>
+              <Box className={classes.submitWrapper}>
                 {!isAllowed && <Button variant="contained" color="secondary" style={{background: 'white', color: 'black', borderRadius: '15px'}} disabled={formSubmitting} onClick={approveToken}>Approve</Button> }
                 {isAllowed && <Button variant="contained" color="secondary" style={{background: 'white', color: 'black', borderRadius: '15px'}} disabled={formSubmitting} type="submit">Swap</Button> }
                 {formSubmitting && <LinearProgress />}
-              </div>
-            </div>
+              </Box>
+            </Box>
           </form>
             
-          <div className={classes.swapinfo}>
-              <div className={classes.swapsubinfo}>
+          <Box className={classes.swapinfo}>
+              <Box className={classes.swapsubinfo}>
                 <p>Minimum received</p>
                 <p>Price Impact</p>
                 <p>Liquidity provider fee</p>
-              </div>
-              <div className={classes.swapsubinfo}>
+              </Box>
+              <Box className={classes.swapsubinfo}>
                 <p style={{color: '#00d70a'}}>{toToken ? `${minimumReceivedAmount.toFixed(4)} ${toToken.code}` : 0}</p>
                 <p>0.0000</p>
                 <p>0.00</p>
-              </div>
-          </div>
-        </div>
+              </Box>
+          </Box>
+        </Box>
       
         <Dialog
           classes={{paper: classes.comfirmModal}}
@@ -374,37 +382,37 @@ const Swap = () => {
           open={openSwapConfirmDialog}
         >
           <form method="post" autoComplete="off" onSubmit={handleSwapConfirmSubmit} className={classes.gasForm}>
-            <div className={classes.swapAmount}>{parseFloat(swapAmount.toFixed(4))} {fromToken ? fromToken.code : ''}</div>
-            <div className={classes.accountInfo}>
+            <Box className={classes.swapAmount}>{parseFloat(swapAmount.toFixed(4))} {fromToken ? fromToken.code : ''}</Box>
+            <Box className={classes.accountInfo}>
               <Jazzicon diameter={32} seed={fromToken && fromToken.contract[network.id]} />
-              <div style={{marginLeft: 10, textAlign: 'left'}}>
-                <div style={{fontSize: 14, fontWeight: 500}}>Account ({shortWalletAddress})</div>
-                <div style={{marginTop: 5}}>Balance: {fromToken ? parseFloat(LatomicNumber.toDecimal(fromToken.balance, fromToken.decimals)).toFixed(5) : ''} {fromToken && fromToken.code}</div>
-              </div>
-            </div>
-            <div className={classes.amountInfo}>
-              <div style={{display: 'flex', alignItems: 'center', justifyContent: 'space-between'}}>
-                <div> Estimated gas fee</div>
-                <div>{parseFloat(gasOptions.limit) * parseFloat(gasOptions.price) / 1000000000} BNB</div>
-              </div>
+              <Box style={{marginLeft: 10, textAlign: 'left'}}>
+                <Box style={{fontSize: 14, fontWeight: 500}}>Account ({shortWalletAddress})</Box>
+                <Box style={{marginTop: 5}}>Balance: {fromToken ? parseFloat(LatomicNumber.toDecimal(fromToken.balance, fromToken.decimals)).toFixed(5) : ''} {fromToken && fromToken.code}</Box>
+              </Box>
+            </Box>
+            <Box className={classes.amountInfo}>
+              <Box style={{display: 'flex', alignItems: 'center', justifyContent: 'space-between'}}>
+                <Box> Estimated gas fee</Box>
+                <Box>{parseFloat(gasOptions.limit) * parseFloat(gasOptions.price) / 1000000000} BNB</Box>
+              </Box>
               <hr/>
-              <div style={{display: 'flex', alignItems: 'center', justifyContent: 'space-between'}}>
-                <div> Total</div>
-                {fromToken && <div>
+              <Box style={{display: 'flex', alignItems: 'center', justifyContent: 'space-between'}}>
+                <Box> Total</Box>
+                {fromToken && <Box>
                   {fromToken.code == 'BNB'
                   ? `${(parseFloat(swapAmount)+parseFloat(gasOptions.limit) * parseFloat(gasOptions.price) / 1000000000).toFixed(4)} BNB`
                   : `${parseFloat(swapAmount).toFixed(4)} ${fromToken.code} + ${(parseFloat(gasOptions.limit) * parseFloat(gasOptions.price) / 1000000000).toFixed(4)} BNB`}
-                </div>}
-              </div>
-            </div>
-            <div onClick={()=>setOpenGasEditDialog(true)} style={{margin: 10, textAlign: 'right', cursor: 'pointer'}}> Edit Gas </div>
+                </Box>}
+              </Box>
+            </Box>
+            <Box onClick={()=>setOpenGasEditDialog(true)} style={{margin: 10, textAlign: 'right', cursor: 'pointer'}}> Edit Gas </Box>
 
-            <div className={classes.submitWrapper}>
-              <div style={{display: 'flex', justifyContent: 'space-between'}}>
+            <Box className={classes.submitWrapper}>
+              <Box style={{display: 'flex', justifyContent: 'space-between'}}>
                 <Button variant="contained" color="primary" style={{width: '48%'}} onClick={()=>setOpenSwapConfirmDialog(false)}>Cancel</Button>
                 <Button variant="contained" color="primary" style={{width: '48%'}} type="submit" disabled={isSwapping}>Confirm {isSwapping && <CircularProgress size={15} style={{color: 'white', marginLeft: 10}}/>}</Button>
-              </div>
-            </div>
+              </Box>
+            </Box>
 
           </form>
         </Dialog>
@@ -442,12 +450,12 @@ const Swap = () => {
               </FormHelperText>
             </FormControl>
 
-            <div className={classes.submitWrapper}>
-              <div style={{display: 'flex', justifyContent: 'space-between'}}>
+            <Box className={classes.submitWrapper}>
+              <Box style={{display: 'flex', justifyContent: 'space-between'}}>
                 <Button variant="contained" color="primary" style={{width: '48%'}} onClick={()=>setOpenGasEditDialog(false)}>Cancel</Button>
                 <Button variant="contained" color="primary" style={{width: '48%'}} type="submit">Save</Button>
-              </div>
-            </div>
+              </Box>
+            </Box>
 
           </form>
         </Dialog>
@@ -459,7 +467,7 @@ const Swap = () => {
         >
           <form method="post" autoComplete="off" className={classes.settingForm}>
             <label className={classes.label}>Slippage tolerance</label>
-            <div style={{textAlign: 'center'}} id='dlg_slider'>
+            <Box style={{textAlign: 'center'}} id='dlg_slider'>
               <IOSSlider
                 value={allowedSlippage}
                 onChange={(e, value)=>setAllowedSlippage(value)}
@@ -471,12 +479,12 @@ const Swap = () => {
                 max={1.5}
                 disabled={autoSlippage}
               />
-              <div style={{display: 'flex', justifyContent: 'space-between', alignItems: 'center'}}>
+              <Box style={{display: 'flex', justifyContent: 'space-between', alignItems: 'center'}}>
                 <input className={classes.slippageInput} type="number" value={allowedSlippage} onChange={(e)=>setAllowedSlippage(parseFloat(e.target.value))} disabled={autoSlippage}/>
                 <Switch label="Auto" checked={autoSlippage} onChange={(e)=>setAutoSlippage(e.target.checked)}/>
                 <span style={{color: 'white'}}>Auto</span>
-              </div>
-            </div>
+              </Box>
+            </Box>
           </form>
         </Dialog>
         <Snackbar open={openSuccess} autoHideDuration={6000} onClose={() => setOpenSuccess(false)}>
@@ -490,7 +498,7 @@ const Swap = () => {
             Failed
           </Alert>
         </Snackbar>
-      </div>
+      </Box>
     </Layout>
   );
 };
