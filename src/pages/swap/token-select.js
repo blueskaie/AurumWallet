@@ -237,7 +237,8 @@ const useStyles = makeStyles((theme) => ({
             height: 20,
             border: 'none',
             outline: 'none',
-            background: 'transparent'
+            background: 'transparent',
+            width: '100%'
         }
     },
     tokenList: {
@@ -257,9 +258,9 @@ const useStyles = makeStyles((theme) => ({
     },
     noTokenList: {
         position: 'absolute',
-        width: 'calc(100% - 2px)',
+        width: 'calc(100% - 42px)',
         overflow: 'auto',
-        padding: '20px 0',
+        padding: 20,
         color: 'white',
         background: '#222222',
         borderRadius: '0 0 16px 16px',
