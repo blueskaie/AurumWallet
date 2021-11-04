@@ -16,18 +16,20 @@ const OneToken = (props) => {
 
   const classes = useStyles(useTheme());
   const history = useHistory();
-  const { code, balance, coinId, decimals, contract, trade, coingecko, showInfo } = props;
+  const { code, balance, decimals, contract, trade, coingecko, showInfo } = props;
 
   const network = useRecoilValue( currentNetwork );
   const currency = useRecoilValue( currentCurrencyCode );
 
   const goToDetail = () => { history.push(`/token-detail/${code}`); }
 
-  const series = [{data: coingecko && coingecko.market.price}]
-  const curPrice = coingecko ? coingecko.market.price[coingecko.market.price.length - 1] : 0
-  const curVolumn = coingecko ? coingecko.market.volumes[coingecko.market.volumes.length - 1] : 0
-  const prevVolumn = coingecko ? coingecko.market.volumes[0] : 0
-  const percent = (curVolumn - prevVolumn) / prevVolumn * 100;
+  const series = [{data: coingecko && coingecko.market.price}];
+  const curPrice = coingecko ? coingecko.market.price[coingecko.market.price.length - 1] : 0;
+  const prevPrice = coingecko ? coingecko.market.price[0] : 0;
+
+  const curAmount = parseFloat(LatomicNumber.toDecimal(balance, decimals)) * curPrice * trade.cmp;
+  const prevAmount = parseFloat(LatomicNumber.toDecimal(balance, decimals)) * prevPrice * trade.cmp;
+  const percent = prevAmount > 0 ? (curAmount - prevAmount) / prevAmount * 100 : 0;
 
   const options = {
     chart: {
@@ -105,7 +107,7 @@ const OneToken = (props) => {
           <p className={classes.tokenname}>{code}</p>
           <p className={classes.tokenname}>
             <HiddenText show={showInfo}>
-              {parseFloat(LatomicNumber.toDecimal(balance,decimals)).toFixed(4).toLocaleString()}
+              {parseFloat(LatomicNumber.toDecimal(balance, decimals)).toFixed(4).toLocaleString()}
             </HiddenText>
           </p>
         </Box>
@@ -116,7 +118,7 @@ const OneToken = (props) => {
           <p className={classes.tokenprice}>
             <HiddenText show={showInfo}>
               {currency == 'USD' ? '$' : '€'}
-              {(parseFloat(LatomicNumber.toDecimal(balance, decimals)) * trade.abs * trade.cmp).toFixed(4).toLocaleString()}
+              {curAmount.toFixed(4).toLocaleString()}
             </HiddenText>
           </p>
         </Box>

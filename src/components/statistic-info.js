@@ -14,8 +14,8 @@ export default function StatisticInfo({showInfo, setToggleInfo}) {
   const [currency, setCurrency] = useRecoilState(currentCurrencyCode);
 
   const [totalAmount, setTotalAmount] = useState(0);
-  const [totalVolumnAmount, setTotalVolumnAmount] = useState(0);
-  const [volumnProfit, setVolumnProfit] = useState(0);
+  const [diffAmount, setDiffAmount] = useState(0);
+  const [profitAmount, setProfit] = useState(0);
 
   const onCurrencyChange = async (e) => {
     const cur = e.target.value;
@@ -24,20 +24,17 @@ export default function StatisticInfo({showInfo, setToggleInfo}) {
 
   useEffect(() => {
     if (list && list.length) {
-      let totalAmount = 0;
-      let curTotalVolumn = 0;
-      let prevTotalVolumn = 0;
+      let ctotalAmount = 0;
+      let pTotalAmount = 0;
       for (let token of list) {
-        totalAmount += parseFloat(LatomicNumber.toDecimal(token.balance, token.decimals)) * token.trade.abs * token.trade.cmp;
-
-        const curVolumn = token && token.coingecko ? token.coingecko.market.volumes[token.coingecko.market.volumes.length - 1] : 0;
-        const prevVolumn = token && token.coingecko ? token.coingecko.market.volumes[0] : 0;
-        curTotalVolumn += curVolumn * token.trade.cmp;
-        prevTotalVolumn += prevVolumn * token.trade.cmp;
+        const curPrice = token && token.coingecko ? token.coingecko.market.price[token.coingecko.market.price.length - 1] : 0;
+        const prevPrice = token && token.coingecko ? token.coingecko.market.price[0] : 0;
+        ctotalAmount += parseFloat(LatomicNumber.toDecimal(token.balance, token.decimals)) * curPrice * token.trade.cmp;
+        pTotalAmount += parseFloat(LatomicNumber.toDecimal(token.balance, token.decimals)) * prevPrice * token.trade.cmp;
       }
-      setTotalAmount(totalAmount);
-      setTotalVolumnAmount(curTotalVolumn);
-      setVolumnProfit((curTotalVolumn - prevTotalVolumn) / prevTotalVolumn * 100);
+      setTotalAmount(ctotalAmount);
+      setDiffAmount(ctotalAmount - pTotalAmount);
+      setProfit(pTotalAmount > 0 ? (ctotalAmount - pTotalAmount) / pTotalAmount * 100 : 0);
     }
   }, [list])
 
@@ -68,14 +65,14 @@ export default function StatisticInfo({showInfo, setToggleInfo}) {
           </Box>
           <Box style={{fontSize: '15px'}}>
             {
-              volumnProfit > 0
+              profitAmount > 0
                 ? <FontAwesomeIcon icon={faCaretUp} style={{color: 'green', marginRight: 3}} />
                 : <FontAwesomeIcon icon={faCaretDown} style={{color: 'red', marginRight: 3}} />
             }
             <span style={{color: 'red', marginTop: '10px'}}>
               <HiddenText show={showInfo}>
                 {currency == 'USD' ? '$' : '€'}
-                {totalVolumnAmount.toFixed(4)}/{volumnProfit.toFixed(2)}%
+                {diffAmount.toFixed(4)}/{profitAmount.toFixed(2)}%
               </HiddenText>
             </span>
             <span style={{marginLeft: '10px', marginTop: '10px'}}>24h</span>
