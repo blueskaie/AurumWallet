@@ -186,8 +186,8 @@ const useStyles = makeStyles((theme) => ({
     display: 'flex',
     flexDirection: "column",
     alignItems: 'flex-end',
-    justifyContent: 'center',
-    height: 'calc(100% - 10px);'
+    justifyContent: 'space-between',
+    height: 'calc(100% - 15px);'
   },
   balanceAmount: {
     textAlign: 'left',

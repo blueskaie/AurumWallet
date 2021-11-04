@@ -12,7 +12,6 @@ import useStyles from './style';
 
 import Layout from "../../components/layout";
 import TokenSelect from './token-select';
-import TokenSelectSkeleton from './token-select-skeleton';
 
 import * as LatomicNumber from '../../utils/big.number'
 import { decryptKeyStore } from '../../utils/keystore'
@@ -105,6 +104,10 @@ const Swap = () => {
     {value: 1, label: '1%'},
     {value: 1.5, label: '1.5%'}
   ];
+
+  const onShowList = () => {
+    setFromSelect(false);
+  }
 
   const onFromChange = async (token) => {
     setFromSelect(false);
@@ -299,8 +302,8 @@ const Swap = () => {
                       </Box>
                     </Box>
                   </Box>}
-                  <React.Suspense fallback={<TokenSelectSkeleton/>}>
-                    <TokenSelect onChange={onFromChange} isShown={fromSelect} exceptToken={toToken}/>
+                  <React.Suspense fallback={<Box></Box>}>
+                    <TokenSelect onShowList={onShowList} onChange={onFromChange} isShown={fromSelect} exceptToken={toToken}/>
                   </React.Suspense>
                   <FormHelperText id="address_helper">
                     {helper.fromToken}
@@ -332,7 +335,7 @@ const Swap = () => {
                       </Box>
                     </Box>
                   </Box>}
-                  <React.Suspense fallback={<TokenSelectSkeleton/>}>
+                  <React.Suspense fallback={<Box></Box>}>
                     <TokenSelect onChange={onToChange} isShown={toSelect} exceptToken={fromToken}/>
                   </React.Suspense>
                   <FormHelperText id="address_helper">
