@@ -36,6 +36,7 @@ const TokenSelect = (props) => {
     const [openImportDlg, setOpenImportDlg] = useState(false);
 
     const setAllTokens = useSetRecoilState(allTokens);
+    const tokens = useRecoilValue(allTokens);
 
     const onImportToken = (event) => {
         event.preventDefault();
@@ -58,17 +59,29 @@ const TokenSelect = (props) => {
         setGetResult('');
     
         setAllTokens((tokens) => {
-          return [...tokens, tokenInfo];
+            console.log("tokens", tokens);
+            console.log("available", tokenList);
+            return [...tokens, tokenInfo];
         });
     }
 
     useEffect(() => {
+        if (search == '')
+            onShowList();
         const getTokenInfo = async ()=>{
             const tokenInfo = await getTokenInfoByAddress(network,search)
             let main='',test='';
             if(tokenInfo)
             {
                 console.log("tokeninfo", tokenInfo);
+                console.log("effect", tokens);
+                for (let i = 0; i < tokens.length; i++) {
+                    if (tokens[i].contract[1] == search) {
+                        console.log("same");
+                        return;
+                    }
+                }
+                console.log("new");
                 setGetResult(2);
                 if(network.id == 1)
                 main = search
