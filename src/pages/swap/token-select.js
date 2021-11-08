@@ -59,9 +59,12 @@ const TokenSelect = (props) => {
         setGetResult('');
     
         setAllTokens((tokens) => {
-            console.log("tokens", tokens);
-            console.log("available", tokenList);
-            return [...tokens, tokenInfo];
+            const existed = tokens.findIndex(token=>token.code === tokenInfo.code);
+            if (existed >= 0) {
+                return [...tokens];
+            } else {
+                return [...tokens, tokenInfo];
+            }
         });
     }
 
@@ -124,10 +127,12 @@ const TokenSelect = (props) => {
             <ul className={classes.tokenList}>
                 {filteredTokenList.map((token, index)=>(
                     <li key={index} className={classes.tokenItem} onClick={()=>selectToken(token)}>
+                        <Box className={classes.tokenImg}>
                         { token && (tokenLogos[token.code.toUpperCase()]
                             ? <img src={tokenLogos[token.code.toUpperCase()]} alt={token.code} width={30} />
                             : <Jazzicon diameter={30} seed={token.contract[network.id]} />
                         )}
+                        </Box>
                         <p className={classes.tokenName}>{token.code}</p>
                     </li>
                 ))}
@@ -154,7 +159,6 @@ const TokenSelect = (props) => {
         aria-labelledby="import-modal" 
         open={openImportDlg}
         >
-            <form method="post" onSubmit={onImportToken}>
             <div className={classes.dlgHeader}>
                 <img src="images/warning.svg" style={{width: 36, height: 36}} />
                 <img src="images/close.svg" onClick={() => setOpenImportDlg(false)} style={{color: 'white', width: 32, height: 32}} />
@@ -181,9 +185,8 @@ const TokenSelect = (props) => {
                     <img src="images/checked-circle.svg" style={{color: 'green', width: 32, height: 32}} />
                     <span style={{marginLeft: 10}}>I understand</span>
                 </div>
-                <ARUButton type='submit'>IMPORT</ARUButton>
+                <ARUButton onClick={onImportToken}>IMPORT</ARUButton>
             </div>
-            </form>
         </Dialog>
     </Box>);
 };
@@ -281,9 +284,9 @@ const useStyles = makeStyles((theme) => ({
         }
     },
     tokenImg:{
-        width: 40,
-        height: 40,
-        borderRadius: 23,
+        width: 30,
+        height: 30,
+        borderRadius: 15,
         overflow:'hidden',
     },
     tokenName: {

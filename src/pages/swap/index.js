@@ -289,7 +289,7 @@ const Swap = () => {
                     <Box className={classes.amountSection}>
                       <Box className={classes.balanceAmount}>Balance: {fromToken ? parseFloat(LatomicNumber.toDecimal(fromToken.balance, fromToken.decimals)).toFixed(5) : ''}</Box>
                       <Box className={classes.fromtokeninfo} onClick={()=>{setFromSelect(true); setToSelect(false);}}>
-                        <Box>
+                        <Box className={classes.tokenImg}>
                           { fromToken 
                             ? (tokenLogos[fromToken.code.toUpperCase()]
                               ? <img src={tokenLogos[fromToken.code.toUpperCase()]} alt={fromToken.code} width={20} />
@@ -322,7 +322,7 @@ const Swap = () => {
                     <Box className={classes.amountSection}>
                       <Box className={classes.balanceAmount}>Balance: {toToken?parseFloat(LatomicNumber.toDecimal(toToken.balance,toToken.decimals)).toFixed(5) : ''}</Box>
                       <Box className={classes.fromtokeninfo} onClick={()=>{setToSelect(true); setFromSelect(false);}}>
-                        <Box>
+                        <Box className={classes.tokenImg}>
                           { toToken 
                             ? (tokenLogos[toToken.code.toUpperCase()]
                               ? <img src={tokenLogos[toToken.code.toUpperCase()]} alt={toToken.code} width={20} />

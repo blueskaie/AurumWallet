@@ -73,6 +73,12 @@ const useStyles = makeStyles((theme) => ({
     margin:  0,
     fontSize: 12
   },
+  tokenImg: {
+    width: 20,
+    height: 20,
+    borderRadius: 10,
+    overflow:'hidden',
+  },
   submitWrapper: {
     display: 'flex',
     flexDirection: 'column'
