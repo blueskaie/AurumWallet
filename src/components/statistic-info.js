@@ -27,8 +27,9 @@ export default function StatisticInfo({showInfo, setToggleInfo}) {
       let ctotalAmount = 0;
       let pTotalAmount = 0;
       for (let token of list) {
-        const curPrice = token && token.coingecko ? token.coingecko.market.price[token.coingecko.market.price.length - 1] : 0;
-        const prevPrice = token && token.coingecko ? token.coingecko.market.price[0] : 0;
+        const curPrice = token && token.coingecko && token.coingecko.market.price && token.coingecko.market.price.length ? token.coingecko.market.price[token.coingecko.market.price.length - 1] : 0;
+        const prevPrice = token && token.coingecko && token.coingecko.market.price && token.coingecko.market.price.length ? token.coingecko.market.price[0] : 0;
+
         ctotalAmount += parseFloat(LatomicNumber.toDecimal(token.balance, token.decimals)) * curPrice * token.trade.cmp;
         pTotalAmount += parseFloat(LatomicNumber.toDecimal(token.balance, token.decimals)) * prevPrice * token.trade.cmp;
       }
@@ -38,7 +39,7 @@ export default function StatisticInfo({showInfo, setToggleInfo}) {
     }
   }, [list])
 
-  
+
   return (
       <Box className={classes.portfolio}>
         <Box style={{flex: '4', fontWeight: '300', padding: '10px'}}>

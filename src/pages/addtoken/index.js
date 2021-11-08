@@ -76,7 +76,12 @@ export default function AddCustomToken() {
     };
 
     setAllTokens((tokens) => {
-      return [...tokens, tokenInfo];
+      const existed = tokens.findIndex(token=>token.code === tokenInfo.code);
+      if (existed >= 0) {
+          return [...tokens];
+      } else {
+          return [...tokens, tokenInfo];
+      }
     });
 
     setOpenSuccess(true);
