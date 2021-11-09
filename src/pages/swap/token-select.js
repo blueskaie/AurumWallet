@@ -4,17 +4,16 @@ import { makeStyles, useTheme } from "@material-ui/core/styles";
 import {tokenLogos} from "../../config/token-info";
 import Jazzicon from 'react-jazzicon';
 import { useRecoilValue, useSetRecoilState } from 'recoil';
-import { networkProvider, currentWallet, currentNetwork, tokenList, allTokens  } from '../../store/atoms'
-import { Box } from '@material-ui/core';
+import { currentNetwork, tokenList, allTokens  } from '../../store/atoms'
 import { getTokenInfoByAddress } from '../../utils/token-utils';
 import ARUButton from '../../components/buttons';
-import { Dialog } from '@material-ui/core';
+import { Box, Dialog } from '@material-ui/core';
 
 const TokenSelect = (props) => {
     const network = useRecoilValue( currentNetwork );
     const availableTokenList = useRecoilValue(tokenList);
 
-    const {isShown,exceptToken,onChange, onShowList } = props;
+    const {isShown,exceptToken,onChange } = props;
     const classes = useStyles(useTheme());
 
     
@@ -41,7 +40,6 @@ const TokenSelect = (props) => {
     const onImportToken = (event) => {
         event.preventDefault();
         setSearch('');
-        onShowList();
         setGetResult(0);
     
         const {main, test, title, code, decimals} = vals;
@@ -59,25 +57,24 @@ const TokenSelect = (props) => {
         setGetResult('');
     
         setAllTokens((tokens) => {
-            const existed = tokens.findIndex(token=>token.code === tokenInfo.code);
-            if (existed >= 0) {
-                return [...tokens];
+            const index = tokens.findIndex(token=>token.code === tokenInfo.code);
+            const newTokens = [...tokens];
+            if (index > -1) {
+              tokenInfo.contract = {...tokens[index].contract, [network.id]: tokenInfo.contract[network.id]};
+              newTokens.splice(index, 1, tokenInfo);
             } else {
-                return [...tokens, tokenInfo];
+              newTokens.push(tokenInfo);
             }
+            return [...newTokens];
         });
     }
 
     useEffect(() => {
-        if (search == '')
-            onShowList();
         const getTokenInfo = async ()=>{
             const tokenInfo = await getTokenInfoByAddress(network,search)
             let main='',test='';
             if(tokenInfo)
             {
-                console.log("tokeninfo", tokenInfo);
-                console.log("effect", tokens);
                 for (let i = 0; i < tokens.length; i++) {
                     if (tokens[i].contract[1] == search) {
                         console.log("same");
@@ -87,9 +84,9 @@ const TokenSelect = (props) => {
                 console.log("new");
                 setGetResult(2);
                 if(network.id == 1)
-                main = search
+                    main = search
                 else
-                test = search
+                    test = search
                 setVals({...vals,...{title: tokenInfo.name,decimals:tokenInfo.decimals,code:tokenInfo.symbol,main,test}})
                 let shortaddress = search.substring(0, 7) + '.....' + search.substring(search.length - 6, search.length);
                 setImportAddress(shortaddress);
@@ -141,17 +138,23 @@ const TokenSelect = (props) => {
         { getResult =='2' && 
             <ul className={classes.tokenList}>
                 <li className={classes.importToken}>
-                    <div className={classes.tokenHeader}>
-                        <img src={tokenLogos[vals.code.toUpperCase()]} alt={vals.code} width={40} />
+                    <Box className={classes.tokenHeader}>
+                        {/* <img src={tokenLogos[vals.code.toUpperCase()]} alt={vals.code} width={40} /> */}
+                        <Box className={classes.tokenImg}>
+                        { vals && (tokenLogos[vals.code.toUpperCase()]
+                            ? <img src={tokenLogos[vals.code.toUpperCase()]} alt={vals.code} width={30} />
+                            : <Jazzicon diameter={30} seed={network.id == 1 ? vals.main : vals.test} />
+                        )}
+                        </Box>
                         <p className={classes.tokenName}>{vals.code}</p>
-                    </div>
+                    </Box>
                     <ARUButton className={classes.importButton} onClick={() => setOpenImportDlg(true)}>IMPORT</ARUButton>
                 </li>
             </ul>
         }
         {
             getResult == 3 && 
-            <div className={classes.noTokenList}> No Token List </div> 
+            <Box className={classes.noTokenList}> No Token List </Box> 
         }
         <Dialog
         classes={{paper: classes.importModal}}
@@ -159,34 +162,34 @@ const TokenSelect = (props) => {
         aria-labelledby="import-modal" 
         open={openImportDlg}
         >
-            <div className={classes.dlgHeader}>
+            <Box className={classes.dlgHeader}>
                 <img src="images/warning.svg" style={{width: 36, height: 36}} />
                 <img src="images/close.svg" onClick={() => setOpenImportDlg(false)} style={{color: 'white', width: 32, height: 32}} />
-            </div>
+            </Box>
             <span style={{marginTop: 10, color: 'red'}}>
                 Anyone can create a BEP20 token on Binance Smart Chain (BSC) with any name, 
                 including fake versions of existing tokens and tokens that claim to represent 
                 projects that do not have a token. If you purchase an arbitrary token you may not be able to sell it.
             </span>
-            <div style={{width: '100%', borderTop: '1px solid #333333', marginTop: 10}}></div>
-            <div className={classes.dlgHeader} style={{marginTop: 10, fontSize: 18}}>
-                <div>
-                    <div>{vals.title}({vals.code})</div>
-                    <div>{importAddress}</div>
-                </div>
-                <div>
-                    <div>View on</div>
-                    <div>BSCSCAN</div>
-                </div>
-            </div>
-            <div style={{width: '100%', borderTop: '1px solid #333333', marginTop: 10}}></div>
-            <div className={classes.dlgHeader} style={{marginTop: 10}}>
-                <div className={classes.dlgHeader}>
+            <Box style={{width: '100%', borderTop: '1px solid #333333', marginTop: 10}}></Box>
+            <Box className={classes.dlgHeader} style={{marginTop: 10, fontSize: 14}}>
+                <Box>
+                    <Box>{vals.title}({vals.code})</Box>
+                    <Box>{importAddress}</Box>
+                </Box>
+                <Box>
+                    <Box>View on</Box>
+                    <Box>BSCSCAN</Box>
+                </Box>
+            </Box>
+            <Box style={{width: '100%', borderTop: '1px solid #333333', marginTop: 10}}></Box>
+            <Box className={classes.dlgHeader} style={{marginTop: 10}}>
+                <Box className={classes.dlgHeader}>
                     <img src="images/checked-circle.svg" style={{color: 'green', width: 32, height: 32}} />
                     <span style={{marginLeft: 10}}>I understand</span>
-                </div>
+                </Box>
                 <ARUButton onClick={onImportToken}>IMPORT</ARUButton>
-            </div>
+            </Box>
         </Dialog>
     </Box>);
 };

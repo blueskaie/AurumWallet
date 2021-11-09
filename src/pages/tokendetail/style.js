@@ -22,13 +22,14 @@ const useStyles = makeStyles((theme) => ({
     display: 'flex',
     flexDirection: 'row',
     justifyContent: 'space-between',
+    alignItems: 'center'
   },
   tokenRow: {
     display: 'flex',
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-between',
-    width: '100%',
+    width: 'calc(100% - 45px)',
   },
   tokenLeft: {
     display: 'flex',
@@ -38,10 +39,11 @@ const useStyles = makeStyles((theme) => ({
     color: 'white',
     marginLeft: '5px',
   },
-  tokenIcon: {
-    width:'40px', 
-    height: '40px',
-    margin: '5px',
+  tokenImg: {
+    width: 40, 
+    height: 40,
+    borderRadius: 20,
+    overflow:'hidden',
   }
 }));
 

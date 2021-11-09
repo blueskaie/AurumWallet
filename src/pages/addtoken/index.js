@@ -76,12 +76,15 @@ export default function AddCustomToken() {
     };
 
     setAllTokens((tokens) => {
-      const existed = tokens.findIndex(token=>token.code === tokenInfo.code);
-      if (existed >= 0) {
-          return [...tokens];
+      const index = tokens.findIndex(token=>token.code === tokenInfo.code);
+      const newTokens = [...tokens];
+      if (index > -1) {
+        tokenInfo.contract = {...tokens[index].contract, [network.id]: tokenInfo.contract[network.id]};
+        newTokens.splice(index, 1, tokenInfo);
       } else {
-          return [...tokens, tokenInfo];
+        newTokens.push(tokenInfo);
       }
+      return [...newTokens];
     });
 
     setOpenSuccess(true);
