@@ -105,10 +105,6 @@ const Swap = () => {
     {value: 1.5, label: '1.5%'}
   ];
 
-  const onShowList = () => {
-    setFromSelect(false);
-  }
-
   const onFromChange = async (token) => {
     setFromSelect(false);
     setFromToken(token);
@@ -303,7 +299,7 @@ const Swap = () => {
                     </Box>
                   </Box>}
                   <React.Suspense fallback={<Box></Box>}>
-                    <TokenSelect onShowList={onShowList} onChange={onFromChange} isShown={fromSelect} exceptToken={toToken}/>
+                    <TokenSelect onChange={onFromChange} isShown={fromSelect} exceptToken={toToken}/>
                   </React.Suspense>
                   <FormHelperText id="address_helper">
                     {helper.fromToken}

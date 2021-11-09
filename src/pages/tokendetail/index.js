@@ -12,6 +12,8 @@ import { faCaretDown, faCaretUp, faSignOutAlt } from "@fortawesome/free-solid-sv
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import Layout from "../../components/layout";
 import * as LatomicNumber from '../../utils/big.number'
+import {tokenLogos} from "../../config/token-info"
+import Jazzicon from 'react-jazzicon';
 
 const TokenDetail = (props) => {
 
@@ -115,13 +117,16 @@ const TokenDetail = (props) => {
           <ReactApexChart options={options} series={series} type="candlestick" height={250} style={{margin: '10px'}} />
         </ARUCard>
         <ARUCard className={classes.tokenInfo}>
-          <Box style={{marginRight: '10px'}} >
-            <img src={`images/tokens/${coin.icon}`} className={classes.tokenIcon} />
+          <Box className={classes.tokenImg}>
+            {tokenLogos[code.toUpperCase()]
+              ? <img src={tokenLogos[coin.code.toUpperCase()]} alt={code} width={40} />
+              : <Jazzicon diameter={40} seed={coin.contract} />
+            }
           </Box>
           <Box className={classes.tokenRow}>
             <Box className={classes.tokenLeft}>
               <Box>{coin.code}</Box>
-              <Box style={{marginTop: '10px'}}>
+              <Box style={{marginTop: 5, marginBottom: 5}}>
                 {currency == 'USD' ? '$' : '€'}
                 {parseFloat(curPrice * coin.trade.cmp).toFixed(2)}
               </Box>
