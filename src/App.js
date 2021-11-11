@@ -80,9 +80,6 @@ function App() {
       <ProvideAuth>
           <Router>
             <Switch>
-              <PrivateRoute path="/about-us">
-                <AboutUs />
-              </PrivateRoute>
               <PrivateRoute path="/send">
                 <Send />
               </PrivateRoute>
@@ -119,6 +116,9 @@ function App() {
               </Route>
               <PrivateRoute path="/wallet/:address/:index" component={WalletDetail}>
               </PrivateRoute>
+              <Route path="/about-us">
+                <AboutUs />
+              </Route>
               <Route path="/setup-wallet">
                 <SetupWallet />
               </Route>
