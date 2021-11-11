@@ -155,7 +155,7 @@ export default function MenuOptions({loggedIn}) {
         onClick={handleClick}
       >
         <Icon className={classes.menuIcon}>
-          <img src="images/menu_icon.svg" alt="AurumWallet" className="logo-image" style={{height: '100%'}} />
+          <img src="images/Menu icon v2.svg" alt="AurumWallet" className="logo-image" style={{height: '100%'}} />
         </Icon>
       </IconButton>
       <Menu

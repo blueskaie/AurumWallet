@@ -48,7 +48,7 @@ const IOSSlider = withStyles({
     background: 'white',
     width: 28,
     height: 12,
-    borderRadius: 15,
+    borderRadius: 12,
     marginLeft: -15,
     marginTop: -5,
     "&.Mui-disabled": {
@@ -353,8 +353,8 @@ const Swap = () => {
                 <Box style={{color: 'white', marginLeft: '20px'}}>100%</Box>
               </Box>
               <Box className={classes.submitWrapper}>
-                {!isAllowed && <Button variant="contained" color="secondary" style={{background: 'white', color: 'black', borderRadius: '15px'}} disabled={formSubmitting} onClick={approveToken}>Approve</Button> }
-                {isAllowed && <Button variant="contained" color="secondary" style={{background: 'white', color: 'black', borderRadius: '15px'}} disabled={formSubmitting} type="submit">Swap</Button> }
+                {!isAllowed && <Button variant="contained" color="secondary" style={{background: 'white', color: 'black', borderRadius: '12px'}} disabled={formSubmitting} onClick={approveToken}>Approve</Button> }
+                {isAllowed && <Button variant="contained" color="secondary" style={{background: 'white', color: 'black', borderRadius: '12px'}} disabled={formSubmitting} type="submit">Swap</Button> }
                 {formSubmitting && <LinearProgress />}
               </Box>
             </Box>

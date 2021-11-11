@@ -10,7 +10,7 @@ const useStyles = makeStyles((theme) => ({
     position: 'relative',
     textAlign: 'left',
     color:'white',
-    fontFamily: 'unset',
+    fontFamily: 'Montserrat',
     fontSize: 35,
     fontWeight: 100,
     lineHeight: '31px',
