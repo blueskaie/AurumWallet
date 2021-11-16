@@ -61,7 +61,7 @@ export default function Signin() {
   };
 
   return (
-    <Layout isShownHeader={false} varient='secondary' >
+    <Layout isShownHeader={false}>
       <Box className={classes.root}>
         <Box className="auth-logo">
           <img src="images/logo.png" alt="AurumWallet" className="logo-image" />

@@ -106,7 +106,7 @@ export default function TransactionDetail({match, location}) {
   }, [network, allTokensData])
 
   return (
-    <Layout isShownBackButton={true} isShownWallet={false} varient="secondary">
+    <Layout isShownBackButton={true} isShownWallet={false}>
       <Box className={classes.root}>
         <Box className={classes.title}>
           Transaction

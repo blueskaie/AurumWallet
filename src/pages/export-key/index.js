@@ -86,7 +86,7 @@ export default function ExportKey() {
               </FormHelperText>
             </FormControl>
 
-            <Button variant="contained" color="primary" type="submit" className={classes.formButton} style={{background: 'white', color: 'black', borderRadius: '15px'}}>Submit</Button>
+            <Button variant="contained" color="primary" type="submit" className={classes.formButton} style={{background: 'white', color: 'black', borderRadius: '12px'}}>Submit</Button>
           </form>
         }
 
@@ -109,7 +109,7 @@ export default function ExportKey() {
               <p><strong>Do not share it!</strong> Your funds will be stolen if you use it on a malicious site.</p>
               <p><strong>Make a backup!</strong> Just in case your laptop is set on fire.</p>
             </Box>
-            <Button variant="contained" color="primary" onClick={copyConfirmed} style={{background: 'white', color: 'black', borderRadius: '15px'}}>I've copied it somewhere safe</Button>
+            <Button variant="contained" color="primary" onClick={copyConfirmed} style={{background: 'white', color: 'black', borderRadius: '12px'}}>I've copied it somewhere safe</Button>
           </Box>
         }
       </Box>

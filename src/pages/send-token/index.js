@@ -149,7 +149,7 @@ export default function SendToken(props) {
   }
 
   return (
-    <Layout isShownBackButton={true} isShownWallet={false} isShownNetworkSelector={false} varient="secondary">
+    <Layout isShownBackButton={true} isShownWallet={false} isShownNetworkSelector={false}>
       <Box className={classes.root}>
         <Box className={classes.title}>
           Send {token && token.title}
