@@ -19,6 +19,7 @@ const OneAccount = (props) => {
       <Box className={classes.accountinfo}>
         <Box style={{display: 'flex', flexDirection: 'column', justifyContent: 'space-between'}}>
           <p className={classes.name}>{name}</p>
+          <p className={classes.money}><HiddenText show={visible}>$826,181.55</HiddenText></p>
           <p className={classes.address}><HiddenText show={visible}>{shortWalletAddress}</HiddenText></p>
         </Box>
         {account.current && <Icon className={classes.checkIcon}>
@@ -69,6 +70,12 @@ const useStyles = makeStyles((theme) => ({
   },
   address: {
     color: "#555555",
+    margin: 0,
+    fontSize: 14,
+    fontWeight: 300
+  },
+  money: {
+    color: "#ffffff",
     margin: 0,
     fontSize: 14,
     fontWeight: 300
