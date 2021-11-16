@@ -67,7 +67,7 @@ export default function Accounts() {
     setToggleAccountInfo(showAccountInfo)
   }
   return (
-    <Layout isShownWallet = {false} varient = 'secondary'>
+    <Layout isShownWallet = {false}>
       <Box className={classes.root}>
         <Box className={classes.myaccount}>
           <Box className={classes.title}>

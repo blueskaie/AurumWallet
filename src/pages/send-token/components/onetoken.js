@@ -57,7 +57,7 @@ const useStyles = makeStyles((theme) => ({
   tokenimg:{
     width: 40,
     height: 40,
-    borderRadius: 20,
+    borderRadius: 12,
     overflow:'hidden',
     zIndex: 3,
     "& > img": {

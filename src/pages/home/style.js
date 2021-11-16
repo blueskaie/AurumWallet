@@ -26,7 +26,7 @@ const useStyles = makeStyles((theme) => ({
     paddingTop: 5,
     paddingBottom: 5,
     "& h3": {
-      fontFamily: 'system-ui',
+      fontFamily: 'Montserrat',
       color: 'white',
       fontWeight: 300,
       fontSize: 'x-large',
@@ -51,7 +51,7 @@ const useStyles = makeStyles((theme) => ({
   },
   title:{
     cursor:'pointer',
-    color:'#ffffff',
+    color:'#5e5e5e',
     flexGrow: 1,
     fontSize: '1rem',
   },

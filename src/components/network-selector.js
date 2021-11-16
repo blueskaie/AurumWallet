@@ -26,8 +26,9 @@ const useStyles = makeStyles((theme) => ({
   },
   select: {
     padding:'3px 10px',
-    border: '1px solid #ffffff',
-    borderRadius:8,
+    background: '#222222',
+    boxShadow: '2px 2px 10px 0 black',
+    borderRadius:12,
     fontSize: 14,
     "&:hover:before":{
       borderBottom:'2px solid transparent!important',

@@ -13,7 +13,7 @@ const useStyles = makeStyles((theme) => ({
         marginBottom: 20,
         textAlign: 'left',
         color:'white',
-        fontFamily: 'unset',
+        fontFamily: 'Montserrat',
         fontSize: 33,
         fontWeight: 100,
         lineHeight: '31px',

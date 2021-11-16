@@ -41,7 +41,7 @@ const useStyles = makeStyles((theme) => ({
     boxSizing: "border-box",
     boxShadow: '0px 3px 3px #000000c2',
     padding: 10,
-    borderRadius: 10,
+    borderRadius: 12,
     // background: "#1e1d1d",
     background: '#222222',
     alignItems: 'center'

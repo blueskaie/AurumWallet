@@ -122,7 +122,7 @@ export default function ImportWallet() {
   }
 
   return (
-    <Layout isShownBackButton={true} isShownWallet={false} isShownNetworkSelector={false} varient="secondary">
+    <Layout isShownBackButton={true} isShownWallet={false} isShownNetworkSelector={false}>
       <Box className={classes.root}>
         <h1 className={classes.logoTitle}>
           Import<br/>From Seed

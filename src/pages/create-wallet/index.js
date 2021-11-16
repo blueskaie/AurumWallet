@@ -144,7 +144,7 @@ export default function CreateWallet() {
   }
 
   return (
-    <Layout isShownBackButton={true} isShownWallet={false} isShownNetworkSelector={false} varient="secondary">
+    <Layout isShownBackButton={true} isShownWallet={false} isShownNetworkSelector={false}>
       <Box className={classes.root}>
         <h1 className={classes.wallettitle}>
           {step == 1 && 'Create Password'}

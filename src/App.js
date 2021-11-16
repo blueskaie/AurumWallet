@@ -43,16 +43,7 @@ import ALL_TOKENS from './config/tokens';
 const theme = createMuiTheme({
   typography: {
     fontFamily: [
-      '-apple-system',
-      'BlinkMacSystemFont',
-      '"Segoe UI"',
-      'Roboto',
-      '"Helvetica Neue"',
-      'Arial',
-      'sans-serif',
-      '"Apple Color Emoji"',
-      '"Segoe UI Emoji"',
-      '"Segoe UI Symbol"',
+      'Montserrat',
     ].join(',')
   },
   palette: {
@@ -81,9 +72,6 @@ function App() {
       <ProvideAuth>
           <Router>
             <Switch>
-              <PrivateRoute path="/about-us">
-                <AboutUs />
-              </PrivateRoute>
               <PrivateRoute path="/send">
                 <Send />
               </PrivateRoute>
@@ -123,6 +111,9 @@ function App() {
               </Route>
               <PrivateRoute path="/wallet/:address/:index" component={WalletDetail}>
               </PrivateRoute>
+              <Route path="/about-us">
+                <AboutUs />
+              </Route>
               <Route path="/setup-wallet">
                 <SetupWallet />
               </Route>
