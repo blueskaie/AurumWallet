@@ -1,28 +1,74 @@
-import React from 'react'
-
-import {  Container, Typography } from '@material-ui/core'
-import BackButtonHeader from '../components/back-button-header'
+import React, { useState } from 'react'
 
 import { makeStyles } from '@material-ui/core/styles';
-
-import Header from '../components/header'
+import Layout from "../components/layout";
+import {  Box } from '@material-ui/core';
+import ARUCard from '../components/card';
 
 const useStyles = makeStyles((theme) => ({
+  '@global': {
+    '*::-webkit-scrollbar': {
+      width: '0.8em'
+    },
+    '*::-webkit-scrollbar-track': {
+      backgroundColor: '#333333',
+      borderRadius: 5,
+      '-webkit-box-shadow': 'inset 0 0 6px rgba(0,0,0,0.00)'
+    },
+    '*::-webkit-scrollbar-thumb': {
+      backgroundColor: 'white',
+      borderRadius: 5,
+      width: 10,
+      outline: '1px solid slategrey'
+    }
+  },
   root: {
-    padding:theme.spacing(2),
     flex:1,
     display: 'flex',
-    flexDirection: 'column'
+    flexDirection: 'column',
   },
-  bottomSpace: {
-    marginBottom: theme.spacing(2)
+  title: {
+    position: 'relative',
+    marginTop: -20,
+    marginBottom: 20,
+    textAlign: 'left',
+    color:'white',
+    fontFamily: 'unset',
+    fontSize: 33,
+    fontWeight: 700,
+    lineHeight: '31px',
+    fontWeight: '100',
+    letterSpacing: '1px'
   },
-  spacer: {
-    flex: '1'
+  subtitle: {
+    position: 'relative',
+    marginTop: -20,
+    marginBottom: 20,
+    textAlign: 'left',
+    color:'white',
+    fontFamily: 'unset',
+    fontSize: 33,
+    fontWeight: 700,
+    lineHeight: '31px',
+    fontWeight: '100',
+    letterSpacing: '1px'
   },
-  partners: {
-    '& img': {
-      maxWidth: theme.spacing(40)
+  card: {
+    padding: 20,
+    marginTop: 10,
+    color: 'white',
+    textAlign: 'center',
+    fontSize: 20,
+    cursor: 'pointer',
+  },
+  content: {
+    padding: 20,
+    marginTop: 10,
+    color: 'white',
+    fontSize: 14,
+    height: 370,
+    '& div': {
+
     }
   }
 }));
@@ -30,25 +76,60 @@ const useStyles = makeStyles((theme) => ({
 export default function AboutUs() {
   const classes = useStyles( );
 
+  const [isClickButton, setClickButton] = useState(0);
+
+  const onClickButton = (val) => {
+    setClickButton(val);
+  }
+
   return (
-    <>
-      <Header loggedIn={true}>
-        <BackButtonHeader title="About Us" />
-      </Header>
-      <Container className={classes.root}>
-
-        <Typography className={classes.bottomSpace}>AurumWallet is a browser extension wallet for Binance Smart Chain. AurumWallet enables you to access BSC Blockchain directly from your favorite browser.</Typography>
-
-        <Typography className={classes.bottomSpace}>We never hold / have access to your private key. The private key is encrypted and only stored on your browser. For safety, always logout your wallet after using it.</Typography>
-        <div className={classes.spacer}></div>
-        <Typography variant="h5" className={classes.bottomSpace}>Partner</Typography>
-
-        <div className={classes.partners}>
-          <img src="images/moopay.png" alt="MooPay" />
-        </div>
-
-        <Typography variant="caption" display="block" >v0.0.12</Typography>
-      </Container>
-    </>
+    <Layout isShownNetworkSelector = {false} isShownBackButton = {true} isShownWallet={false} >
+      <Box className={classes.root}>
+        { isClickButton == 0 && 
+          <Box>
+            <Box className={classes.title}>
+              About
+            </Box>
+            <ARUCard className={classes.card} onClick={() => onClickButton(1)}>
+              Privacy Policy
+            </ARUCard>
+            <ARUCard className={classes.card} onClick={() => onClickButton(2)}>
+              Terms of Use
+            </ARUCard>
+            <ARUCard className={classes.card}>
+              Visit Our Website
+            </ARUCard>
+          </Box>
+        }
+        { isClickButton == 1 && 
+          <Box>
+            <Box className={classes.subtitle}>Privacy Policy</Box>
+            <ARUCard className={classes.content}>
+              <Box style={{height: '100%', overflow: 'auto', paddingRight: 20}}>
+                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Quis ipsum suspendisse ultrices gravida. Risus commodo viverra maecenas accumsan lacus vel facilisis. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Quis ipsum suspendisse ultrices gravida. Risus commodo viverra maecenas accumsan lacus vel facilisis.
+                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Quis ipsum suspendisse ultrices gravida. Risus commodo viverra maecenas accumsan lacus vel facilisis. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Quis ipsum suspendisse ultrices gravida. Risus commodo viverra maecenas accumsan lacus vel facilisis.
+                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Quis ipsum suspendisse ultrices gravida. Risus commodo viverra maecenas accumsan lacus vel facilisis. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Quis ipsum suspendisse ultrices gravida. Risus commodo viverra maecenas accumsan lacus vel facilisis.
+                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Quis ipsum suspendisse ultrices gravida. Risus commodo viverra maecenas accumsan lacus vel facilisis. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Quis ipsum suspendisse ultrices gravida. Risus commodo viverra maecenas accumsan lacus vel facilisis.
+                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Quis ipsum suspendisse ultrices gravida. Risus commodo viverra maecenas accumsan lacus vel facilisis. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Quis ipsum suspendisse ultrices gravida. Risus commodo viverra maecenas accumsan lacus vel facilisis.
+              </Box>
+            </ARUCard>
+          </Box>
+        }
+        { isClickButton == 2 && 
+          <Box>
+            <Box className={classes.subtitle}>Terms of Use</Box>
+            <ARUCard className={classes.content}>
+              <Box style={{height: '100%', overflow: 'auto', paddingRight: 20}}>
+                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Quis ipsum suspendisse ultrices gravida. Risus commodo viverra maecenas accumsan lacus vel facilisis. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Quis ipsum suspendisse ultrices gravida. Risus commodo viverra maecenas accumsan lacus vel facilisis.
+                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Quis ipsum suspendisse ultrices gravida. Risus commodo viverra maecenas accumsan lacus vel facilisis. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Quis ipsum suspendisse ultrices gravida. Risus commodo viverra maecenas accumsan lacus vel facilisis.
+                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Quis ipsum suspendisse ultrices gravida. Risus commodo viverra maecenas accumsan lacus vel facilisis. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Quis ipsum suspendisse ultrices gravida. Risus commodo viverra maecenas accumsan lacus vel facilisis.
+                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Quis ipsum suspendisse ultrices gravida. Risus commodo viverra maecenas accumsan lacus vel facilisis. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Quis ipsum suspendisse ultrices gravida. Risus commodo viverra maecenas accumsan lacus vel facilisis.
+                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Quis ipsum suspendisse ultrices gravida. Risus commodo viverra maecenas accumsan lacus vel facilisis. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Quis ipsum suspendisse ultrices gravida. Risus commodo viverra maecenas accumsan lacus vel facilisis.
+              </Box>
+            </ARUCard>
+          </Box>
+        }
+      </Box>
+    </Layout>
   )
 }

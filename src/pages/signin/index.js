@@ -84,6 +84,7 @@ export default function Signin() {
           </FormControl>
           <ARUButton className={classes.formARU} mode="outline" type={'submit'}>SIGN IN</ARUButton>
           <ARUButton className={classes.formARU} mode="outline" onClick={()=>history.push('/setup-wallet')}>WALLET SETUP</ARUButton>
+          <ARUButton className={classes.formARU} mode="outline" onClick={()=>history.push('/about-us')}>ABOUT</ARUButton>
         </form>
       </Box>
     </Layout>
