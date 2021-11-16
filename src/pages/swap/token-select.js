@@ -222,7 +222,7 @@ const useStyles = makeStyles((theme) => ({
     },
     importModal: {
         width: '100%',
-        borderRadius: 10,
+        borderRadius: 12,
         background: '#222222',
         padding: 20,
         color: 'white',
@@ -233,7 +233,7 @@ const useStyles = makeStyles((theme) => ({
     },
     searchBox: {
         border: '1px solid white',
-        borderRadius: '13px 13px 0 0',
+        borderRadius: '12px 12px 0 0',
         display: 'flex',
         justifyContent: 'space-between',
         flexDirection: 'row',
@@ -257,7 +257,7 @@ const useStyles = makeStyles((theme) => ({
         listStyleType: 'none',
         color: 'white',
         background: '#222222',
-        borderRadius: '0 0 16px 16px',
+        borderRadius: '0 0 12px 12px',
         border: '1px solid white',
         borderTop: 'none',
         zIndex: 10
@@ -269,7 +269,7 @@ const useStyles = makeStyles((theme) => ({
         padding: 20,
         color: 'white',
         background: '#222222',
-        borderRadius: '0 0 16px 16px',
+        borderRadius: '0 0 12px 12px',
         border: '1px solid white',
         borderTop: 'none',
         zIndex: 10
@@ -289,7 +289,7 @@ const useStyles = makeStyles((theme) => ({
     tokenImg:{
         width: 30,
         height: 30,
-        borderRadius: 15,
+        borderRadius: 12,
         overflow:'hidden',
     },
     tokenName: {

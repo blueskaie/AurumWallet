@@ -12,7 +12,7 @@ export default function SetupWallet() {
   const history = useHistory();
 
   return (
-    <Layout isShownBackButton={true} isShownWallet={false} isShownNetworkSelector={false} varient="secondary">
+    <Layout isShownBackButton={true} isShownWallet={false} isShownNetworkSelector={false}>
       <Box className={classes.root}>
         <Box className={classes.title}>
           Wallet <br/> Setup

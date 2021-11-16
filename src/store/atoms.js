@@ -304,9 +304,14 @@ export const tokenLoader = selectorFamily({
     }
 
     const coinId = coingekoCoinIds[token.code.toLowerCase()];
-    const market = await getMarketChart(coinId);
-    const ohlc = await getOHLC(coinId);
-    const coingecko = {ohlc: ohlc, market: market};
+    let coingecko = null;
+    try {
+      const market = await getMarketChart(coinId);
+      const ohlc = await getOHLC(coinId);
+      coingecko = {ohlc: ohlc, market: market};
+    } catch (e) {
+      console.error('coingeko error', e);
+    }
 
     if (token.code === BNB_CODE) {
       const wallet = get(currentWallet)

@@ -26,13 +26,13 @@ const useStyles = makeStyles(() => ({
     /* Track */
     "&::-webkit-scrollbar-track": {
       boxShadow: 'inset 0 0 5px gray',
-      borderRadius: 5
+      borderRadius: 12
     },
     
     /* Handle */
     "&::-webkit-scrollbar-thumb": {
       background: '#ffffff',
-      borderRadius: 5
+      borderRadius: 12
     },
 
     /* Handle on hover */

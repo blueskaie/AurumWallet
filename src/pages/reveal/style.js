@@ -56,7 +56,7 @@ const useStyles = makeStyles((theme) => ({
     secretPhrase: {
         border: '1px solid red',
         marginBottom: 10,
-        borderRadius: 8,
+        borderRadius: 12,
         padding: 12,
         color: 'white',
         fontSize: 14
@@ -64,7 +64,7 @@ const useStyles = makeStyles((theme) => ({
     clipboardButton: {
         background: 'transparent',
         border: '1px solid red',
-        borderRadius: 10,
+        borderRadius: 12,
         color: 'white',
         padding: 12,
         fontSize: 14,

@@ -91,7 +91,7 @@ function Alert(props) {
   return <MuiAlert elevation={6} variant="filled" {...props} />;
 }
 
-export default function Layout({isShownHeader=true, isShownWallet = true, isShownNetworkSelector = true, isShownBackButton = false, varient='primary', children}) {
+export default function Layout({isShownHeader=true, isShownWallet = true, isShownNetworkSelector = true, isShownBackButton = false, children}) {
   const classes = useStyles(useTheme());
   const loggedIn = true;
   // const [refresh, setRefresh] = useRecoilState(refreshCalled);
@@ -152,15 +152,6 @@ export default function Layout({isShownHeader=true, isShownWallet = true, isShow
       </Box>}
       <Box className={classes.content}>
         {children}
-      </Box>
-      {
-        varient == 'primary'
-        ? <img src="images/wave.png" className={classes.bottomimg} alt="bottom_image"/>
-        : <img src="images/wave1.png" className={classes.bottomimg} alt="bottom_image"/>
-      }
-      
-      <Box className={classes.termofservice}>
-        <p>Terms of service</p>
       </Box>
       <Snackbar open={openSuccess} autoHideDuration={6000} onClose={() => setOpenSuccess(false)}>
         <Alert onClose={() => setOpenSuccess(false)} severity="success">
