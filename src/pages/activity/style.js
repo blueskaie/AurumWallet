@@ -13,9 +13,8 @@ const useStyles = makeStyles((theme) => ({
     color:'white',
     fontFamily: 'Montserrat',
     fontSize: 33,
-    fontWeight: 100,
+    fontWeight: 400,
     lineHeight: '31px',
-    fontWeight: '100',
     letterSpacing: '1px'
   },
 }));

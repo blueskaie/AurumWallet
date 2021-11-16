@@ -32,7 +32,7 @@ const OneToken = (props) => {
             </Box>
             <Box style={{display: 'flex', flexDirection: 'row', justifyContent: 'space-between'}}>
               <p className={classes.tokenprice}>${parseFloat(LatomicNumber.toDecimal(token.balance, token.decimals)).toFixed(4).toLocaleString()}</p>
-              <p className={classes.tokenprice}>${(parseFloat(LatomicNumber.toDecimal(token.balance, token.decimals)) * token.trade).toFixed(4).toLocaleString()}</p>
+              <p className={classes.tokenprice}>${(parseFloat(LatomicNumber.toDecimal(token.balance, token.decimals)) * token.trade.cmp).toFixed(4).toLocaleString()}</p>
             </Box>
             <Box><p className={classes.tokenprice}>BEP20</p></Box>
           </Box>

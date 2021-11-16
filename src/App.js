@@ -14,6 +14,7 @@ import TransactionDetail from './pages/transaction-details';
 import WalletDetail from './pages/wallet-details';
 import ExportKey from './pages/export-key';
 import AddCustomToken from './pages/addtoken';
+import ImportAccount from './pages/importaccount';
 import DeployContract from './pages/deploy-contract';
 //
 import Swap from "./pages/swap";
@@ -93,6 +94,9 @@ function App() {
               </PrivateRoute>
               <PrivateRoute path="/add-token">
                 <AddCustomToken />
+              </PrivateRoute>
+              <PrivateRoute path="/import-account">
+                <ImportAccount />
               </PrivateRoute>
               <PrivateRoute path="/home">
                 <Home />

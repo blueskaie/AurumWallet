@@ -15,15 +15,16 @@ const useStyles = makeStyles((theme) => ({
     userSelect: 'none',
     display: 'flex',
     flexDirection: 'row',
-    justifyContent: 'flex-start',
-    alignItems: 'flex-end',
+    width: '100%',
+    justifyContent: 'space-between',
+    alignItems: 'center',
     paddingTop: 5,
     paddingBottom: 5,
     "& h3": {
       fontFamily: 'Montserrat',
       color: 'white',
-      fontWeight: 300,
-      fontSize: 'x-large',
+      fontWeight: 400,
+      fontSize: 33,
       margin: 0 
     },
     "& p": {
@@ -33,8 +34,14 @@ const useStyles = makeStyles((theme) => ({
   },
   title: {
     display: 'flex',
-    flexDirection: 'row',
+    flexDirection: 'column',
     justifyContent: 'space-between',
+    alignItems: 'baseline',
+  },
+  buttonAcnt: {
+    display: 'flex',
+    flexDirection: 'row',
+    justifyContent: 'flex-start',
     alignItems: 'baseline',
   },
   accountlist:{

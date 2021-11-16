@@ -12,7 +12,7 @@ const useStyles = makeStyles((theme) => ({
     color:'white',
     fontFamily: 'Montserrat',
     fontSize: 35,
-    fontWeight: 100,
+    fontWeight: 400,
     lineHeight: '31px',
     letterSpacing: '1px'
   },
