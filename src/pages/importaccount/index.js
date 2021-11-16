@@ -1,7 +1,8 @@
 import React,{ useState } from 'react'
 import Layout from "../../components/layout";
 
-import { Box, Icon } from '@material-ui/core'
+import { Box, Icon, Snackbar } from '@material-ui/core';
+import MuiAlert from '@material-ui/lab/Alert';
 import ARUCard from '../../components/card';
 import useStyles from './style';
 import ARUButton from '../../components/buttons';
@@ -9,6 +10,10 @@ import { ARUBaseInput } from '../../components/fields';
 import { allWallets, networkProvider, currentWallet } from '../../store/atoms';
 import { useRecoilState, useRecoilValue } from 'recoil';
 import { encryptKeyStore } from '../../utils/keystore';
+
+function Alert(props) {
+  return <MuiAlert elevation={6} variant="filled" {...props} />;
+}
 
 export default function ImportAccount() {
   const classes = useStyles( );
@@ -18,32 +23,39 @@ export default function ImportAccount() {
   const [, setWalletAtom] = useRecoilState(allWallets)
   const wallet = useRecoilValue( currentWallet );
   const [helperKeyText, setHelperKeyText] = React.useState('');
+  const [openSuccess, setOpenSuccess] = useState(false);
 
   const importAccount = () => {
     try {
-      console.log(privateKey.length);
       const account = web3.eth.accounts.privateKeyToAccount(privateKey);
       const keystore = encryptKeyStore(web3, privateKey, wallet.password);
       setWalletAtom((item) => {
         let all = [...item];
+        let exist = false;
         for(let i = 0; i < all.length; i++) {
           let si = {...all[i], current: false};
-          if (si.address === account.address)
-            return;
+          if (si.address === account.address) {
+            exist = true;
+            continue;
+          }
           all[i] = si;
         }
-        const wal = {
-          address: account.address,
-          password: wallet.password,
-          keystore: keystore,
-          current: true
-        };
-        all.push(wal);
-        setHelperKeyText('Import account successfully!');
+        if (!exist) {
+          const wal = {
+            address: account.address,
+            mnemonic: wallet.mnemonic,//this is wallet info
+            password: wallet.password,//this is wallet info
+            keystore: keystore,
+            current: true
+          };
+          setOpenSuccess(true);
+          all.push(wal);
+        } else {
+          setHelperKeyText("This account already exists!");
+        }
         return all;
       });
     } catch(error) {
-      console.error(error)
       setHelperKeyText(error.message);
     }
 }
@@ -76,6 +88,11 @@ export default function ImportAccount() {
           <span className={classes.helptext}>{helperKeyText}</span>
           <ARUButton onClick={importAccount} className={classes.buttonImport}>IMPORT</ARUButton>
         </Box>
+        <Snackbar open={openSuccess} autoHideDuration={6000} onClose={() => setOpenSuccess(false)}>
+          <Alert onClose={() => setOpenSuccess(false)} severity="success">
+            Imported successfully
+          </Alert>
+        </Snackbar>
       </Box>
     </Layout>
   )

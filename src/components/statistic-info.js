@@ -42,9 +42,9 @@ export default function StatisticInfo({showInfo, setToggleInfo}) {
 
   return (
       <Box className={classes.portfolio}>
-        <Box style={{flex: '4', fontWeight: '300', padding: '10px'}}>
-          <Box style={{display: 'flex', alignItems: 'center'}}>
-            <Box style={{fontWeight: '500', fontSize: '25px'}}>Portfolio</Box>
+        <Box style={{flex: '4', fontWeight: '400', padding: 5}}>
+          <Box style={{display: 'flex', alignItems: 'center', marginBottom: 5}}>
+            <Box style={{fontWeight: 600, fontSize: '25px'}}>Portfolio</Box>
             <IconButton
               className={classes.toggleButton}
               onClick={setToggleInfo}
@@ -58,8 +58,8 @@ export default function StatisticInfo({showInfo, setToggleInfo}) {
               </Icon>
             </IconButton>
           </Box>
-          <Box>
-            <HiddenText show={showInfo}>
+          <Box style={{marginBottom: 5}}>
+            <HiddenText show={showInfo} length={10}>
               {currency == 'USD' ? '$' : '€'}
               {totalAmount.toFixed(4).toLocaleString()}
             </HiddenText>
@@ -71,7 +71,7 @@ export default function StatisticInfo({showInfo, setToggleInfo}) {
                 : <FontAwesomeIcon icon={faCaretDown} style={{color: 'red', marginRight: 3}} />
             }
             <span style={{color: 'red', marginTop: '10px'}}>
-              <HiddenText show={showInfo}>
+              <HiddenText show={showInfo} length={18}>
                 {currency == 'USD' ? '$' : '€'}
                 {diffAmount.toFixed(4)}/{profitAmount.toFixed(2)}%
               </HiddenText>
@@ -95,8 +95,8 @@ const useStyles = makeStyles((theme) => ({
     border: '1px solid white',
     borderRadius: '12px',
     fontSize: '20px',
-    marginTop: 20,
-    marginBottom: 20,
+    marginTop: 15,
+    marginBottom: 15,
     padding: '10px',
     position: 'relative'
   },

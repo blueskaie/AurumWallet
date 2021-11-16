@@ -23,8 +23,8 @@ const useStyles = makeStyles((theme) => ({
     "& h3": {
       fontFamily: 'Montserrat',
       color: 'white',
-      fontWeight: 300,
-      fontSize: 'x-large',
+      fontWeight: 400,
+      fontSize: 33,
       margin: 0 
     },
     "& p": {

@@ -195,7 +195,7 @@ export default function SendToken(props) {
             </FormControl>
 
             <Box className={classes.submitWrapper}>
-              <ARUButton mode="filled" type="submit" disabled={formSubmitting}>Send</ARUButton>
+              <ARUButton mode="filled" type="submit" disabled={formSubmitting}>SEND</ARUButton>
             </Box>
           </form>
         </Box>}
@@ -278,7 +278,7 @@ export default function SendToken(props) {
             </FormControl>
 
             <div className={classes.submitWrapper}>
-              <ARUButton variant="contained" mode="filled" type="submit">Save</ARUButton>
+              <ARUButton variant="contained" mode="filled" type="submit">SAVE</ARUButton>
             </div>
           </form>
         </Dialog>

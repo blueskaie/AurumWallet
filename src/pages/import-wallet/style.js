@@ -12,7 +12,7 @@ const useStyles = makeStyles((theme) => ({
   },
   logoTitle: {
     color: 'white',
-    fontWeight: '200',
+    fontWeight: 400,
     fontSize: 33,
     userSelect: 'none',
     lineHeight: 0.98,

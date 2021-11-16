@@ -7,7 +7,7 @@ const useStyles = makeStyles((theme) => ({
   },
   wallettitle: {
     margin: "20px 0",
-    fontWeight: "200",
+    fontWeight: 400,
     fontSize: 33,
     lineHeight: 0.98,
   },

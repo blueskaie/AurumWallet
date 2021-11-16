@@ -13,15 +13,14 @@ const useStyles = makeStyles((theme) => ({
     marginTop: -20,
     textAlign: 'left',
     color:'white',
-    fontFamily: 'unset',
+    fontFamily: 'Montserrat',
     fontSize: 33,
-    fontWeight: 100,
+    fontWeight: 400,
     lineHeight: '31px',
-    fontWeight: '100',
     letterSpacing: '1px'
   },
   formWrap: {
-    marginTop: 50
+    marginTop: 30
   },
   form: {
     display: 'flex',
@@ -73,7 +72,7 @@ const useStyles = makeStyles((theme) => ({
   },
   helptext:{
     fontSize: 14,
-    color:'white',
+    color:'red',
   },
 }));
 
