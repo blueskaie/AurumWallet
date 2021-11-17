@@ -42,7 +42,7 @@ export default function Reveal() {
   }
 
   return (
-    <Layout isShownWallet={false} isShownBackButton={true} varient='secondary'>
+    <Layout isShownWallet={false} varient='secondary'>
       <Box className={classes.root}>
         <h1 className={classes.wallettitle}>
           <Box>Reveal</Box>
