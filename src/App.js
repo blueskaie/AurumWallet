@@ -20,6 +20,9 @@ import DeployContract from './pages/deploy-contract';
 import Swap from "./pages/swap";
 import Nft from "./pages/nft";
 import Reveal from "./pages/reveal";
+import ShowPrivatekey from "./pages/show-privatekey";
+import ChangePassword from "./pages/change-password";
+import Security from "./pages/security";
 import Buysell from "./pages/buysell";
 import TokenDetail from "./pages/tokendetail";
 import Activity from "./pages/activity";
@@ -88,6 +91,15 @@ function App() {
               </PrivateRoute>
               <PrivateRoute path="/reveal">
                 <Reveal />
+              </PrivateRoute>
+              <PrivateRoute path="/show-privatekey">
+                <ShowPrivatekey />
+              </PrivateRoute>
+              <PrivateRoute path="/change-password">
+                <ChangePassword />
+              </PrivateRoute>
+              <PrivateRoute path="/security">
+                <Security />
               </PrivateRoute>
               <PrivateRoute path="/accounts">
                 <Accounts />
