@@ -5,6 +5,7 @@ import Layout from "../../components/layout";
 
 import { useRecoilState, useRecoilValue } from 'recoil';
 import { currentWallet, allWallets, networkProvider } from '../../store/atoms';
+import { encryptKeyStore, decryptKeyStore } from '../../utils/keystore';
 
 import {Alert} from '@material-ui/lab';
 import { ARUBaseInput } from '../../components/fields';
@@ -21,6 +22,7 @@ export default function ChangePassword() {
   const [repass, setRePass] = React.useState('');
   const [helperText, setHelperText] = React.useState('');
 
+  const provider = useRecoilValue(networkProvider);
   const wallet = useRecoilValue(currentWallet);
   const [, setWalletAtom] = useRecoilState(allWallets);
 
@@ -62,10 +64,19 @@ export default function ChangePassword() {
     }
 
     setWalletAtom((items) => {
-      const all = [...items];
-      for(let i = 0; i < all.length; i++) {
-        let si = {...all[i], password: pass};
-        all[i] = si;
+      const all = [];
+      for(let i = 0; i < items.length; i++) {
+        try {
+          const account = decryptKeyStore(provider, items[i].keystore, items[i].password);
+          const keystore = encryptKeyStore(provider, account.privateKey, pass);
+          all.push({
+            ...items[i],
+            password: pass,
+            keystore: keystore
+          });
+        } catch (e) {
+          console.log(e);
+        }
       }
       return all;
     });
@@ -119,7 +130,7 @@ export default function ChangePassword() {
             <FormControl className={classes.fieldPassword} error={error}>
               <ARUBaseInput id="repassword" value={repass} onChange={e => setRePass(e.target.value)}
                 type="password" placeholder="Confirm Password"/>
-              <FormHelperText style={{fontSize: 14, color: 'white'}}>
+              <FormHelperText style={{color: '#f44336'}}>
                 {helperText}
               </FormHelperText>
             </FormControl>

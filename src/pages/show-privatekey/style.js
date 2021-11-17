@@ -9,7 +9,7 @@ const useStyles = makeStyles((theme) => ({
     },
     wallettitle: {
         margin: 0,
-        fontWeight: 200,
+        fontWeight: 400,
         fontSize: 33,
         lineHeight: 0.98,
         color: 'white',
@@ -22,14 +22,13 @@ const useStyles = makeStyles((theme) => ({
         marginLeft: 15, 
         color: 'white', 
         fontSize: 14, 
-        fontWeight: 300, 
+        fontWeight: 400, 
         lignHeight: '20px'
     },
     form: {
         color: 'white',
         display: 'flex',
-        flexDirection: 'column',
-        paddingTop: 10
+        flexDirection: 'column'
     },
     fieldPassword: {
         marginBottom: 10,
@@ -47,10 +46,10 @@ const useStyles = makeStyles((theme) => ({
         justifyContent: 'center',
         alignItems: 'flex-start',
         padding: 18,
+        marginTop: 20,
         marginBottom: 10
     },
     secretPhraseSection: {
-        paddingTop: 10,
         display: 'flex',
         flexDirection: 'column'
     },

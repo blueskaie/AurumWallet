@@ -7,8 +7,8 @@ const useStyles = makeStyles((theme) => ({
         flexDirection: 'column'
     },
     wallettitle: {
-        marginBottom: '45px',
-        fontWeight: 300,
+        marginBottom: 45,
+        fontWeight: 400,
         fontSize: 33,
         lineHeight: 0.98,
         color: 'white',

@@ -2,7 +2,7 @@ import React from 'react';
 
 import { Box, FormControl, FormHelperText, Icon, Snackbar } from '@material-ui/core'
 import Layout from "../../components/layout";
-
+import { useHistory } from 'react-router-dom';
 import { useRecoilValue } from 'recoil';
 import { currentWallet } from '../../store/atoms';
 
@@ -15,6 +15,7 @@ import useStyles from "./style";
 
 export default function Reveal() {
   const classes = useStyles( );
+  const history = useHistory();
 
   const [passValid, setPassValid] = React.useState(false);
   const [error, setError] = React.useState();
@@ -41,8 +42,17 @@ export default function Reveal() {
     return false;
   }
 
+  const cancel = (event) => {
+    event.preventDefault();
+    if(history.length) {
+      history.goBack();
+    } else {
+      history.push('/');
+    }
+  }
+
   return (
-    <Layout isShownWallet={false}>
+    <Layout isShownBackButton={true} isShownWallet={false} isShownNetworkSelector={false}>
       <Box className={classes.root}>
         <h1 className={classes.wallettitle}>
           <Box>Reveal</Box>
@@ -89,7 +99,7 @@ export default function Reveal() {
             >
               COPY TO CLIPBOARD
             </Clipboard>
-            <ARUButton className={classes.formButton} type='submit'>CANCEL</ARUButton>
+            <ARUButton className={classes.formButton} onClick={cancel}>CANCEL</ARUButton>
           </Box>
         }
       </Box>

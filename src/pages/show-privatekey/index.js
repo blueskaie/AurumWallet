@@ -2,7 +2,7 @@ import React from 'react';
 
 import { Box, FormControl, FormHelperText, Icon, Snackbar } from '@material-ui/core'
 import Layout from "../../components/layout";
-
+import { useHistory } from 'react-router-dom';
 import { useRecoilValue } from 'recoil';
 import { currentWallet, allWallets, networkProvider } from '../../store/atoms';
 
@@ -15,6 +15,7 @@ import useStyles from "./style";
 
 export default function ShowPrivatekey() {
   const classes = useStyles( );
+  const history = useHistory();
 
   const [passValid, setPassValid] = React.useState(false);
   const [error, setError] = React.useState();
@@ -50,6 +51,15 @@ export default function ShowPrivatekey() {
     return false;
   }
 
+  const cancel = (event) => {
+    event.preventDefault();
+    if(history.length) {
+      history.goBack();
+    } else {
+      history.push('/');
+    }
+  }
+
   return (
     <Layout isShownWallet={false} isShownBackButton={true} varient='secondary'>
       <Box className={classes.root}>
@@ -57,18 +67,19 @@ export default function ShowPrivatekey() {
           <Box>Show</Box>
           <Box>Private Key</Box>
         </h1>
+        <ARUCard className={classes.card}>
+          <Icon className={classes.warningIcon}>
+            <img src="images/warning.svg" alt="AurumWallet" className="warning-image" style={{height: '100%'}} />
+          </Icon>
+          <Box className={classes.warningMessage}>
+            This is the private key for: <br/>
+            <span style={{fontWeight: 'bold', fontSize: 16}}>{wallet.name ? wallet.name : 'Account '}</span>
+            NEVER DISCLOSE your private key as it controls full access to your account.
+          </Box>
+        </ARUCard>
         {
           !passValid 
           ? <form method="post" autoComplete="off" onSubmit={handleSubmit} className={classes.form}>
-            <ARUCard className={classes.card}>
-              <Icon className={classes.warningIcon}>
-                <img src="images/warning.svg" alt="AurumWallet" className="warning-image" style={{height: '100%'}} />
-              </Icon>
-              <Box className={classes.warningMessage}>
-                This is the private key for:<br/>
-                <span style={{fontWeight: 300}}>Account 1.</span>NEVER DISCLOSE your private key as it controls full access to your account.
-              </Box>
-            </ARUCard>
             <FormControl className={classes.fieldPassword} error={error}>
               <ARUBaseInput id="password" value={pass} onChange={e => setPass(e.target.value)}
                 type="password" placeholder="Password"/>
@@ -79,15 +90,6 @@ export default function ShowPrivatekey() {
             <ARUButton className={classes.formButton} type='submit'>SHOW PRIVATE KEY</ARUButton>
           </form>
           : <Box className={classes.secretPhraseSection}>
-            <ARUCard className={classes.card}>
-              <Icon className={classes.warningIcon}>
-                <img src="images/warning.svg" alt="AurumWallet" className="warning-image" style={{height: '100%'}} />
-              </Icon>
-              <Box className={classes.warningMessage}>
-                This is the private key for:<br/>
-                <span style={{fontWeight: 300}}>Account 1.</span>NEVER DISCLOSE your private key as it controls full access to your account.
-              </Box>
-            </ARUCard>
             <ARUCard className={classes.privatekey}>
             {privatekey}
             </ARUCard>
@@ -100,7 +102,7 @@ export default function ShowPrivatekey() {
             >
               COPY TO CLIPBOARD
             </Clipboard>
-            <ARUButton className={classes.formButton} type='submit'>CANCEL</ARUButton>
+            <ARUButton className={classes.formButton} onClick={cancel}>CANCEL</ARUButton>
           </Box>
         }
       </Box>
