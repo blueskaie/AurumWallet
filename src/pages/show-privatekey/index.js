@@ -4,7 +4,7 @@ import { Box, FormControl, FormHelperText, Icon, Snackbar } from '@material-ui/c
 import Layout from "../../components/layout";
 
 import { useRecoilValue } from 'recoil';
-import { currentWallet } from '../../store/atoms';
+import { currentWallet, allWallets, networkProvider } from '../../store/atoms';
 
 import {Alert} from '@material-ui/lab';
 import Clipboard from 'react-clipboard.js';
@@ -13,7 +13,7 @@ import ARUButton from '../../components/buttons';
 import ARUCard from '../../components/card';
 import useStyles from "./style";
 
-export default function Reveal() {
+export default function ShowPrivatekey() {
   const classes = useStyles( );
 
   const [passValid, setPassValid] = React.useState(false);
@@ -23,9 +23,18 @@ export default function Reveal() {
 
   const wallet = useRecoilValue(currentWallet);
   const [openSuccess, setOpenSuccess] = React.useState(false);
+  const [privatekey, setPrivatekey] = React.useState('');
+  const walletList = useRecoilValue(allWallets);
+  const web3 = useRecoilValue(networkProvider);
 
   const handleSubmit = (event) => {
     event.preventDefault();
+    for(let i = 0; i < walletList.length; i++) {
+        if (walletList[i].current === true) {
+          const account = web3.eth.accounts.decrypt(walletList[i].keystore, walletList[i].password);
+          setPrivatekey(account.privateKey);
+        }
+    }
 
     if(wallet.password !== pass) {
       setError(true);
@@ -45,8 +54,8 @@ export default function Reveal() {
     <Layout isShownWallet={false} isShownBackButton={true} varient='secondary'>
       <Box className={classes.root}>
         <h1 className={classes.wallettitle}>
-          <Box>Reveal</Box>
-          <Box>Recovery Phrase</Box>
+          <Box>Show</Box>
+          <Box>Private Key</Box>
         </h1>
         {
           !passValid 
@@ -56,7 +65,8 @@ export default function Reveal() {
                 <img src="images/warning.svg" alt="AurumWallet" className="warning-image" style={{height: '100%'}} />
               </Icon>
               <Box className={classes.warningMessage}>
-                DO NOT SHARE this phrase with anyone! These words can be used to steal funds from ALL OF YOUR ACCOUNTS.
+                This is the private key for:<br/>
+                <span style={{fontWeight: 300}}>Account 1.</span>NEVER DISCLOSE your private key as it controls full access to your account.
               </Box>
             </ARUCard>
             <FormControl className={classes.fieldPassword} error={error}>
@@ -66,7 +76,7 @@ export default function Reveal() {
                 {helperText}
               </FormHelperText>
             </FormControl>
-            <ARUButton className={classes.formButton} type='submit'>REVEAL</ARUButton>
+            <ARUButton className={classes.formButton} type='submit'>SHOW PRIVATE KEY</ARUButton>
           </form>
           : <Box className={classes.secretPhraseSection}>
             <ARUCard className={classes.card}>
@@ -74,17 +84,18 @@ export default function Reveal() {
                 <img src="images/warning.svg" alt="AurumWallet" className="warning-image" style={{height: '100%'}} />
               </Icon>
               <Box className={classes.warningMessage}>
-                DO NOT SHARE this phrase with anyone! These words can be used to steal funds from ALL OF YOUR ACCOUNTS.
+                This is the private key for:<br/>
+                <span style={{fontWeight: 300}}>Account 1.</span>NEVER DISCLOSE your private key as it controls full access to your account.
               </Box>
             </ARUCard>
-            <Box className={classes.secretPhrase}>
-              {wallet.mnemonic}
-            </Box>
+            <ARUCard className={classes.privatekey}>
+            {privatekey}
+            </ARUCard>
             <Clipboard
               component="button"
               className={classes.clipboardButton}
               button-href="#"
-              data-clipboard-text={wallet.mnemonic}
+              data-clipboard-text={privatekey}
               onClick={()=>setOpenSuccess(true)}
             >
               COPY TO CLIPBOARD
@@ -95,7 +106,7 @@ export default function Reveal() {
       </Box>
       <Snackbar open={openSuccess} autoHideDuration={6000} onClose={() => setOpenSuccess(false)}>
         <Alert onClose={() => setOpenSuccess(false)} severity="success">
-          Secret Phrase Copied!
+          Private key Copied!
         </Alert>
       </Snackbar>
     </Layout>
