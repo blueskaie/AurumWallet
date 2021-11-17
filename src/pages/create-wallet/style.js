@@ -7,7 +7,7 @@ const useStyles = makeStyles((theme) => ({
   },
   wallettitle: {
     margin: "20px 0",
-    fontWeight: "200",
+    fontWeight: 400,
     fontSize: 33,
     lineHeight: 0.98,
   },
@@ -38,7 +38,7 @@ const useStyles = makeStyles((theme) => ({
   circleIcon: {
     width: 26,
     height: 18,
-    borderRadius: 15,
+    borderRadius: 12,
     margin: 3,
     border: '3px solid white',
   },
@@ -71,7 +71,7 @@ const useStyles = makeStyles((theme) => ({
   },
   confirmSecretPharse: {
     border: '1px solid white',
-    borderRadius: 8,
+    borderRadius: 12,
     padding: '10px 20px',
     lineHeight: '18px',
     fontSize: 14,
@@ -97,7 +97,7 @@ const useStyles = makeStyles((theme) => ({
   //     border: '1px solid #ccc',
   //     borderRight: 'none',
   //     background: '#fafafa',
-  //     borderRadius: '2px 0 0 2px',
+  //     borderRadius: '12px 0 0 12px',
   //     '&:focus': {
   //       outline: 'none',
   //       background: '#f3f3f3'
@@ -109,7 +109,7 @@ const useStyles = makeStyles((theme) => ({
   //     background: '#f1f1f1',
   //     border: '1px solid #ccc',
   //     borderLeft: 'none',
-  //     borderRadius: '0 2px 2px 0',
+  //     borderRadius: '0 12px 12px 0',
   //     '& svg': {
   //       width: '15px'
   //     }

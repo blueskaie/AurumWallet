@@ -14,6 +14,7 @@ import TransactionDetail from './pages/transaction-details';
 import WalletDetail from './pages/wallet-details';
 import ExportKey from './pages/export-key';
 import AddCustomToken from './pages/addtoken';
+import ImportAccount from './pages/importaccount';
 import DeployContract from './pages/deploy-contract';
 //
 import Swap from "./pages/swap";
@@ -45,16 +46,7 @@ import ALL_TOKENS from './config/tokens';
 const theme = createMuiTheme({
   typography: {
     fontFamily: [
-      '-apple-system',
-      'BlinkMacSystemFont',
-      '"Segoe UI"',
-      'Roboto',
-      '"Helvetica Neue"',
-      'Arial',
-      'sans-serif',
-      '"Apple Color Emoji"',
-      '"Segoe UI Emoji"',
-      '"Segoe UI Symbol"',
+      'Montserrat',
     ].join(',')
   },
   palette: {
@@ -83,9 +75,6 @@ function App() {
       <ProvideAuth>
           <Router>
             <Switch>
-              <PrivateRoute path="/about-us">
-                <AboutUs />
-              </PrivateRoute>
               <PrivateRoute path="/send">
                 <Send />
               </PrivateRoute>
@@ -118,6 +107,9 @@ function App() {
               <PrivateRoute path="/add-token">
                 <AddCustomToken />
               </PrivateRoute>
+              <PrivateRoute path="/import-account">
+                <ImportAccount />
+              </PrivateRoute>
               <PrivateRoute path="/home">
                 <Home />
               </PrivateRoute>
@@ -131,6 +123,9 @@ function App() {
               </Route>
               <PrivateRoute path="/wallet/:address/:index" component={WalletDetail}>
               </PrivateRoute>
+              <Route path="/about-us">
+                <AboutUs />
+              </Route>
               <Route path="/setup-wallet">
                 <SetupWallet />
               </Route>

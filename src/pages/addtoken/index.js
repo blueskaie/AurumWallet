@@ -9,6 +9,7 @@ import MuiAlert from '@material-ui/lab/Alert';
 import { useSetRecoilState,useRecoilValue} from 'recoil';
 import { allTokens,currentNetwork } from '../../store/atoms';
 import useStyles from './style';
+import {useHistory} from 'react-router-dom';
 
 function Alert(props) {
   return <MuiAlert elevation={6} variant="filled" {...props} />;
@@ -16,6 +17,7 @@ function Alert(props) {
 
 export default function AddCustomToken() {
   const classes = useStyles( );
+  const history = useHistory();
 
   const network = useRecoilValue( currentNetwork );
   const [contract, setContract] = React.useState('');
@@ -89,10 +91,11 @@ export default function AddCustomToken() {
 
     setOpenSuccess(true);
 
+    history.push('/');
   }
 
   return (
-    <Layout isShownWallet={false} isShownBackButton={true} varient="secondary">
+    <Layout isShownNetworkSelector={false} isShownWallet={false} isShownBackButton={true}>
       <Box className={classes.root}>
         <Box className={classes.title}>
           Add Token
@@ -121,7 +124,7 @@ export default function AddCustomToken() {
               <ARUBaseInput id="decimals" value={vals.decimals}
                 type="text" placeholder="Decimals" inputProps={{ readOnly: true, }} />
             </FormControl>
-            <Button variant="contained" type="submit" style={{background: 'white', color: 'black', borderRadius: 8}}>ADD TOKEN</Button>
+            <Button variant="contained" type="submit" style={{background: 'white', color: 'black', borderRadius: 12}}>ADD TOKEN</Button>
           </form>
         </Box>
 

@@ -10,7 +10,7 @@ export default function Activity() {
   const classes = useStyles( );
 
   return (
-    <Layout isShownWallet={false} varient="secondary">
+    <Layout isShownWallet={false}>
       <Box className={classes.root}>
         <Box className={classes.title}>
           Activity

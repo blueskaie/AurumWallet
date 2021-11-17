@@ -11,9 +11,9 @@ const useStyles = makeStyles((theme) => ({
     marginTop: -20,
     textAlign: 'left',
     color:'white',
-    fontFamily: 'unset',
+    fontFamily: 'Montserrat',
     fontSize: 33,
-    fontWeight: 100,
+    fontWeight: 400,
     lineHeight: '31px',
     letterSpacing: '1px'
   },
@@ -62,7 +62,7 @@ const useStyles = makeStyles((theme) => ({
   editGasModal: {
     background: '#1e1d1d',
     boxShadow: '0px 3px 3px #000000c2',
-    borderRadius: 8,
+    borderRadius: 12,
     padding: 20
   }
 }));

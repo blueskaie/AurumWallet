@@ -9,7 +9,7 @@ const useStyles = makeStyles({
   },
   button: {
     border: '1px solid white',
-    borderRadius: 5,
+    borderRadius: 12,
     color: 'white',
     background: '#161616',
     width: '100%',

@@ -107,7 +107,7 @@ const TokenDetail = (props) => {
   const percent = (curVolumn - prevVolumn) / prevVolumn * 100;
 
   return (
-    <Layout isShownBackButton = {true} isShownWallet = {false} varient = 'secondary'>
+    <Layout isShownBackButton = {true} isShownWallet = {false}>
       {/* main_div */}
       <Box className={classes.root}>
         {coin && coin.code && coin.code !== 'BNB' && <div style={{marginBottom: 20, textAlign: 'right'}}>

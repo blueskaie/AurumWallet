@@ -69,7 +69,7 @@ img {
   display: flex;
   height: 90px;
   justify-content: space-between;
-  border-radius: 10px;
+  border-radius: 12px;
 
   background:linear-gradient(#d4a0cf,#8341e0);
   box-shadow: 0px 10px 5px #120f31;
@@ -88,7 +88,7 @@ img {
   width: 200px;
   flex-direction: row;
   height:100px;
-  border-radius: 10px;
+  border-radius: 12px;
 }
 .inactive{
   background:linear-gradient(#8d7884,#98376b);

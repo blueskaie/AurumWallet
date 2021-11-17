@@ -39,8 +39,8 @@ export default function Home() {
               data-clipboard-text={wallet && wallet.address}
               onClick={()=>setOpenSuccess(true)}
             >
-              <Typography variant="h6" className={classes.title}>
-                <Box><HiddenText show={showInfo}>{shortWalletAddress}</HiddenText></Box>
+              <Typography variant="h6" className={classes.walletaddress}>
+                <Box><HiddenText show={showInfo} length={20}>{shortWalletAddress}</HiddenText></Box>
               </Typography>
             </Clipboard>
           </Box>

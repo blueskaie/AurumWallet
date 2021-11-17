@@ -11,11 +11,10 @@ const useStyles = makeStyles((theme) => ({
     marginTop: -20,
     textAlign: 'left',
     color:'white',
-    fontFamily: 'unset',
+    fontFamily: 'Montserrat',
     fontSize: 33,
-    fontWeight: 100,
+    fontWeight: 400,
     lineHeight: '31px',
-    fontWeight: '100',
     letterSpacing: '1px'
   },
 }));

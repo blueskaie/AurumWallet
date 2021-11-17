@@ -8,6 +8,7 @@ import AccountList from "./account-list";
 import { useRecoilState, useRecoilValue } from "recoil";
 import useStyles from "./style";
 import { encryptKeyStore } from '../../utils/keystore';
+import { useHistory } from "react-router-dom";
 
 export default function Accounts() {
   const classes = useStyles(useTheme());
@@ -17,6 +18,9 @@ export default function Accounts() {
   const [showAccountInfo, setToggleAccountInfo] = React.useState(true);
 
   const [walletList, setWalletAtom] = useRecoilState(allWallets);
+
+  const history = useHistory();
+  const importAccount = () => { history.push("/import-account"); };
 
   const createAccount = () => { 
 
@@ -63,7 +67,7 @@ export default function Accounts() {
     setToggleAccountInfo(showAccountInfo)
   }
   return (
-    <Layout isShownWallet = {false} varient = 'secondary'>
+    <Layout isShownWallet = {false}>
       <Box className={classes.root}>
         <Box className={classes.myaccount}>
           <Box className={classes.title}>
@@ -82,8 +86,11 @@ export default function Accounts() {
                 </Icon>
               </IconButton>
             </Box>
-            <p onClick={createAccount} style={{color: 'white', cursor: 'pointer'}}>Create Account</p>
+            <Box className={classes.buttonAcnt}>
+              <p onClick={createAccount} style={{color: 'white', cursor: 'pointer'}}>Create Account |</p>
+              <p onClick={importAccount} style={{color: 'white', cursor: 'pointer'}}>&nbsp;Import Account</p>
             </Box>
+          </Box>
           <ScrollContainer className={classes.accountlist} vertical={true}>
             <React.Suspense fallback={<Box>Loading...</Box>}>
               <AccountList

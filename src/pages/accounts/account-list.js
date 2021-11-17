@@ -19,7 +19,8 @@ const OneAccount = (props) => {
       <Box className={classes.accountinfo}>
         <Box style={{display: 'flex', flexDirection: 'column', justifyContent: 'space-between'}}>
           <p className={classes.name}>{name}</p>
-          <p className={classes.address}><HiddenText show={visible}>{shortWalletAddress}</HiddenText></p>
+          {/* <p className={classes.money}><HiddenText show={visible}>$826,181.55</HiddenText></p> */}
+          <p className={classes.address}><HiddenText show={visible} length={22}>{shortWalletAddress}</HiddenText></p>
         </Box>
         {account.current && <Icon className={classes.checkIcon}>
           <img src="images/checked-circle.svg" alt="AurumWallet" className="logo-image" style={{height: '100%'}} />
@@ -40,7 +41,7 @@ const useStyles = makeStyles((theme) => ({
     boxSizing: "border-box",
     boxShadow: '0px 3px 3px #000000c2',
     padding: 10,
-    borderRadius: 10,
+    borderRadius: 12,
     // background: "#1e1d1d",
     background: '#222222',
     alignItems: 'center'
@@ -57,19 +58,25 @@ const useStyles = makeStyles((theme) => ({
   },
   name: {
     color: "white",
-    margin: 0,
+    margin: 2,
     fontSize: 18,
-    fontWeight: 300
+    fontWeight: 400
   },
   balance: {
     color: "white",
-    margin: 0,
+    margin: 2,
     fontSize: 14,
-    fontWeight: 300
+    fontWeight: 400
   },
   address: {
-    color: "#555555",
-    margin: 0,
+    color: "#bcc5e1",
+    margin: 2,
+    fontSize: 12,
+    fontWeight: 400
+  },
+  money: {
+    color: "#ffffff",
+    margin: 2,
     fontSize: 14,
     fontWeight: 300
   },

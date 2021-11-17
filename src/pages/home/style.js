@@ -26,9 +26,9 @@ const useStyles = makeStyles((theme) => ({
     paddingTop: 5,
     paddingBottom: 5,
     "& h3": {
-      fontFamily: 'system-ui',
+      fontFamily: 'Montserrat',
       color: 'white',
-      fontWeight: 300,
+      fontWeight: 400,
       fontSize: 'x-large',
       margin: 0 
     },
@@ -49,11 +49,11 @@ const useStyles = makeStyles((theme) => ({
       border:'none',
     }
   },
-  title:{
+  walletaddress:{
     cursor:'pointer',
-    color:'#ffffff',
+    color:'#5e5e5e',
     flexGrow: 1,
-    fontSize: '1rem',
+    fontSize: 14,
   },
 }));
 

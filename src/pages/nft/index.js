@@ -127,7 +127,6 @@ const Nft = () => {
         </h1>
           <AllNFTs />
       </div>
-      <img src="images/wave.png" className={classes.bottomimg} alt="bottom_image"/>
     </div>
   );
 };
