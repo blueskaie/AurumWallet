@@ -11,6 +11,7 @@ import SendToken from './pages/send-token'
 import SetupWallet from './pages/setup-wallet'
 import Receive from './pages/receive'
 import TransactionDetail from './pages/transaction-details';
+import TransactionDetailLocal from './pages/transaction-local-details';
 import WalletDetail from './pages/wallet-details';
 import ExportKey from './pages/export-key';
 import AddCustomToken from './pages/addtoken';
@@ -26,6 +27,7 @@ import Security from "./pages/security";
 import Buysell from "./pages/buysell";
 import TokenDetail from "./pages/tokendetail";
 import Activity from "./pages/activity";
+import ActivityLocal from "./pages/activity-local";
 import Accounts from "./pages/accounts";
 import Test from "./pages/test";
 
@@ -119,7 +121,12 @@ function App() {
               <Route path="/activity">
                 <Activity/>
               </Route>
+              <Route path="/activity-local">
+                <ActivityLocal/>
+              </Route>
               <Route path="/transaction/:hash" component={TransactionDetail}>
+              </Route>
+              <Route path="/transaction-local/:hash" component={TransactionDetailLocal}>
               </Route>
               <PrivateRoute path="/wallet/:address/:index" component={WalletDetail}>
               </PrivateRoute>

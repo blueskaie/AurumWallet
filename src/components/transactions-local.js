@@ -84,16 +84,16 @@ const useStyles = makeStyles(() => ({
 }));
 
 
-export function AllTransactions({token, height}) {
+export function AllTransactionsLocal({token, height}) {
 
   const classes = useStyles( );
 
   const wallet = useRecoilValue(currentWallet);
   const network = useRecoilValue(currentNetwork);
   const transactions = useRecoilValue(networkTransactions(0));
-  const allTrans = useRecoilValue(allTransactions);
 
   const allTokensData = useRecoilValue(allTokens);
+  const allTrans = useRecoilValue(allTransactions);
 
   const history = useHistory();
 
@@ -120,7 +120,7 @@ export function AllTransactions({token, height}) {
 
     return (
         <Box style={style} key={index} >
-          <ButtonBase className={classes.listItem} onClick={()=>history.push(`/transaction/${di.hash}?from=${di.from}&to=${di.to}`)}>
+          <ButtonBase className={classes.listItem} onClick={()=>history.push(`/transaction-local/${di.hash}?from=${di.from}&to=${di.to}`)}>
             <Box className={classes.icon}>
               <Icon className={classes.infoIcon}>
                   <img src={`images/${image}`} alt="AurumWallet" className={type} style={{height: '100%'}} />
@@ -177,10 +177,10 @@ export function AllTransactions({token, height}) {
   )
 }
 
-export default function Transactions(props) {
+export default function TransactionsLocal(props) {
   return (
     <React.Suspense fallback={<Box className="loading">Loading Transactions..</Box>}>
-      <AllTransactions {...props}/>
+      <AllTransactionsLocal {...props}/>
     </React.Suspense>
   )
 }
