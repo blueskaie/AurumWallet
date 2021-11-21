@@ -29,7 +29,15 @@ export function formatDateFromSeconds(dt) {
     dt = parseInt(dt)
   }
   const dat = new Date(dt * 1000);
-  return dat.toUTCString();
+  return dat.toGMTString();
+}
+
+export function formatLocaleDateFromSeconds(dt) {
+  if(typeof dt === 'string') {
+    dt = parseInt(dt)
+  }
+  const dat = new Date(dt * 1000);
+  return dat.toLocaleString();
 }
 
 export function formatOnlyDateFromSeconds(dt) {

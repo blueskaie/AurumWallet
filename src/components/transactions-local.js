@@ -7,7 +7,7 @@ import {ButtonBase, Box, Icon} from '@material-ui/core';
 import { ArrowDownward, ArrowUpward } from '@material-ui/icons';
 import { makeStyles } from '@material-ui/core/styles';
 import { DEFAULT_TOKEN } from '../config/tokens'
-import { precisionFormat, formatDateFromSeconds, compressAddress} from '../utils/format-utils';
+import { precisionFormat, formatLocaleDateFromSeconds, compressAddress} from '../utils/format-utils';
 import ARUCard from './card';
 import { useHistory } from 'react-router-dom';
 
@@ -144,7 +144,7 @@ export function AllTransactionsLocal({token, height}) {
                     : <span>From: {compressAddress(di.from)}</span> 
                   }
                   </Box>
-                  <Box>{ formatDateFromSeconds(di.timeStamp) }</Box>
+                  <Box>{ formatLocaleDateFromSeconds(di.timeStamp) }</Box>
                 </Box>           
                 <Icon className={classes.infoIcon}>
                   <img src="images/details.svg" alt="AurumWallet" className="detail-image" style={{height: '100%'}} />

@@ -232,7 +232,7 @@ export const currentCurrencyCode = atom({
 
 export const allTransactions = atom({
   key: 'allTransactions',
-  default: "USD",
+  default: "",
   persistence_UNSTABLE: {
     type: 'allTransactions'
   }

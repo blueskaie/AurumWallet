@@ -5,7 +5,7 @@ import Layout from "../../components/layout";
 import {  Box, Icon } from '@material-ui/core'
 
 // import { makeStyles } from '@material-ui/core/styles';
-import { currentNetwork, currentWallet, transactionDetails, allTokens } from '../../store/atoms';
+import { currentNetwork, currentWallet, transactionDetails, allTokens, allTransactions } from '../../store/atoms';
 import { useRecoilValue } from 'recoil';
 
 import { DEFAULT_TOKEN } from '../../config/tokens'
@@ -24,7 +24,17 @@ function ActualDetailsLocal({hash, from, to, tokensMap, network}) {
   const classes = useStyles( );
 
   const wallet = useRecoilValue(currentWallet);
-  const di = useRecoilValue(transactionDetails({hash, from, to}));
+  const allTrans = useRecoilValue(allTransactions);
+  const get_di = () => {
+    for (let i = 0; i < allTrans.length; i++) {
+      if (hash === allTrans[i].hash && from === allTrans[i].from && to === allTrans[i].to) {
+        return allTrans[i];
+      }
+    }
+    return null;
+  }
+  const di = get_di();
+  // const di = useRecoilValue(transactionDetails({hash, from, to}));
   const tokenValue = di.contractAddress && tokensMap[di.contractAddress.toUpperCase()] ? tokensMap[di.contractAddress.toUpperCase()] : DEFAULT_TOKEN;
 
   // const success = di.isError === "0" ? true : false;
