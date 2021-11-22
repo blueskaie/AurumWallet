@@ -158,11 +158,11 @@ export function AllTransactionsLocal({token, height}) {
   
   const filteredTransactions = !token
   ? allTrans 
-  : allTrans.filter((di)=>{
+  : (allTrans && allTrans.length)? allTrans.filter((di)=>{
     return token.code === 'BNB' 
       ? di.contractAddress === '' 
       : di.contractAddress === token.contract
-  });
+  }) : [];
 
   return (
     <ARUCard className={classes.root}>

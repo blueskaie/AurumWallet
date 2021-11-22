@@ -5,7 +5,7 @@ import { useRecoilValue, useSetRecoilState } from 'recoil';
 import { Box } from '@material-ui/core';
 import useStyles from './style';
 import { tokenList, allTokens, currentNetwork, currentCurrencyCode  } from '../../store/atoms';
-import Transactions from '../../components/transactions';
+import TransactionsLocal from '../../components/transactions-local';
 import ARUCard from '../../components/card';
 import ReactApexChart from 'react-apexcharts';
 import { faCaretDown, faCaretUp, faSignOutAlt } from "@fortawesome/free-solid-svg-icons";
@@ -150,7 +150,7 @@ const TokenDetail = (props) => {
             </Box>
           </Box>
         </ARUCard>
-        {coin && <Transactions token={coin} height={80} />}
+        {coin && <TransactionsLocal token={coin} height={80} />}
       </Box>
     </Layout>
   );
