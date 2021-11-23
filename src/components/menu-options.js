@@ -68,7 +68,7 @@ const options = [
   {id: KEY_SEND, name: 'Send', icon: 'send.svg'},
   // {id: KEY_REVEAL, name: 'Reveal', icon: 'reveal.svg'},
   {id: WALLET_SECURITY, name: 'Security', icon: 'reveal.svg'},
-  // {id: KEY_ACTIVITY, name: 'Activity', icon: 'activity.svg'},
+  {id: KEY_ACTIVITY, name: 'Activitya', icon: 'activity.svg'},
   {id: KEY_ACTIVITY_LOCAL, name: 'Activity', icon: 'activity.svg'},
   {id: KEY_ACCOUNTS, name: 'Accounts', icon: 'accounts.svg'},
   {id: KEY_LOGOUT, name: 'Logout', icon: 'logout.svg'}

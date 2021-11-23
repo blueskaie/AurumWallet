@@ -140,11 +140,26 @@ const Swap = () => {
             timeStamp: timeStamp,
             contractAddress: result.contractAddress,
             from: result.from,
+            fromTokenType: fromToken.code,
             gasUsed: result.gasUsed,
             to: result.to,
+            toTokenType: toToken.code,
             hash: result.transactionHash,
             gasPrice: gasPrice,
             value: parseFloat(swapAmount) * Math.pow(10, fromToken.decimals),
+          })
+
+          all.unshift({
+            timeStamp: timeStamp,
+            contractAddress: wallet.address,
+            from: result.to,
+            fromTokenType: toToken.code,
+            gasUsed: result.gasUsed,
+            to: result.from,
+            toTokenType: fromToken.code,
+            hash: result.transactionHash,
+            gasPrice: gasPrice,
+            value: parseFloat(expectedAmount) * Math.pow(10, fromToken.decimals),
           })
           return all;
         });
@@ -175,11 +190,30 @@ const Swap = () => {
             timeStamp: timeStamp,
             contractAddress: result.contractAddress,
             from: result.from,
+            fromTokenType: fromToken.code,
             gasUsed: result.gasUsed,
             to: result.to,
+            toTokenType: toToken.code,
             hash: result.transactionHash,
             gasPrice: gasPrice,
             value: parseFloat(swapAmount) * Math.pow(10, fromToken.decimals),
+          })
+          return all;
+        });
+        setTransactionAtom((items) => {
+          const all = [...items];
+          let timeStamp = (new Date()).getTime() / 1000;
+          all.unshift({
+            timeStamp: timeStamp,
+            contractAddress: wallet.address,
+            from: result.to,
+            fromTokenType: toToken.code,
+            gasUsed: result.gasUsed,
+            to: result.from,
+            toTokenType: fromToken.code,
+            hash: result.transactionHash,
+            gasPrice: gasPrice,
+            value: parseFloat(expectedAmount) * Math.pow(10, fromToken.decimals),
           })
           return all;
         });

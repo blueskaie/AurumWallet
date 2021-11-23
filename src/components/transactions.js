@@ -157,8 +157,8 @@ export function AllTransactions({token, height}) {
   }
   
   const filteredTransactions = !token
-  ? allTrans 
-  : allTrans.filter((di)=>{
+  ? transactions 
+  : transactions.filter((di)=>{
     return token.code === 'BNB' 
       ? di.contractAddress === '' 
       : di.contractAddress === token.contract

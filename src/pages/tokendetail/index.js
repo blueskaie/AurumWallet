@@ -125,7 +125,7 @@ const TokenDetail = (props) => {
           </Box>
           <Box className={classes.tokenRow}>
             <Box className={classes.tokenLeft}>
-              <Box>{coin.code}</Box>
+              <Box>{coin.fromTokenType}</Box>
               <Box style={{marginTop: 5, marginBottom: 5}}>
                 {currency == 'USD' ? '$' : '€'}
                 {parseFloat(curPrice * coin.trade.cmp).toFixed(2)}
