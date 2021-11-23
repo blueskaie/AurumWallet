@@ -57,7 +57,7 @@ const KEY_SEND = 3;
 const KEY_ACTIVITY = 5;
 const KEY_ACCOUNTS = 6;
 const WALLET_SECURITY = 7;
-// const KEY_SETTINGS = 4;
+const KEY_SETTINGS = 4;
 // const KEY_ABOUT_US = 5;
 // const KEY_DEPLOY_CONTRACT = 7;
 
@@ -66,7 +66,8 @@ const options = [
   {id: KEY_SWAP, name: 'Swap', icon: 'swap.svg'},
   {id: KEY_SEND, name: 'Send', icon: 'send.svg'},
   // {id: KEY_REVEAL, name: 'Reveal', icon: 'reveal.svg'},
-  {id: WALLET_SECURITY, name: 'Security', icon: 'reveal.svg'},
+  {id: KEY_SETTINGS, name: 'Settings', icon: 'settings.svg'},
+  // {id: WALLET_SECURITY, name: 'Security', icon: 'reveal.svg'},
   {id: KEY_ACTIVITY, name: 'Activity', icon: 'activity.svg'},
   {id: KEY_ACCOUNTS, name: 'Accounts', icon: 'accounts.svg'},
   {id: KEY_LOGOUT, name: 'Logout', icon: 'logout.svg'}
@@ -109,9 +110,9 @@ export default function MenuOptions({loggedIn}) {
       case KEY_SEND:
         history.push('/send');
         break;
-      // case KEY_SETTINGS:
-      //   history.push('/settings');
-      //   break;
+      case KEY_SETTINGS:
+        history.push('/settings');
+        break;
       // case KEY_REVEAL:
       //   history.push('/reveal');
       //   break;

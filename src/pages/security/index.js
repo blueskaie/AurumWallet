@@ -21,7 +21,7 @@ export default function Security() {
   }
 
   return (
-    <Layout isShownWallet={false} varient='secondary'>
+    <Layout isShownBackButton={true} isShownWallet={false} varient='secondary'>
       <Box className={classes.root}>
         <h1 className={classes.wallettitle}>
           <Box>Wallet</Box>

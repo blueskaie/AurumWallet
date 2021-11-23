@@ -14,7 +14,7 @@ const useStyles = makeStyles((theme) => ({
   },
   nftfilter: {
     background: "#23272f",
-    borderRadius: "12px",
+    borderRadius: "6px",
     padding: "3px 10px",
     margin: "10px 2px",
     color: "white",
@@ -43,14 +43,14 @@ const useStyles = makeStyles((theme) => ({
     position: "relative",
     zIndex: 3,
     boxShadow: "0px 10px 5px #0a0b0c",
-    borderRadius: 12,
+    borderRadius: 6,
     background: "linear-gradient(#2c2f36,#141517);",
     padding: 10,
     height: 130,
   },
   nftimg: {
     width: "100%",
-    borderRadius: 12,
+    borderRadius: 6,
     height: 90,
     textAlign:'center',
     '& > img':{
@@ -78,7 +78,7 @@ const useStyles = makeStyles((theme) => ({
   },
   nftprice: {
     border: "1px solid #24b503",
-    borderRadius: "12px",
+    borderRadius: "6px",
     color: "#24b503",
     fontSize: 7,
     padding: "1px 2px",
@@ -93,7 +93,7 @@ const useStyles = makeStyles((theme) => ({
     zIndex: 2,
     position: "relative",
     boxShadow: "0px 10px 5px #0a0b0c",
-    borderRadius: "0px 0px 12px 12px",
+    borderRadius: "0px 0px 6px 6px",
     background: "#141517",
     height: 30,
     width: "100%",
@@ -115,7 +115,7 @@ const useStyles = makeStyles((theme) => ({
   onenft:{
     background:'linear-gradient(#141517,#1e2024)',
     boxShadow:'0 5px 5px #0a0b0c',
-    borderRadius:12,
+    borderRadius:6,
     position:'relative',
     height:115,
     flex:1,
@@ -138,7 +138,7 @@ const useStyles = makeStyles((theme) => ({
     zIndex:1,
     maxHeight:'100%',
     width:'100%',
-    borderRadius:12,
+    borderRadius:6,
   },
   search_image:{
     position:'absolute',
@@ -147,7 +147,7 @@ const useStyles = makeStyles((theme) => ({
     width:'65%',
     height:'65%',
     margin:'20px 15px',
-    borderRadius:12,
+    borderRadius:6,
   },
   bottomimg: {
     position: "absolute",

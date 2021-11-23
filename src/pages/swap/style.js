@@ -24,13 +24,13 @@ const useStyles = makeStyles((theme) => ({
     position: 'relative',
     zIndex: 2,
     background: '#1e1d1d',
-    borderRadius: 12,
+    borderRadius: 6,
     boxShadow: '0px 5px 5px #000000a0',
     padding: 15
   },
   swapform: {
     border:'1px solid white',
-    borderRadius: 12,
+    borderRadius: 6,
     display: 'flex',
     justifyContent: 'space-between',
     alignItems: 'center',
@@ -76,7 +76,7 @@ const useStyles = makeStyles((theme) => ({
   tokenImg: {
     width: 20,
     height: 20,
-    borderRadius: 12,
+    borderRadius: 6,
     overflow:'hidden',
   },
   submitWrapper: {
@@ -92,7 +92,7 @@ const useStyles = makeStyles((theme) => ({
     cursor: 'pointer'
   },
   comfirmModal: {
-    borderRadius: 12,
+    borderRadius: 6,
     textAlign: 'center',
     color: 'white',
     width: '100%'
@@ -101,21 +101,21 @@ const useStyles = makeStyles((theme) => ({
     marginTop: 15,
     display: 'flex',
     border: '1px solid white',
-    borderRadius: 12,
+    borderRadius: 6,
     padding: 12
   },
   amountInfo: {
     marginTop: 15,
     border: '1px solid white',
-    borderRadius: 12,
+    borderRadius: 6,
     padding: 12
   },
   editGasModal: {
-    borderRadius: 12,
+    borderRadius: 6,
   },
   settingsModal: {
     width: '100%',
-    borderRadius: 12
+    borderRadius: 6
   },
   gasForm: {
     background: '#1e1d1d',
@@ -132,7 +132,7 @@ const useStyles = makeStyles((theme) => ({
     color: 'white',
     background: 'transparent',
     border: '1px solid #aaaaaa',
-    borderRadius: 12,
+    borderRadius: 6,
     padding: '0 10px',
   },
   formrow: {
@@ -181,7 +181,7 @@ const useStyles = makeStyles((theme) => ({
   textField: {
     color: 'white',
     border: '1px solid white',
-    borderRadius: 12,
+    borderRadius: 6,
     padding: 5,
     height: 30,
     background: 'transparent',
@@ -208,7 +208,7 @@ const useStyles = makeStyles((theme) => ({
   swapinfo: {
     zIndex: 1,
     position:'relative',
-    borderRadius: '0px 0px 12px 12px',
+    borderRadius: '0px 0px 6px 6px',
     marginTop: -10,
     background: '#222121',
     padding: '25px 35px 10px 35px',

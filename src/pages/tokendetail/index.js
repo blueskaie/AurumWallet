@@ -118,9 +118,11 @@ const TokenDetail = (props) => {
         </ARUCard>
         <ARUCard className={classes.tokenInfo}>
           <Box className={classes.tokenImg}>
-            {tokenLogos[code.toUpperCase()]
-              ? <img src={tokenLogos[coin.code.toUpperCase()]} alt={code} width={40} />
-              : <Jazzicon diameter={40} seed={coin.contract} />
+            {(tokenLogos[code.toUpperCase()] && (code.toUpperCase() === "AUR"))?
+              <img src="images/AurumLogo-whitecircule.svg" alt={code} width={40} /> : 
+            (tokenLogos[code.toUpperCase()]
+              ? <img src={tokenLogos[coin.code.toUpperCase()]} alt={code} width={40} style={{borderRadius: '50%'}} />
+              : <Jazzicon diameter={40} seed={coin.contract} />)
             }
           </Box>
           <Box className={classes.tokenRow}>

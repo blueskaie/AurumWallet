@@ -12,7 +12,7 @@ export default function Send() {
   const [keyword, setKeyword] = useState('');
 
   return (
-    <Layout isShownBackButton={true} isShownWallet={false} isShownNetworkSelector={false}>
+    <Layout isShownWallet={false} isShownNetworkSelector={false}>
       <Box className={classes.root}>
         <Box className={classes.title}>
           Send Tokens

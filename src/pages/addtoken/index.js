@@ -124,7 +124,7 @@ export default function AddCustomToken() {
               <ARUBaseInput id="decimals" value={vals.decimals}
                 type="text" placeholder="Decimals" inputProps={{ readOnly: true, }} />
             </FormControl>
-            <Button variant="contained" type="submit" style={{background: 'white', color: 'black', borderRadius: 12}}>ADD TOKEN</Button>
+            <Button variant="contained" type="submit" style={{background: 'white', color: 'black', borderRadius: 6}}>ADD TOKEN</Button>
           </form>
         </Box>
 

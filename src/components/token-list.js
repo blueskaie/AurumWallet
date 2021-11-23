@@ -6,6 +6,7 @@ import OneToken from "./onetoken";
 
 export default function TokenList(props) {
   const list = useRecoilValue(tokenList);
+  console.log(list);
   return (
     <>
       {list.map((item, index) => {
