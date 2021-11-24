@@ -230,6 +230,13 @@ export const currentCurrencyCode = atom({
   }
 });
 
+export const allTransactions = atom({
+  key: 'allTransactions',
+  default: "",
+  persistence_UNSTABLE: {
+    type: 'allTransactions'
+  }
+});
 
 export const tokenList = selector({
   key: 'tokenList',

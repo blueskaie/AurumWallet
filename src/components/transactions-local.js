@@ -7,7 +7,7 @@ import {ButtonBase, Box, Icon} from '@material-ui/core';
 import { ArrowDownward, ArrowUpward } from '@material-ui/icons';
 import { makeStyles } from '@material-ui/core/styles';
 import { DEFAULT_TOKEN } from '../config/tokens'
-import { precisionFormat, formatDateFromSeconds, compressAddress} from '../utils/format-utils';
+import { precisionFormat, formatLocaleDateFromSeconds, compressAddress} from '../utils/format-utils';
 import ARUCard from './card';
 import { useHistory } from 'react-router-dom';
 
@@ -61,14 +61,12 @@ const useStyles = makeStyles(() => ({
   label: {
     fontSize: '1rem',
     textAlign: 'left',
-    width: '40%',
     color: '#fff'
   },
   amount: {
     fontSize: '1rem',
     textAlign: 'right',
     paddingLeft: 15,
-    width: '60%'
   },
   extra: {
     width: 'calc(100% - 28px)',
@@ -84,17 +82,17 @@ const useStyles = makeStyles(() => ({
 }));
 
 
-export function AllTransactions({token, height}) {
+export function AllTransactionsLocal({token, height}) {
 
   const classes = useStyles( );
 
   const wallet = useRecoilValue(currentWallet);
   const network = useRecoilValue(currentNetwork);
   const transactions = useRecoilValue(networkTransactions(0));
-  const allTrans = useRecoilValue(allTransactions);
 
   const allTokensData = useRecoilValue(allTokens);
-
+  const allTrans = useRecoilValue(allTransactions);
+  console.log('allTrans===>', allTrans);
   const history = useHistory();
 
   const ALL_TOKENS_MAP = React.useMemo(() => {
@@ -108,26 +106,29 @@ export function AllTransactions({token, height}) {
     return mp;
   }, [network, allTokensData])
 
+  const goToTransactionDetail = (di) => {
+    if (di && di.transactionHash && di.from && di.to) {
+      history.push(`/transaction-local/${di.transactionHash}?from=${di.from}&to=${di.to}`)
+    }
+  }
+
   const renderRow = (props) => {
     const { di, index, style } = props;
 
     const tokenValue = di.contractAddress && ALL_TOKENS_MAP[di.contractAddress.toUpperCase()] ? ALL_TOKENS_MAP[di.contractAddress.toUpperCase()] : DEFAULT_TOKEN;
-    const type = di.contractAddress 
-      ? (wallet.address.toUpperCase() === di.from.toUpperCase() ? 'Sent' : 'Received')
-      : 'Contract Call';
-
+    const type = di.type && di.type == 'send' ? 'Sent' : 'Contract Call';
     const image = type === 'Sent' ? 'transfer_out.svg' : (type === 'Received' ? 'transfer_in.svg' : 'contract_call.svg');
 
     return (
         <Box style={style} key={index} >
-          <ButtonBase className={classes.listItem} onClick={()=>history.push(`/transaction/${di.hash}?from=${di.from}&to=${di.to}`)}>
+          <ButtonBase className={classes.listItem} onClick={()=>goToTransactionDetail(di)}>
             <Box className={classes.icon}>
               <Icon className={classes.infoIcon}>
                   <img src={`images/${image}`} alt="AurumWallet" className={type} style={{height: '100%'}} />
               </Icon>
             </Box>
             <Box className={classes.contentArea}>
-              <Box style={{display: 'flex'}}>
+              <Box style={{display: 'flex', justifyContent: 'space-between'}}>
                 <Box className={classes.label}>{type}</Box>
                 <Box className={classes.amount} style={{color: type === 'Sent' ? 'red' : (type === 'Received' ? 'green' : 'white')}}>
                   {type !== 'Contract Call' && (type === 'Sent' ? ' - ' : ' + ')}
@@ -139,12 +140,9 @@ export function AllTransactions({token, height}) {
               <Box style={{display: 'flex'}}>
                 <Box className={classes.extra}>
                   <Box style={{color: 'white', marginBottom: 5}}>
-                  {type === 'Received'
-                    ? <span>To: {compressAddress(di.to)}</span>
-                    : <span>From: {compressAddress(di.from)}</span> 
-                  }
+                    To: {compressAddress(di.to)}
                   </Box>
-                  <Box>{ formatDateFromSeconds(di.timeStamp) }</Box>
+                  <Box>{ formatLocaleDateFromSeconds(di.timeStamp) }</Box>
                 </Box>           
                 <Icon className={classes.infoIcon}>
                   <img src="images/details.svg" alt="AurumWallet" className="detail-image" style={{height: '100%'}} />
@@ -157,12 +155,10 @@ export function AllTransactions({token, height}) {
   }
   
   const filteredTransactions = !token
-  ? transactions 
-  : transactions.filter((di)=>{
-    return token.code === 'BNB' 
-      ? di.contractAddress === '' 
-      : di.contractAddress === token.contract
-  });
+  ? allTrans 
+  : (allTrans && allTrans.length)? allTrans.filter((di)=>{
+    return di && di.token && token.code === di.token.code
+  }) : [];
 
   return (
     <ARUCard className={classes.root}>
@@ -177,10 +173,10 @@ export function AllTransactions({token, height}) {
   )
 }
 
-export default function Transactions(props) {
+export default function TransactionsLocal(props) {
   return (
     <React.Suspense fallback={<Box className="loading">Loading Transactions..</Box>}>
-      <AllTransactions {...props}/>
+      <AllTransactionsLocal {...props}/>
     </React.Suspense>
   )
 }
