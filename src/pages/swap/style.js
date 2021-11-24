@@ -146,13 +146,14 @@ const useStyles = makeStyles((theme) => ({
     marginBottom: theme.spacing(1)
   },
   swapRouter: {
-    background: 'transparent',
     outline:'none',
     height: 25,
     border:'none',
     color: 'white',
     padding: '0 5px',
-    fontWeight: '600'
+    fontWeight: '600',
+    background: '#1e1d1d',
+    border: 'none'
   },
   maxBtn: {
     margin: 0,

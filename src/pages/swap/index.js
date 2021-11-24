@@ -18,7 +18,7 @@ import { decryptKeyStore } from '../../utils/keystore'
 import { getExpectedAmounts, getGasInfo, doSwap } from '../../utils/swap-utils';
 import { approve } from '../../utils/token-utils';
 
-import { networkProvider, currentWallet, currentNetwork, currentGasOptions  } from '../../store/atoms'
+import { networkProvider, currentWallet, currentNetwork, currentGasOptions, allTransactions  } from '../../store/atoms'
 
 import { DEFAULT_TOKEN } from "../../config/tokens";
 import {tokenLogos} from "../../config/token-info";
@@ -97,6 +97,7 @@ const Swap = () => {
   const [openSwapConfirmDialog, setOpenSwapConfirmDialog] = React.useState(false);
   const [openGasEditDialog, setOpenGasEditDialog] = React.useState(false);
   const [openSettingsDialog, setOpenSettingsDialog] = React.useState(false);
+  const [, setTransactionAtom] = useRecoilState(allTransactions);
 
   const availableSlipageToleranceArray = [
     {value: 0.1, label: '0.1%'},
@@ -125,10 +126,25 @@ const Swap = () => {
       setAllowToken(false);
       setFormSubmitting(true);
       const unlocked = decryptKeyStore(provider, wallet.keystore, wallet.password)
-      await approve(network, swapRouter, fromToken, unlocked.privateKey);
-      setFormSubmitting(false);
-      setOpenSuccess(true);
-      setAllowToken(true);
+      const result = await approve(network, swapRouter, fromToken, unlocked.privateKey);
+      const gasPrice = await provider.eth.getGasPrice();
+      if (result.status) {
+        setFormSubmitting(false);
+        setOpenSuccess(true);
+        setAllowToken(true);
+
+        setTransactionAtom((items) => {
+          const all = [...items];
+          let timeStamp = (new Date()).getTime() / 1000;
+          all.unshift({
+            ...result,
+            type: 'approve',
+            gasPrice: gasPrice,
+            timeStamp: timeStamp,
+          })
+          return all;
+        });
+      }
     } catch (error) {
       setFormSubmitting(false);
       setAllowToken(false);
@@ -141,10 +157,25 @@ const Swap = () => {
     setSwapping(true);
     const unlocked = decryptKeyStore(provider, wallet.keystore, wallet.password)
     try {
-      await doSwap(network, swapRouter, fromToken, toToken, swapAmount, unlocked.privateKey, gasOptions);
-      setSwapping(false);
-      setOpenSwapConfirmDialog(false);
-      setOpenSuccess(true);
+      const result = await doSwap(network, swapRouter, fromToken, toToken, swapAmount, unlocked.privateKey, gasOptions);
+      const gasPrice = await provider.eth.getGasPrice();
+      if (result.status) {
+        setSwapping(false);
+        setOpenSwapConfirmDialog(false);
+        setOpenSuccess(true);
+
+        setTransactionAtom((items) => {
+          const all = [...items];
+          let timeStamp = (new Date()).getTime() / 1000;
+          all.unshift({
+            ...result,
+            type: 'swap',
+            gasPrice: gasPrice,
+            timeStamp: timeStamp,
+          })
+          return all;
+        });
+      }
     } catch (e) {
       setSwapping(false);
       setOpenSwapConfirmDialog(false);
@@ -268,8 +299,8 @@ const Swap = () => {
             <Box className={classes.swaptoken}>
               <Box className={classes.swapOptions} style={{paddingRight: '7px'}}>
                 <select className={classes.swapRouter} onChange={(e)=>setSwapRouter(e.target.value)} value={swapRouter}>
-                  <option value="pancake">Apeswap</option>
-                  <option value="apeswap">Pancake</option>
+                  <option value="pancake">Pancake</option>
+                  <option value="apeswap">Apeswap</option>
                 </select>
                 <Box className={classes.setting} onClick={()=>setOpenSettingsDialog(true)}>
                   <FontAwesomeIcon icon={faCog} style={{width: 15, height: 15, color:'white'}}/>

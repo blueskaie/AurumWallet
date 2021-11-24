@@ -1,7 +1,7 @@
 import React from "react";
 
 import { useHistory } from "react-router-dom";
-import { useTheme, Box, Typography } from "@material-ui/core";
+import { useTheme, Box, Typography, Snackbar } from "@material-ui/core";
 import ScrollContainer from "react-indiana-drag-scroll";
 import Clipboard from "react-clipboard.js";
 
@@ -12,8 +12,13 @@ import { currentWallet } from "../../store/atoms";
 import { useRecoilValue } from "recoil";
 import HiddenText from "../../components/hidden-text";
 import FadeLoader from "react-spinners/FadeLoader";
+import MuiAlert from '@material-ui/lab/Alert';
 
 import useStyles from "./style";
+
+function Alert(props) {
+  return <MuiAlert elevation={6} variant="filled" {...props} />;
+}
 
 export default function Home() {
   const classes = useStyles(useTheme());
@@ -57,6 +62,11 @@ export default function Home() {
           </Box>
         </Box>
       </React.Suspense>
+      <Snackbar open={openSuccess} autoHideDuration={6000} onClose={() => setOpenSuccess(false)}>
+        <Alert onClose={() => setOpenSuccess(false)} severity="success">
+          Address copied
+        </Alert>
+      </Snackbar>
     </Layout>
   );
 }

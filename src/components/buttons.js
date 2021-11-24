@@ -23,7 +23,7 @@ const ARUButton = (props) => {
   const classes = useStyles(props);
 
   return (
-    <Button className={`${classes.root} ${props.className}`} type={props.type} onClick={props.onClick}>{props.children}</Button>
+    <Button className={`${classes.root} ${props.className}`} type={props.type} onClick={props.onClick} style={props.style}>{props.children}</Button>
   );
 };
 

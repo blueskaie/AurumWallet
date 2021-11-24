@@ -66,11 +66,11 @@ export default function StatisticInfo({showInfo, setToggleInfo}) {
           </Box>
           <Box style={{fontSize: '15px'}}>
             {
-              profitAmount > 0
+              profitAmount >= 0
                 ? <FontAwesomeIcon icon={faCaretUp} style={{color: 'green', marginRight: 3}} />
                 : <FontAwesomeIcon icon={faCaretDown} style={{color: 'red', marginRight: 3}} />
             }
-            <span style={{color: 'red', marginTop: '10px'}}>
+            <span style={{color: profitAmount >= 0 ? 'green' : 'red', marginTop: '10px'}}>
               <HiddenText show={showInfo} length={18}>
                 {currency == 'USD' ? '$' : '€'}
                 {diffAmount.toFixed(4)}/{profitAmount.toFixed(2)}%

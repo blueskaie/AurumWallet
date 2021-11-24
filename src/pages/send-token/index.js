@@ -6,8 +6,8 @@ import {FormControl, Dialog, FormHelperText, LinearProgress, Button, Box, Snackb
 import { ARUBaseInput } from '../../components/fields';
 import ARUNumberInput from '../../components/number';
 import ARUButton from '../../components/buttons';
-import { useRecoilValue } from 'recoil';
-import { networkProvider, currentWallet, currentNetwork, tokenList } from '../../store/atoms'
+import { useRecoilValue, useRecoilState } from 'recoil';
+import { networkProvider, currentWallet, currentNetwork, tokenList, allTransactions } from '../../store/atoms'
 import { decryptKeyStore } from '../../utils/keystore'
 
 import MuiAlert from '@material-ui/lab/Alert';
@@ -20,6 +20,7 @@ import useStyles from "./style";
 import ARUCard from '../../components/card';
 import Grid from '@material-ui/core/Grid';
 import * as LatomicNumber from '../../utils/big.number';
+import { ReportProblemOutlined } from '@material-ui/icons';
 
 function Alert(props) {
   return <MuiAlert elevation={6} variant="filled" {...props} />;
@@ -37,7 +38,7 @@ export default function SendToken(props) {
 
   const [step, setStep] = useState(1);
   const [errors, setErrors] = useState({});
-  const [vals, setVals] = useState({address: '', token: DEFAULT_TOKEN});
+  const [vals, setVals] = useState({address: ''});
   const [helper, setHelper] = useState({address: ''})
   const [openSuccess, setOpenSuccess] = useState(false);
   const [openError, setOpenError] = useState(false);
@@ -45,6 +46,7 @@ export default function SendToken(props) {
 
   const [openGasEditDialog, setOpenGasEditDialog] = React.useState(false);
   const [gasOptions, setGasOptions] = React.useState({limit: 243540, price: '10'});
+  const [, setTransactionAtom] = useRecoilState(allTransactions);
   
   const token = useMemo(()=>{
     if (list && code) {
@@ -60,7 +62,7 @@ export default function SendToken(props) {
     if(formSubmitting) {
       return false;
     }
-    const {address, amount, token} = vals;
+    const {address, amount} = vals;
 
     let hasErrors = false;
     const er = {};
@@ -100,7 +102,8 @@ export default function SendToken(props) {
 
   const handleSendToken  = async (e) => {
     e.preventDefault();
-    const {address, amount, token} = vals;
+    const {address, amount} = vals;
+
     try {
       setFormSubmitting(true)
 
@@ -112,11 +115,26 @@ export default function SendToken(props) {
       }
 
       const result = await doTransfer(network, token, unlocked.privateKey, amount, address);
+      const gasPrice = await provider.eth.getGasPrice();
 
       setFormSubmitting(false);
       if (result.status) {
         setOpenSuccess(true);
         setVals(val => {return {...val, address: '', amount: ''}});
+
+        setTransactionAtom((items) => {
+          const all = [...items];
+          let timeStamp = (new Date()).getTime() / 1000;
+          all.unshift({
+            ...result,
+            type: 'send',
+            token: token,
+            gasPrice: gasPrice,
+            value: parseFloat(amount) * Math.pow(10, token.decimals),
+            timeStamp: timeStamp,
+          });
+          return all;
+        });
       } else {
         setOpenError(true);
       }
