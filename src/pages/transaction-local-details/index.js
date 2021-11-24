@@ -27,21 +27,15 @@ function ActualDetailsLocal({hash, from, to, tokensMap, network}) {
   const allTrans = useRecoilValue(allTransactions);
   const get_di = () => {
     for (let i = 0; i < allTrans.length; i++) {
-      if (hash === allTrans[i].hash && from === allTrans[i].from && to === allTrans[i].to) {
+      if (hash === allTrans[i].transactionHash && from === allTrans[i].from && to === allTrans[i].to) {
         return allTrans[i];
       }
     }
     return null;
   }
   const di = get_di();
-  // const di = useRecoilValue(transactionDetails({hash, from, to}));
-  const tokenValue = di.contractAddress && tokensMap[di.contractAddress.toUpperCase()] ? tokensMap[di.contractAddress.toUpperCase()] : DEFAULT_TOKEN;
-
-  // const success = di.isError === "0" ? true : false;
-  const type = di.contractAddress 
-  ? (wallet.address.toUpperCase() === di.from.toUpperCase() ? 'Sent' : 'Received')
-  : 'Contract Call';
-
+  const tokenValue = di && di.token ? di.token : DEFAULT_TOKEN;
+  const type = di && di.type == 'send' ? 'Sent' : 'Contract Call'; 
   const image = type === 'Sent' ? 'transfer_out.svg' : (type === 'Received' ? 'transfer_in.svg' : 'contract_call.svg');
 
   return (<>
@@ -56,41 +50,39 @@ function ActualDetailsLocal({hash, from, to, tokensMap, network}) {
         </Box>
         <Box className={classes.amount} style={{color: type === 'Sent' ? 'red' : (type === 'Received' ? 'green' : 'white')}}>
           {type !== 'Contract Call' && (type === 'Sent' ? ' - ' : ' + ')}
-          { precisionFormat(tokenValue.decimals)(di.value, 4) }
+          { precisionFormat(tokenValue.decimals)(di && di.value ? di.value : 0, 4) }
           {' '}
           {tokenValue.code}
         </Box>
       </Box>
       <Box className={classes.row}>
         <Box className={classes.label}>Date: </Box>
-        <Box className={classes.value}>{ formatOnlyDateFromSeconds(di.timeStamp) }</Box>
+        <Box className={classes.value}>{ di && di.timeStamp && formatOnlyDateFromSeconds(di.timeStamp) }</Box>
       </Box>
       <Box className={classes.row}>
         <Box className={classes.label}>Time: </Box>
-        <Box className={classes.value}>{ formatOnlyTimeFromSeconds(di.timeStamp) }</Box>
+        <Box className={classes.value}>{ di && di.timeStamp && formatOnlyTimeFromSeconds(di.timeStamp) }</Box>
       </Box>
       <Box className={classes.row}>
         <Box className={classes.label}>Status: </Box>
-        {/* <Box className={classes.value}>{ success ? 'Complete' : 'Failure' }</Box> */}
         <Box className={classes.value}>Complete</Box>
       </Box>
       <Box className={classes.row} style={{marginBottom: 0}}>
-        <Box className={classes.label}>{ type === 'Received' ? 'From' : 'To' }: </Box>
-        <Box className={classes.value}>{ type === 'Received' ? compressAddress(di.from) : compressAddress(di.to) }</Box>
+        <Box className={classes.label}> To: </Box>
+        <Box className={classes.value}>{ di && di.to && compressAddress(di.to) }</Box>
       </Box>
     </ARUCard>
     <ARUCard className={classes.detail}>
       <Box className={classes.row}>
         <Box className={classes.label}>Network Fee: </Box>
-        <Box className={classes.label}>{parseFloat(di.gasUsed) * parseFloat(di.gasPrice) / 1000000000000000000} BNB </Box>
-        {/* <Box className={classes.label}>~$2.40</Box> */}
+        <Box className={classes.label}>{di && di.gasUsed && di.gasPrice ? parseFloat(di.gasUsed) * parseFloat(di.gasPrice) / 1000000000000000000 : 0} {tokenValue && tokenValue.code} </Box>
       </Box>
       <Box className={classes.row}>
         <Box className={classes.label}>Nonce</Box>
-        <Box className={classes.label}>{di.nonce}</Box>
+        <Box className={classes.label}>{di && di.nonce}</Box>
       </Box>
     </ARUCard>
-    <ARUButton href={`${network.explore}/tx/${di.hash}`} target="_blank" variant="contained" mode="filled">View on bscscan</ARUButton>
+    <ARUButton target="_blank" variant="contained" mode="filled" onClick={()=>window.open(`${network.explore}/tx/${hash}`)}>View on bscscan</ARUButton>
   </>)
 }
 

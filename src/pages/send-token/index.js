@@ -125,17 +125,13 @@ export default function SendToken(props) {
           const all = [...items];
           let timeStamp = (new Date()).getTime() / 1000;
           all.unshift({
-            timeStamp: timeStamp,
-            contractAddress: wallet.address,
-            from: result.from,
-            fromTokenType: token.code,
-            gasUsed: result.gasUsed,
-            to: result.to,
-            toTokenType: token.code,
-            hash: result.transactionHash,
+            ...result,
+            type: 'send',
+            token: token,
             gasPrice: gasPrice,
             value: parseFloat(amount) * Math.pow(10, token.decimals),
-          })
+            timeStamp: timeStamp,
+          });
           return all;
         });
       } else {

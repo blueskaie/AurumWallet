@@ -61,14 +61,12 @@ const useStyles = makeStyles(() => ({
   label: {
     fontSize: '1rem',
     textAlign: 'left',
-    width: '40%',
     color: '#fff'
   },
   amount: {
     fontSize: '1rem',
     textAlign: 'right',
     paddingLeft: 15,
-    width: '60%'
   },
   extra: {
     width: 'calc(100% - 28px)',
@@ -94,7 +92,7 @@ export function AllTransactionsLocal({token, height}) {
 
   const allTokensData = useRecoilValue(allTokens);
   const allTrans = useRecoilValue(allTransactions);
-
+  console.log('allTrans===>', allTrans);
   const history = useHistory();
 
   const ALL_TOKENS_MAP = React.useMemo(() => {
@@ -108,26 +106,29 @@ export function AllTransactionsLocal({token, height}) {
     return mp;
   }, [network, allTokensData])
 
+  const goToTransactionDetail = (di) => {
+    if (di && di.transactionHash && di.from && di.to) {
+      history.push(`/transaction-local/${di.transactionHash}?from=${di.from}&to=${di.to}`)
+    }
+  }
+
   const renderRow = (props) => {
     const { di, index, style } = props;
 
     const tokenValue = di.contractAddress && ALL_TOKENS_MAP[di.contractAddress.toUpperCase()] ? ALL_TOKENS_MAP[di.contractAddress.toUpperCase()] : DEFAULT_TOKEN;
-    const type = di.contractAddress 
-      ? (wallet.address.toUpperCase() === di.from.toUpperCase() ? 'Sent' : 'Received')
-      : 'Contract Call';
-
+    const type = di.type && di.type == 'send' ? 'Sent' : 'Contract Call';
     const image = type === 'Sent' ? 'transfer_out.svg' : (type === 'Received' ? 'transfer_in.svg' : 'contract_call.svg');
 
     return (
         <Box style={style} key={index} >
-          <ButtonBase className={classes.listItem} onClick={()=>history.push(`/transaction-local/${di.hash}?from=${di.from}&to=${di.to}`)}>
+          <ButtonBase className={classes.listItem} onClick={()=>goToTransactionDetail(di)}>
             <Box className={classes.icon}>
               <Icon className={classes.infoIcon}>
                   <img src={`images/${image}`} alt="AurumWallet" className={type} style={{height: '100%'}} />
               </Icon>
             </Box>
             <Box className={classes.contentArea}>
-              <Box style={{display: 'flex'}}>
+              <Box style={{display: 'flex', justifyContent: 'space-between'}}>
                 <Box className={classes.label}>{type}</Box>
                 <Box className={classes.amount} style={{color: type === 'Sent' ? 'red' : (type === 'Received' ? 'green' : 'white')}}>
                   {type !== 'Contract Call' && (type === 'Sent' ? ' - ' : ' + ')}
@@ -139,10 +140,7 @@ export function AllTransactionsLocal({token, height}) {
               <Box style={{display: 'flex'}}>
                 <Box className={classes.extra}>
                   <Box style={{color: 'white', marginBottom: 5}}>
-                  {type === 'Received'
-                    ? <span>To: {compressAddress(di.to)}</span>
-                    : <span>From: {compressAddress(di.from)}</span> 
-                  }
+                    To: {compressAddress(di.to)}
                   </Box>
                   <Box>{ formatLocaleDateFromSeconds(di.timeStamp) }</Box>
                 </Box>           
@@ -159,9 +157,7 @@ export function AllTransactionsLocal({token, height}) {
   const filteredTransactions = !token
   ? allTrans 
   : (allTrans && allTrans.length)? allTrans.filter((di)=>{
-    return token.code === 'BNB' 
-      ? di.contractAddress === '' 
-      : di.contractAddress === token.contract
+    return di && di.token && token.code === di.token.code
   }) : [];
 
   return (
