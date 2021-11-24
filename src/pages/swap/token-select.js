@@ -125,10 +125,12 @@ const TokenSelect = (props) => {
                 {filteredTokenList.map((token, index)=>(
                     <li key={index} className={classes.tokenItem} onClick={()=>selectToken(token)}>
                         <Box className={classes.tokenImg}>
-                        { token && (tokenLogos[token.code.toUpperCase()]
-                            ? <img src={tokenLogos[token.code.toUpperCase()]} alt={token.code} width={30} />
+                        { token && (tokenLogos[token.code.toUpperCase()] && token.code.toUpperCase() === "AUR"?
+                            <img src="images/AurumLogo-whitecircule.svg" alt={token.code} width={30} /> : 
+                            (tokenLogos[token.code.toUpperCase()]
+                            ? <img src={tokenLogos[token.code.toUpperCase()]} alt={token.code} width={30} style={{borderRadius: '50%'}} />
                             : <Jazzicon diameter={30} seed={token.contract[network.id]} />
-                        )}
+                        ))}
                         </Box>
                         <p className={classes.tokenName}>{token.code}</p>
                     </li>
@@ -141,10 +143,12 @@ const TokenSelect = (props) => {
                     <Box className={classes.tokenHeader}>
                         {/* <img src={tokenLogos[vals.code.toUpperCase()]} alt={vals.code} width={40} /> */}
                         <Box className={classes.tokenImg}>
-                        { vals && (tokenLogos[vals.code.toUpperCase()]
-                            ? <img src={tokenLogos[vals.code.toUpperCase()]} alt={vals.code} width={30} />
+                        { vals && (tokenLogos[vals.code.toUpperCase()] && vals.code.toUpperCase() === "AUR"?
+                            <img src="images/AurumLogo-whitecircule.svg" alt={vals.code} width={30} /> : 
+                            (tokenLogos[vals.code.toUpperCase()]
+                            ? <img src={tokenLogos[vals.code.toUpperCase()]} alt={vals.code} width={30} style={{borderRadius: '50%'}} />
                             : <Jazzicon diameter={30} seed={network.id == 1 ? vals.main : vals.test} />
-                        )}
+                        ))}
                         </Box>
                         <p className={classes.tokenName}>{vals.code}</p>
                     </Box>
@@ -222,7 +226,7 @@ const useStyles = makeStyles((theme) => ({
     },
     importModal: {
         width: '100%',
-        borderRadius: 12,
+        borderRadius: 6,
         background: '#222222',
         padding: 20,
         color: 'white',
@@ -233,7 +237,7 @@ const useStyles = makeStyles((theme) => ({
     },
     searchBox: {
         border: '1px solid white',
-        borderRadius: '12px 12px 0 0',
+        borderRadius: '6px 6px 0 0',
         display: 'flex',
         justifyContent: 'space-between',
         flexDirection: 'row',
@@ -257,7 +261,7 @@ const useStyles = makeStyles((theme) => ({
         listStyleType: 'none',
         color: 'white',
         background: '#222222',
-        borderRadius: '0 0 12px 12px',
+        borderRadius: '0 0 6px 6px',
         border: '1px solid white',
         borderTop: 'none',
         zIndex: 10
@@ -269,7 +273,7 @@ const useStyles = makeStyles((theme) => ({
         padding: 20,
         color: 'white',
         background: '#222222',
-        borderRadius: '0 0 12px 12px',
+        borderRadius: '0 0 6px 6px',
         border: '1px solid white',
         borderTop: 'none',
         zIndex: 10
@@ -289,7 +293,7 @@ const useStyles = makeStyles((theme) => ({
     tokenImg:{
         width: 30,
         height: 30,
-        borderRadius: 12,
+        borderRadius: 6,
         overflow:'hidden',
     },
     tokenName: {

@@ -64,7 +64,7 @@ export default function Signin() {
     <Layout isShownHeader={false}>
       <Box className={classes.root}>
         <Box className="auth-logo">
-          <img src="images/logo.png" alt="AurumWallet" className="logo-image" />
+          <img src="images/AURUM LOGO-white.svg" alt="AurumWallet" className="logo-image" />
         </Box>
 
         <h1 className="auth-title">Welcome</h1>

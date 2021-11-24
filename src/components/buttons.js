@@ -8,7 +8,7 @@ const useStyles = makeStyles({
     color: (props) => props.mode === 'filled' ? '#000000' : '#ffffff',
     boxShadow: '0px 3px 3px #000000c2',
     border: '1px solid #ffffff',
-    borderRadius: 12,
+    borderRadius: 6,
     minHeight: 40,
     fontSize: 16,
     textTransform: 'none',

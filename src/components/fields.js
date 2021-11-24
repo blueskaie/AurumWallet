@@ -8,7 +8,7 @@ export const ARUBaseInput = withStyles((theme) => ({
     },
   },
   input: {
-    borderRadius: 12,
+    borderRadius: 6,
     position: 'relative',
     backgroundColor: '#161616',
     border: '1px solid #ffffff',
@@ -39,7 +39,7 @@ export const ARUOutlinedInput = withStyles({
     },
     notchedOutline: {
         borderColor: "red",
-        borderRadius: 12
+        borderRadius: 6
     },
     focused: {}
 })(OutlinedInput);

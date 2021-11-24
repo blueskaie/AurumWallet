@@ -20,9 +20,11 @@ const OneToken = (props) => {
     { token 
       ? <Fragment>
           <Box className={classes.tokenimg}>
-          { tokenLogos[token.code.toUpperCase()]
+          { (tokenLogos[token.code.toUpperCase()] && (token.code.toUpperCase() === 'AUR'))?
+            <img src="images/AurumLogo-whitecircule.svg" alt={token.code} width={20} style={{borderRadius: '50%'}} /> : 
+            (tokenLogos[token.code.toUpperCase()]
               ? <img src={tokenLogos[token.code.toUpperCase()]} alt={token.code} width={20} />
-              : <Jazzicon diameter={40} seed={token.contract[network.id]} />
+              : <Jazzicon diameter={40} seed={token.contract[network.id]} />)
           }
           </Box>
           <Box className={classes.tokeninfo}>
@@ -57,7 +59,7 @@ const useStyles = makeStyles((theme) => ({
   tokenimg:{
     width: 40,
     height: 40,
-    borderRadius: 12,
+    borderRadius: 6,
     overflow:'hidden',
     zIndex: 3,
     "& > img": {

@@ -56,7 +56,7 @@ const useStyles = makeStyles((theme) => ({
     secretPhrase: {
         border: '1px solid red',
         marginBottom: 10,
-        borderRadius: 8,
+        borderRadius: 6,
         padding: 12,
         color: 'white',
         fontSize: 14
@@ -64,7 +64,7 @@ const useStyles = makeStyles((theme) => ({
     clipboardButton: {
         background: 'transparent',
         border: '1px solid red',
-        borderRadius: 10,
+        borderRadius: 6,
         color: 'white',
         padding: 12,
         fontSize: 14,
@@ -89,7 +89,7 @@ const useStyles = makeStyles((theme) => ({
     circleIcon: {
         width: 26,
         height: 18,
-        borderRadius: 15,
+        borderRadius: 6,
         margin: 3,
         border: '3px solid white',
     },

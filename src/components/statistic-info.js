@@ -80,7 +80,7 @@ export default function StatisticInfo({showInfo, setToggleInfo}) {
           </Box>
         </Box>
         <Box className={classes.currency}>
-          <select style={{fontWeight: '400', borderRadius: '12px'}} onChange={onCurrencyChange} value={currency}>
+          <select style={{fontWeight: '400', borderRadius: '6px'}} onChange={onCurrencyChange} value={currency}>
             <option value='USD'>USD</option>
             <option value='EUR'>EUR</option>
           </select>
@@ -93,7 +93,7 @@ const useStyles = makeStyles((theme) => ({
   portfolio: {
     color: 'white',
     border: '1px solid white',
-    borderRadius: '12px',
+    borderRadius: '6px',
     fontSize: '20px',
     marginTop: 15,
     marginBottom: 15,

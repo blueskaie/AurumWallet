@@ -52,7 +52,7 @@ const useStyles = makeStyles(() => ({
     padding: 12,
     color: 'white',
     border: '1px solid #ffffff',
-    borderRadius: 12,
+    borderRadius: 6,
     fontSize: 12
   },
   label: {

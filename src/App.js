@@ -6,6 +6,8 @@ import ImportWallet from './pages/import-wallet'
 import Signin from './pages/signin'
 import Home from './pages/home'
 import AboutUs from './pages/about-us'
+import PrivacyPolicy from './pages/privacy-policy'
+import TermsOfUse from './pages/terms-of-use'
 import Send from './pages/send'
 import SendToken from './pages/send-token'
 import SetupWallet from './pages/setup-wallet'
@@ -103,6 +105,9 @@ function App() {
               <PrivateRoute path="/security">
                 <Security />
               </PrivateRoute>
+              <PrivateRoute path="/settings">
+                <Settings />
+              </PrivateRoute>
               <PrivateRoute path="/accounts">
                 <Accounts />
               </PrivateRoute>
@@ -132,6 +137,12 @@ function App() {
               </PrivateRoute>
               <Route path="/about-us">
                 <AboutUs />
+              </Route>
+              <Route path="/privacy-policy">
+                <PrivacyPolicy />
+              </Route>
+              <Route path="/terms-of-use">
+                <TermsOfUse />
               </Route>
               <Route path="/setup-wallet">
                 <SetupWallet />

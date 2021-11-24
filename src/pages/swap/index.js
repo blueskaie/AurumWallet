@@ -48,7 +48,7 @@ const IOSSlider = withStyles({
     background: 'white',
     width: 28,
     height: 12,
-    borderRadius: 12,
+    borderRadius: 6,
     marginLeft: -15,
     marginTop: -5,
     "&.Mui-disabled": {
@@ -299,8 +299,8 @@ const Swap = () => {
             <Box className={classes.swaptoken}>
               <Box className={classes.swapOptions} style={{paddingRight: '7px'}}>
                 <select className={classes.swapRouter} onChange={(e)=>setSwapRouter(e.target.value)} value={swapRouter}>
-                  <option value="pancake">Apeswap</option>
-                  <option value="apeswap">Pancake</option>
+                  <option value="pancake">Pancake</option>
+                  <option value="apeswap">Apeswap</option>
                 </select>
                 <Box className={classes.setting} onClick={()=>setOpenSettingsDialog(true)}>
                   <FontAwesomeIcon icon={faCog} style={{width: 15, height: 15, color:'white'}}/>
@@ -318,9 +318,11 @@ const Swap = () => {
                       <Box className={classes.fromtokeninfo} onClick={()=>{setFromSelect(true); setToSelect(false);}}>
                         <Box className={classes.tokenImg}>
                           { fromToken 
-                            ? (tokenLogos[fromToken.code.toUpperCase()]
-                              ? <img src={tokenLogos[fromToken.code.toUpperCase()]} alt={fromToken.code} width={20} />
-                              : <Jazzicon diameter={20} seed={fromToken.contract[network.id]} /> )
+                            ? (fromToken.code.toUpperCase() === 'AUR'?
+                              <img src="images/AurumLogo-whitecircule.svg" alt={fromToken.code} width={20} /> : 
+                              (tokenLogos[fromToken.code.toUpperCase()]
+                              ? <img src={tokenLogos[fromToken.code.toUpperCase()]} alt={fromToken.code} width={20} style={{borderRadius: '50%'}} />
+                              : <Jazzicon diameter={20} seed={fromToken.contract[network.id]} /> ))
                             : <Box style={{width: 20, height: 20}}></Box>
                           }
                         </Box>
@@ -351,9 +353,11 @@ const Swap = () => {
                       <Box className={classes.fromtokeninfo} onClick={()=>{setToSelect(true); setFromSelect(false);}}>
                         <Box className={classes.tokenImg}>
                           { toToken 
-                            ? (tokenLogos[toToken.code.toUpperCase()]
-                              ? <img src={tokenLogos[toToken.code.toUpperCase()]} alt={toToken.code} width={20} />
-                              : <Jazzicon diameter={20} seed={toToken.contract[network.id]} /> )
+                            ? (toToken.code.toUpperCase() === "AUR"? 
+                            <img src="images/AurumLogo-whitecircule.svg" alt={toToken.code} width={20} /> :
+                            (tokenLogos[toToken.code.toUpperCase()]
+                              ? <img src={tokenLogos[toToken.code.toUpperCase()]} alt={toToken.code} width={20} style={{borderRadius: '50%'}} />
+                              : <Jazzicon diameter={20} seed={toToken.contract[network.id]} /> ))
                             : <Box style={{width: 20, height: 20}}></Box>
                           }
                         </Box>
@@ -384,8 +388,8 @@ const Swap = () => {
                 <Box style={{color: 'white', marginLeft: '20px'}}>100%</Box>
               </Box>
               <Box className={classes.submitWrapper}>
-                {!isAllowed && <Button variant="contained" color="secondary" style={{background: 'white', color: 'black', borderRadius: '12px'}} disabled={formSubmitting} onClick={approveToken}>Approve</Button> }
-                {isAllowed && <Button variant="contained" color="secondary" style={{background: 'white', color: 'black', borderRadius: '12px'}} disabled={formSubmitting} type="submit">Swap</Button> }
+                {!isAllowed && <Button variant="contained" color="secondary" style={{background: 'white', color: 'black', borderRadius: '6px'}} disabled={formSubmitting} onClick={approveToken}>Approve</Button> }
+                {isAllowed && <Button variant="contained" color="secondary" style={{background: 'white', color: 'black', borderRadius: '6px'}} disabled={formSubmitting} type="submit">Swap</Button> }
                 {formSubmitting && <LinearProgress />}
               </Box>
             </Box>

@@ -38,7 +38,7 @@ export default function SendToken(props) {
 
   const [step, setStep] = useState(1);
   const [errors, setErrors] = useState({});
-  const [vals, setVals] = useState({address: '', token: DEFAULT_TOKEN});
+  const [vals, setVals] = useState({address: ''});
   const [helper, setHelper] = useState({address: ''})
   const [openSuccess, setOpenSuccess] = useState(false);
   const [openError, setOpenError] = useState(false);
@@ -62,7 +62,7 @@ export default function SendToken(props) {
     if(formSubmitting) {
       return false;
     }
-    const {address, amount, token} = vals;
+    const {address, amount} = vals;
 
     let hasErrors = false;
     const er = {};
@@ -102,7 +102,8 @@ export default function SendToken(props) {
 
   const handleSendToken  = async (e) => {
     e.preventDefault();
-    const {address, amount, token} = vals;
+    const {address, amount} = vals;
+
     try {
       setFormSubmitting(true)
 

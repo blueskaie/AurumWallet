@@ -96,9 +96,11 @@ const OneToken = (props) => {
   return (
     <Box className={classes.onetoken} onClick={goToDetail}>
       <Box className={classes.tokenimg}>
-        { tokenLogos[code.toUpperCase()]
-            ? <img src={tokenLogos[code.toUpperCase()]} alt={code} width={20} />
-            : <Jazzicon diameter={40} seed={contract[network.id]} />
+        { (tokenLogos[code.toUpperCase()] && (code.toUpperCase() === 'AUR'))?
+            <img src="images/AurumLogo-whitecircule.svg" alt={code} width={20} /> : 
+            (tokenLogos[code.toUpperCase()]
+            ? <img src={tokenLogos[code.toUpperCase()]} alt={code} width={20} style={{borderRadius: '50%'}} />
+            : <Jazzicon diameter={40} seed={contract[network.id]} />)
         }
       </Box>
       <Box className={classes.tokeninfo}>
@@ -144,7 +146,7 @@ const useStyles = makeStyles((theme) => ({
     boxSizing: "border-box",
     boxShadow: '0px 3px 3px #000000c2',
     padding: 10,
-    borderRadius: 12,
+    borderRadius: 6,
     // background: "#1e1d1d",
     background: 'linear-gradient(to bottom, #1e1d1d 0%,#1e1d1d 60px,#000000 50%,#272626 60px,#272626 70px)',
     alignItems: 'center'
@@ -153,7 +155,7 @@ const useStyles = makeStyles((theme) => ({
   tokenimg:{
     width: 40,
     height: 40,
-    borderRadius: 12,
+    borderRadius: 6,
     overflow:'hidden',
     zIndex: 3,
     "& > img": {

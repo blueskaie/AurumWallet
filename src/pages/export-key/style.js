@@ -51,7 +51,7 @@ const useStyles = makeStyles((theme) => ({
             border: '1px solid #ffffff',
             borderRight: 'none',
             background: '#fafafa',
-            borderRadius: '12px 0 0 12px',
+            borderRadius: '6px 0 0 6px',
             '&:focus': {
             outline: 'none',
             background: 'transparent'
@@ -63,7 +63,7 @@ const useStyles = makeStyles((theme) => ({
         background: '#ffffff',
         border: '1px solid #ccc',
         borderLeft: 'none',
-        borderRadius: '0 12px 12px 0',
+        borderRadius: '0 6px 6px 0',
         '& svg': {
             width: '15px'
         }

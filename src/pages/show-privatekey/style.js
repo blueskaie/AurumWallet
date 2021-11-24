@@ -64,7 +64,7 @@ const useStyles = makeStyles((theme) => ({
     clipboardButton: {
         background: 'transparent',
         border: '1px solid red',
-        borderRadius: 10,
+        borderRadius: 6,
         color: 'white',
         padding: 12,
         fontSize: 14,

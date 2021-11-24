@@ -115,7 +115,7 @@ export function AllTransactionsLocal({token, height}) {
   const renderRow = (props) => {
     const { di, index, style } = props;
 
-    const tokenValue = di.contractAddress && ALL_TOKENS_MAP[di.contractAddress.toUpperCase()] ? ALL_TOKENS_MAP[di.contractAddress.toUpperCase()] : DEFAULT_TOKEN;
+    const tokenValue = di && di.token ? di.token : DEFAULT_TOKEN;
     const type = di.type && di.type == 'send' ? 'Sent' : 'Contract Call';
     const image = type === 'Sent' ? 'transfer_out.svg' : (type === 'Received' ? 'transfer_in.svg' : 'contract_call.svg');
 
