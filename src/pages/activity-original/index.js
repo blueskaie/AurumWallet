@@ -2,11 +2,11 @@ import React from 'react'
 
 import Layout from "../../components/layout";
 import {  Box } from '@material-ui/core';
-import TransactionsLocal from '../../components/transactions-local';
+import Transactions from '../../components/transactions';
 
 import useStyles from "./style";
 
-export default function ActivityLocal() {
+export default function Activity() {
   const classes = useStyles( );
 
   return (
@@ -15,7 +15,7 @@ export default function ActivityLocal() {
         <Box className={classes.title}>
           Activity
         </Box>
-        <TransactionsLocal height={400}/>
+        <Transactions height={400}/>
       </Box>
     </Layout>
   )

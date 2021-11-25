@@ -1,7 +1,7 @@
-import React, { useCallback, useMemo, useState } from 'react'
+import React, { useMemo, useState } from 'react'
 
 import Layout from "../../components/layout";
-import OneToken from "./components/onetoken";
+import OneToken from "../../components/onetoken";
 import {FormControl, Dialog, FormHelperText, LinearProgress, Button, Box, Snackbar, IconButton, Icon} from '@material-ui/core';
 import { ARUBaseInput } from '../../components/fields';
 import ARUNumberInput from '../../components/number';
@@ -13,14 +13,12 @@ import { decryptKeyStore } from '../../utils/keystore'
 import MuiAlert from '@material-ui/lab/Alert';
 
 import { DEFAULT_TOKEN } from '../../config/tokens';
-// import TokenMenuItems from '../../components/token-menu-list';
 
 import { doTransfer } from '../../utils/token-utils';
 import useStyles from "./style";
 import ARUCard from '../../components/card';
 import Grid from '@material-ui/core/Grid';
 import * as LatomicNumber from '../../utils/big.number';
-import { ReportProblemOutlined } from '@material-ui/icons';
 
 function Alert(props) {
   return <MuiAlert elevation={6} variant="filled" {...props} />;
@@ -173,7 +171,7 @@ export default function SendToken(props) {
           Send {token && token.title}
         </Box>
         {step === 1 && <Box style={{marginTop: 45}}>
-          <OneToken token={token}/>
+          <OneToken {...token}/>
           <form method="post" autoComplete="off" onSubmit={handleSubmit} className={classes.form}>
 
             <FormControl  error={errors.address} className={classes.formrow}>

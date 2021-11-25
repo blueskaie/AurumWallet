@@ -1,4 +1,4 @@
-import React, {useState, useEffect, useMemo} from "react";
+import React, {useMemo} from "react";
 // get our fontawesome imports
 import { useHistory } from "react-router-dom";
 import { useRecoilValue, useSetRecoilState } from 'recoil';
@@ -7,13 +7,9 @@ import useStyles from './style';
 import { tokenList, allTokens, currentNetwork, currentCurrencyCode  } from '../../store/atoms';
 import TransactionsLocal from '../../components/transactions-local';
 import ARUCard from '../../components/card';
+import OneToken from "../../components/onetoken";
 import ReactApexChart from 'react-apexcharts';
-import { faCaretDown, faCaretUp, faSignOutAlt } from "@fortawesome/free-solid-svg-icons";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import Layout from "../../components/layout";
-import * as LatomicNumber from '../../utils/big.number'
-import {tokenLogos} from "../../config/token-info"
-import Jazzicon from 'react-jazzicon';
 
 const TokenDetail = (props) => {
 
@@ -108,7 +104,6 @@ const TokenDetail = (props) => {
 
   return (
     <Layout isShownBackButton = {true} isShownWallet = {false}>
-      {/* main_div */}
       <Box className={classes.root}>
         {coin && coin.code && coin.code !== 'BNB' && <div style={{marginBottom: 20, textAlign: 'right'}}>
           <span className={classes.deleteBtn} onClick={deleteToken}>Delete Token</span>
@@ -116,43 +111,8 @@ const TokenDetail = (props) => {
         <ARUCard>
           <ReactApexChart options={options} series={series} type="candlestick" height={250} style={{margin: '10px'}} />
         </ARUCard>
-        <ARUCard className={classes.tokenInfo}>
-          <Box className={classes.tokenImg}>
-            {(tokenLogos[code.toUpperCase()] && (code.toUpperCase() === "AUR"))?
-              <img src="images/AurumLogo-whitecircule.svg" alt={code} width={40} /> : 
-            (tokenLogos[code.toUpperCase()]
-              ? <img src={tokenLogos[coin.code.toUpperCase()]} alt={code} width={40} style={{borderRadius: '50%'}} />
-              : <Jazzicon diameter={40} seed={coin.contract} />)
-            }
-          </Box>
-          <Box className={classes.tokenRow}>
-            <Box className={classes.tokenLeft}>
-              <Box>{coin.fromTokenType}</Box>
-              <Box style={{marginTop: 5, marginBottom: 5}}>
-                {currency == 'USD' ? '$' : '€'}
-                {parseFloat(curPrice * coin.trade.cmp).toFixed(2)}
-              </Box>
-              <Box style={{color: percent > 0?'green':'red'}}>
-                {percent > 0 ? <FontAwesomeIcon icon={faCaretUp} /> : <FontAwesomeIcon icon={faCaretDown} /> }
-                <span>{percent.toFixed(2)}%</span>
-              </Box>
-            </Box>
-            <Box className={classes.tokenLeft} style={{alignItems: 'flex-end', marginRight: '5px'}}>
-              <Box style={{fontSize: '18px', fontWeight: '500'}}>
-                {parseFloat(LatomicNumber.toDecimal(coin.balance, coin.decimals)).toFixed(2)}
-              </Box>
-              <Box style={{marginTop: '5px'}}>
-                {currency == 'USD' ? '$' : '€'}
-                {(parseFloat(LatomicNumber.toDecimal(coin.balance, coin.decimals)) * coin.trade.abs * coin.trade.cmp).toFixed(2).toLocaleString()}
-              </Box>
-              <Box style={{color: '#999999', marginTop: '5px', cursor: 'pointer'}} onClick={()=>goToSendToken(coin)} >
-                <span>Send</span>
-                <FontAwesomeIcon icon={faSignOutAlt} style={{marginLeft: '5px'}} />
-              </Box>
-            </Box>
-          </Box>
-        </ARUCard>
-        {coin && <TransactionsLocal token={coin} height={80} />}
+        <OneToken {...coin} showSendLink={true}/>
+        {coin && <TransactionsLocal token={coin} height={80}/>}
       </Box>
     </Layout>
   );

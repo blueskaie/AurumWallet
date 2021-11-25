@@ -8,7 +8,7 @@ import Jazzicon from 'react-jazzicon';
 import { useRecoilValue } from 'recoil';
 import { currentNetwork, currentCurrencyCode  } from '../store/atoms'
 import ReactApexChart from 'react-apexcharts';
-import { faCaretDown, faCaretUp } from "@fortawesome/free-solid-svg-icons";
+import { faCaretDown, faCaretUp, faSignOutAlt } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import HiddenText from "./hidden-text";
 
@@ -16,19 +16,31 @@ const OneToken = (props) => {
 
   const classes = useStyles(useTheme());
   const history = useHistory();
-  const { code, balance, coinId, decimals, contract, trade, coingecko, showInfo } = props;
+  const { code, balance, coinId, decimals, contract, trade, coingecko, showInfo, showSendLink, onClick } = props;
 
   const network = useRecoilValue( currentNetwork );
   const currency = useRecoilValue( currentCurrencyCode );
 
-  const goToDetail = () => { history.push(`/token-detail/${code}`); }
+  const goToDetail = () => { 
+    if (onClick) {
+      onClick();
+    } else {
+      history.push(`/token-detail/${code}`);
+    }
+  }
+
+  const goToSendToken = (code) => {
+    if (code) {
+      history.push(`/send-token/${code}`);
+    }
+  }
 
   const series = [{data: coingecko && coingecko.market.price}]
   const curPrice = coingecko && coingecko.market && coingecko.market.price && coingecko.market.price.length ? coingecko.market.price[coingecko.market.price.length - 1] : 0;
   const prevPrice = coingecko && coingecko.market && coingecko.market.price && coingecko.market.price.length ? coingecko.market.price[0] : 0;
   const cAmount = parseFloat(LatomicNumber.toDecimal(balance, decimals)) * curPrice * trade.cmp;
-  const pAmount = parseFloat(LatomicNumber.toDecimal(balance, decimals)) * prevPrice * trade.cmp;
-  const percent = pAmount !== 0 ? (cAmount - pAmount) / pAmount * 100 : 0;
+  // const pAmount = parseFloat(LatomicNumber.toDecimal(balance, decimals)) * prevPrice * trade.cmp;
+  const percent = prevPrice !== 0 ? (curPrice - prevPrice) / prevPrice * 100 : 0;
 
   const options = {
     chart: {
@@ -94,8 +106,8 @@ const OneToken = (props) => {
   };
 
   return (
-    <Box className={classes.onetoken} onClick={goToDetail}>
-      <Box className={classes.tokenimg}>
+    <Box className={classes.onetoken}>
+      <Box className={classes.tokenimg} onClick={goToDetail}>
         { (tokenLogos[code.toUpperCase()] && (code.toUpperCase() === 'AUR'))?
             <img src="images/AurumLogo-whitecircule.svg" alt={code} width={20} /> : 
             (tokenLogos[code.toUpperCase()]
@@ -104,7 +116,7 @@ const OneToken = (props) => {
         }
       </Box>
       <Box className={classes.tokeninfo}>
-        <Box style={{display: 'flex', flexDirection: 'row', justifyContent: 'space-between'}}>
+        <Box style={{display: 'flex', flexDirection: 'row', justifyContent: 'space-between', cursor:'pointer'}} onClick={goToDetail}>
           <p className={classes.tokenname}>{code}</p>
           <p className={classes.tokenname}>
             <HiddenText show={showInfo}>
@@ -112,9 +124,10 @@ const OneToken = (props) => {
             </HiddenText>
           </p>
         </Box>
-        <Box style={{display: 'flex', flexDirection: 'row', justifyContent: 'space-between'}}>
+        <Box style={{display: 'flex', flexDirection: 'row', justifyContent: 'space-between', cursor:'pointer'}} onClick={goToDetail}>
           <p className={classes.tokenprice}>
-            {curPrice.toFixed(4).toLocaleString()}
+            {currency == 'USD' ? '$' : '€'}
+            {(curPrice * trade.cmp).toFixed(4).toLocaleString()}
           </p>
           <p className={classes.tokenprice}>
             <HiddenText show={showInfo}>
@@ -123,9 +136,15 @@ const OneToken = (props) => {
             </HiddenText>
           </p>
         </Box>
-        <Box style={{color: percent > 0?'green':'red'}} >
-          {percent > 0 ? <FontAwesomeIcon icon={faCaretUp} /> : <FontAwesomeIcon icon={faCaretDown} /> }
-          <span style={{marginLeft: 5}}>{percent.toFixed(2)}%</span>
+        <Box style={{display: 'flex', flexDirection: 'row', justifyContent: 'space-between'}}>
+          <Box style={{color: percent >= 0?'green':'red'}} >
+            {percent >= 0 ? <FontAwesomeIcon icon={faCaretUp} /> : <FontAwesomeIcon icon={faCaretDown} /> }
+            <span style={{marginLeft: 5}}>{percent.toFixed(2)}%</span>
+          </Box>
+          {showSendLink && <Box style={{color: '#999999', cursor: 'pointer'}} onClick={()=>goToSendToken(code)} >
+            <span>Send</span>
+            <FontAwesomeIcon icon={faSignOutAlt} style={{marginLeft: '5px'}} />
+          </Box>}
         </Box>
       </Box>
       <Box className={classes.pricechart}>
@@ -138,11 +157,10 @@ const OneToken = (props) => {
 const useStyles = makeStyles((theme) => ({
   onetoken: {
     position: 'relative',
-    cursor:'pointer',
     height: 70,
     zIndex: 1,
     display: "flex",
-    margin: "8px 0px",
+    margin: "10px 0px",
     boxSizing: "border-box",
     boxShadow: '0px 3px 3px #000000c2',
     padding: 10,
@@ -158,6 +176,7 @@ const useStyles = makeStyles((theme) => ({
     borderRadius: 6,
     overflow:'hidden',
     zIndex: 3,
+    cursor:'pointer',
     "& > img": {
       width: 40,
     },

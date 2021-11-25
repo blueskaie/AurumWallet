@@ -46,7 +46,14 @@ img {
   margin:0;
   color:white
 }
-.nothing-msg,
+
+.nothing-msg {
+  font-size:.9rem;
+  display: block;
+  text-align: center;
+  color:#666;
+}
+
 .loading {
   font-size:.9rem;
   margin-top:16px;

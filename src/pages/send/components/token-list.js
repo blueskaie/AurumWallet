@@ -1,7 +1,8 @@
 import React, {useMemo} from "react";
 import { useHistory } from "react-router-dom";
 import { makeStyles, useTheme } from "@material-ui/core/styles";
-import OneToken from "./onetoken";
+// import OneToken from "./onetoken";
+import OneToken from "../../../components/onetoken";
 import { tokenList } from '../../../store/atoms'
 import { useRecoilValue } from 'recoil';
 import ScrollContainer from "react-indiana-drag-scroll";
@@ -37,7 +38,7 @@ export default function TokenList(props) {
     return (
         <ScrollContainer className={classes.tokenList} vertical={true}>
             {filteredList.map((token, index) => {
-            return <OneToken key={index.toString} token={token} onClick={()=>goToSendToken(token)}/>;
+              return <OneToken key={index.toString} {...token} onClick={()=>goToSendToken(token)}/>;
             })}
         </ScrollContainer>
     )

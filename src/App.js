@@ -29,7 +29,6 @@ import Security from "./pages/security";
 import Buysell from "./pages/buysell";
 import TokenDetail from "./pages/tokendetail";
 import Activity from "./pages/activity";
-import ActivityLocal from "./pages/activity-local";
 import Accounts from "./pages/accounts";
 import Test from "./pages/test";
 
@@ -125,9 +124,6 @@ function App() {
               </PrivateRoute>
               <Route path="/activity">
                 <Activity/>
-              </Route>
-              <Route path="/activity-local">
-                <ActivityLocal/>
               </Route>
               <Route path="/transaction/:hash" component={TransactionDetail}>
               </Route>

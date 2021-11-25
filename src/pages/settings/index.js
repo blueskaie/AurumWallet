@@ -17,7 +17,7 @@ export default function Settings() {
   }
 
   return (
-    <Layout isShownWallet={false} varient='secondary'>
+    <Layout isShownWallet={false} >
       <Box className={classes.root}>
         <h1 className={classes.wallettitle}>
           <Box>Settings</Box>

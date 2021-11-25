@@ -10,7 +10,7 @@ export default function TokenList(props) {
   return (
     <>
       {list.map((item, index) => {
-        return <OneToken {...props} {...item} key={`oneToken-${index}`} />;
+        return <OneToken {...props} {...item} key={`oneToken-${index}`} showSendLink={false} />;
       })}
     </>
   )

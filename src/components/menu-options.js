@@ -54,11 +54,10 @@ const KEY_LOGOUT = 2;
 const KEY_SEND = 3;
 // const KEY_RECEIVE = 2;
 // const KEY_REVEAL = 4;
+const KEY_SETTINGS = 4;
 const KEY_ACTIVITY = 5;
-const KEY_ACTIVITY_LOCAL = 8;
 const KEY_ACCOUNTS = 6;
 const WALLET_SECURITY = 7;
-const KEY_SETTINGS = 4;
 // const KEY_ABOUT_US = 5;
 // const KEY_DEPLOY_CONTRACT = 7;
 
@@ -69,7 +68,7 @@ const options = [
   // {id: KEY_REVEAL, name: 'Reveal', icon: 'reveal.svg'},
   {id: KEY_SETTINGS, name: 'Settings', icon: 'settings.svg'},
   // {id: WALLET_SECURITY, name: 'Security', icon: 'reveal.svg'},
-  {id: KEY_ACTIVITY_LOCAL, name: 'Activity', icon: 'activity.svg'},
+  {id: KEY_ACTIVITY, name: 'Activity', icon: 'activity.svg'},
   {id: KEY_ACCOUNTS, name: 'Accounts', icon: 'accounts.svg'},
   {id: KEY_LOGOUT, name: 'Logout', icon: 'logout.svg'}
 ];
@@ -123,9 +122,6 @@ export default function MenuOptions({loggedIn}) {
       case KEY_ACTIVITY:
         history.push('/activity');
         break;
-      case KEY_ACTIVITY_LOCAL:
-        history.push('/activity-local');
-        break;
         // case KEY_DEPLOY_CONTRACT:
       //   history.push('/deploy-contract');
       //   break;
@@ -152,6 +148,7 @@ export default function MenuOptions({loggedIn}) {
       }
       return all;
     });
+    history.push('/home');
   }
 
   return (
