@@ -1,6 +1,6 @@
 import React from 'react';
-import Header from '../components/header'
-import BackButtonHeader from '../components/back-button-header'
+// import Header from '../components/header'
+// import BackButtonHeader from '../components/back-button-header'
 import {  Button, Container, TextField, FormControl, FormHelperText, Snackbar, Typography } from '@material-ui/core'
 import { Alert } from '@material-ui/lab';
 import { makeStyles } from '@material-ui/core/styles';
@@ -133,9 +133,9 @@ export default function DeployContract() {
 
   return (
     <>
-      <Header loggedIn={true}>
+      {/* <Header loggedIn={true}>
         <BackButtonHeader title="Deploy Contract" />
-      </Header>
+      </Header> */}
       <Container className={classes.root}>
         <div className={classes.formWrap}>
           {contractAddress && <Alert severity="info" icon={false}>

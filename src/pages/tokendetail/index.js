@@ -4,7 +4,7 @@ import { useHistory } from "react-router-dom";
 import { useRecoilValue, useSetRecoilState } from 'recoil';
 import { Box } from '@material-ui/core';
 import useStyles from './style';
-import { tokenList, allTokens, currentNetwork, currentCurrencyCode  } from '../../store/atoms';
+import { tokenList, allTokens, currentNetwork  } from '../../store/atoms';
 import TransactionsLocal from '../../components/transactions-local';
 import ARUCard from '../../components/card';
 import OneToken from "../../components/onetoken";
@@ -17,16 +17,10 @@ const TokenDetail = (props) => {
   const {code} = props.match.params;
 
   const network = useRecoilValue( currentNetwork );
-  const currency = useRecoilValue( currentCurrencyCode );
   const list = useRecoilValue(tokenList);
   const history = useHistory();
 
   const setAllTokens = useSetRecoilState(allTokens);
-  const goToSendToken = (token) => {
-    if (token && token.code) {
-      history.push(`/send-token/${token.code}`);
-    }
-  }
 
   const deleteToken = (event) => {
     event.preventDefault();
@@ -96,11 +90,6 @@ const TokenDetail = (props) => {
   const series = [{
     data: coin.coingecko && coin.coingecko.ohlc
   }];
-
-  const curPrice = coin && coin.coingecko ? coin.coingecko.market.price[coin.coingecko.market.price.length - 1] : 0
-  const curVolumn = coin && coin.coingecko ? coin.coingecko.market.volumes[coin.coingecko.market.volumes.length - 1] : 0
-  const prevVolumn = coin && coin.coingecko ? coin.coingecko.market.volumes[0] : 0
-  const percent = (curVolumn - prevVolumn) / prevVolumn * 100;
 
   return (
     <Layout isShownBackButton = {true} isShownWallet = {false}>

@@ -1,6 +1,6 @@
 import React from 'react'
-import Header from '../components/header'
-import BackButtonHeader from '../components/back-button-header'
+// import Header from '../components/header'
+// import BackButtonHeader from '../components/back-button-header'
 import {  Button, Container, TextField, FormControlLabel, Checkbox } from '@material-ui/core'
 
 import { makeStyles } from '@material-ui/core/styles';
@@ -136,9 +136,9 @@ export default function WalletDetail({match}) {
   
   return (
     <>
-      <Header loggedIn={true}>
+      {/* <Header loggedIn={true}>
         <BackButtonHeader title="Wallet" />
-      </Header>
+      </Header> */}
       <Container className={classes.root}>
         <React.Suspense fallback={<div>Loading...</div>}>
           <InternalWalletDetail address={address} index={index} />

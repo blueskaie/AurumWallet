@@ -21,7 +21,7 @@ import useStyles from './style';
 const helperTextString = '';
 const helperErrorString = 'Invalid Password, should be atleast 8 characters long';
 const helpermatchString = 'Invalid Password, should match confirm password';
-const helperCheckingString = "Please check If understand.";
+const helperCheckingString = "Please check If you understand.";
 
 export default function ImportWallet() {
 

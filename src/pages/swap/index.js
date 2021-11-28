@@ -18,7 +18,7 @@ import { decryptKeyStore } from '../../utils/keystore'
 import { getExpectedAmounts, getGasInfo, doSwap } from '../../utils/swap-utils';
 import { approve } from '../../utils/token-utils';
 
-import { networkProvider, currentWallet, currentNetwork, currentGasOptions, allTransactions  } from '../../store/atoms'
+import { networkProvider, refreshCalled, currentWallet, currentNetwork, currentGasOptions, allTransactions  } from '../../store/atoms'
 
 import { DEFAULT_TOKEN } from "../../config/tokens";
 import {tokenLogos} from "../../config/token-info";
@@ -98,6 +98,7 @@ const Swap = () => {
   const [openGasEditDialog, setOpenGasEditDialog] = React.useState(false);
   const [openSettingsDialog, setOpenSettingsDialog] = React.useState(false);
   const [, setTransactionAtom] = useRecoilState(allTransactions);
+  const [refresh, setRefresh] = useRecoilState(refreshCalled);
 
   const availableSlipageToleranceArray = [
     {value: 0.1, label: '0.1%'},
@@ -132,7 +133,6 @@ const Swap = () => {
         setFormSubmitting(false);
         setOpenSuccess(true);
         setAllowToken(true);
-
         setTransactionAtom((items) => {
           const all = [...items];
           let timeStamp = (new Date()).getTime() / 1000;
@@ -144,6 +144,7 @@ const Swap = () => {
           })
           return all;
         });
+        setRefresh(refresh + 1);
       }
     } catch (error) {
       setFormSubmitting(false);
@@ -175,6 +176,7 @@ const Swap = () => {
           })
           return all;
         });
+        setRefresh(refresh + 1);
       }
     } catch (e) {
       setSwapping(false);
@@ -224,16 +226,16 @@ const Swap = () => {
     }
   }
 
-  const onMaxAmount = () => {
-    if (fromToken) {
-      let swapAmount = fromToken?parseFloat(LatomicNumber.toDecimal(fromToken.balance,fromToken.decimals)):0;
-      if (fromToken.code === "BNB") {
-        setSwapAmount(swapAmount>0.01 ? (swapAmount-0.01) : 0);
-      } else {
-        setSwapAmount(swapAmount);
-      }
-    }
-  };
+  // const onMaxAmount = () => {
+  //   if (fromToken) {
+  //     let swapAmount = fromToken?parseFloat(LatomicNumber.toDecimal(fromToken.balance,fromToken.decimals)):0;
+  //     if (fromToken.code === "BNB") {
+  //       setSwapAmount(swapAmount>0.01 ? (swapAmount-0.01) : 0);
+  //     } else {
+  //       setSwapAmount(swapAmount);
+  //     }
+  //   }
+  // };
 
   const filpToken = (e) => {
     e.preventDefault();
@@ -246,7 +248,6 @@ const Swap = () => {
   const isAllowed = useMemo(()=>{
     return !fromToken || fromToken.code === DEFAULT_TOKEN.code || LatomicNumber.toDecimal(fromToken.allowance,fromToken.decimals) > 0 || isAllowToken
   }, [fromToken, isAllowToken])
-
 
   const minimumReceivedAmount = useMemo(()=>{
     if (allowedSlippage > 0 && expectedAmount>0) {

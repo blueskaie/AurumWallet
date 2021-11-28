@@ -4,18 +4,12 @@ import queryString from 'query-string';
 import Layout from "../../components/layout";
 import {  Box, Icon } from '@material-ui/core'
 
-// import { makeStyles } from '@material-ui/core/styles';
-import { currentNetwork, currentWallet, transactionDetails, allTokens, allTransactions } from '../../store/atoms';
+import { currentNetwork, allTokens, allTransactions } from '../../store/atoms';
 import { useRecoilValue } from 'recoil';
 
 import { DEFAULT_TOKEN } from '../../config/tokens'
-// import { Avatar } from '@material-ui/core';
 import { precisionFormat, compressAddress, formatOnlyDateFromSeconds, formatOnlyTimeFromSeconds } from '../../utils/format-utils';
-// import { Check } from '@material-ui/icons';
 
-// import { FileCopyOutlined } from '@material-ui/icons';
-
-// import Clipboard from 'react-clipboard.js';
 import useStyles from './style';
 import ARUCard from '../../components/card';
 import ARUButton from '../../components/buttons';
@@ -23,7 +17,6 @@ import ARUButton from '../../components/buttons';
 function ActualDetailsLocal({hash, from, to, tokensMap, network}) {
   const classes = useStyles( );
 
-  const wallet = useRecoilValue(currentWallet);
   const allTrans = useRecoilValue(allTransactions);
   const get_di = () => {
     for (let i = 0; i < allTrans.length; i++) {
@@ -35,7 +28,7 @@ function ActualDetailsLocal({hash, from, to, tokensMap, network}) {
   }
   const di = get_di();
   const tokenValue = di && di.token ? di.token : DEFAULT_TOKEN;
-  const type = di && di.type == 'send' ? 'Sent' : 'Contract Call'; 
+  const type = di && di.type === 'send' ? 'Sent' : 'Contract Call'; 
   const image = type === 'Sent' ? 'transfer_out.svg' : (type === 'Received' ? 'transfer_in.svg' : 'contract_call.svg');
 
   return (<>

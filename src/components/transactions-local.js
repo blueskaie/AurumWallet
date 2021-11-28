@@ -4,7 +4,6 @@ import { currentNetwork, currentWallet, networkTransactions, allTokens, allTrans
 import { useRecoilValue } from 'recoil';
 
 import {ButtonBase, Box, Icon} from '@material-ui/core';
-import { ArrowDownward, ArrowUpward } from '@material-ui/icons';
 import { makeStyles } from '@material-ui/core/styles';
 import { DEFAULT_TOKEN } from '../config/tokens'
 import { precisionFormat, formatLocaleDateFromSeconds, compressAddress} from '../utils/format-utils';

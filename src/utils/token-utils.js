@@ -51,11 +51,11 @@ export const loadSingle = async (network, token, ownAddress) => {
   return { balance, allowance };
 }
 
-export const approve = async (network, router, token, privateKey, amount=1000) => {
+export const approve = async (network, router, token, privateKey, amount) => {
   let provider = getProvider(network);
   const account = provider.eth.accounts.privateKeyToAccount( privateKey );
   provider.eth.accounts.wallet.add(account);
-  let amountIn = swap.formatBN(amount, token.decimals);
+  let amountIn = swap.formatBN(amount ? amount : token.balance, token.decimals);
 
   let contract = new provider.eth.Contract( ABI , getContractAddress(network, token) )
 

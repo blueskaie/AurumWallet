@@ -1,9 +1,8 @@
 import React from 'react';
 import {  Container, List, ListItem, ListItemText, ListItemIcon, Card, CardContent, CardActions, Typography, Button } from '@material-ui/core'
-import BackButtonHeader from '../components/back-button-header'
 import { makeStyles } from '@material-ui/core/styles';
 
-import Header from '../components/header'
+// import Header from '../components/header'
 import { useHistory } from 'react-router-dom'
 import { allWallets, networkProvider } from '../store/atoms';
 import { useRecoilState, useRecoilValue } from 'recoil';
@@ -79,9 +78,9 @@ export default function Settings() {
   }
 
   return (<>
-    <Header loggedIn={true}>
+    {/* <Header loggedIn={true}>
       <BackButtonHeader title="Settings" />
-    </Header>
+    </Header> */}
     <Container className={classes.root}>
       <Card>
         <CardContent>

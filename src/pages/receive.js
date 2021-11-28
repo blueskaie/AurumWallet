@@ -1,11 +1,11 @@
 import React from 'react'
 
 import {  Container, Typography, Box } from '@material-ui/core'
-import BackButtonHeader from '../components/back-button-header'
+// import BackButtonHeader from '../components/back-button-header'
 
 import { makeStyles } from '@material-ui/core/styles';
 
-import Header from '../components/header'
+// import Header from '../components/header'
 import { useRecoilValue } from 'recoil';
 import { currentWallet } from '../store/atoms';
 
@@ -59,9 +59,9 @@ export default function Receive() {
 
   return (
     <>
-      <Header loggedIn={true}>
+      {/* <Header loggedIn={true}>
         <BackButtonHeader title="Receive" />
-      </Header>
+      </Header> */}
       <Container className={classes.root}>
 
         <Typography align="center" className={classes.bottomSpace}>Send to following address</Typography>

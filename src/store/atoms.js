@@ -3,7 +3,7 @@ import {
   selector,
   selectorFamily,
   waitForAll,
-  waitForNone
+  // waitForNone
 } from 'recoil';
 
 import Networks from '../config/networks'

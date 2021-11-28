@@ -19,7 +19,7 @@ import ARUMnemonic from './mnemonic';
 import useStyles from "./style";
 
 const helpermatchString = "Password doesn't match.";
-const helperchecking = "Please check If understand.";
+const helperchecking = "Please check If you understand.";
 const helperErrorString =
   "Invalid Password, should be atleast 8 characters long";
 

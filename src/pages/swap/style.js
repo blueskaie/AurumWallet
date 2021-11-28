@@ -152,8 +152,7 @@ const useStyles = makeStyles((theme) => ({
     color: 'white',
     padding: '0 5px',
     fontWeight: '600',
-    background: '#1e1d1d',
-    border: 'none'
+    background: '#1e1d1d'
   },
   maxBtn: {
     margin: 0,
