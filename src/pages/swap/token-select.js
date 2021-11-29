@@ -12,6 +12,7 @@ import { Box, Dialog } from '@material-ui/core';
 const TokenSelect = (props) => {
     const network = useRecoilValue( currentNetwork );
     const availableTokenList = useRecoilValue(tokenList);
+    const [curToken, setCurToken] = useState(null);
 
     const {isShown,exceptToken,onChange } = props;
     const classes = useStyles(useTheme());
@@ -24,6 +25,7 @@ const TokenSelect = (props) => {
     }
 
     const selectToken = (token) => {
+        setCurToken(token);
         if (onChange) {
             onChange(token);
         }
@@ -94,6 +96,14 @@ const TokenSelect = (props) => {
         }
         getTokenInfo();
     }, [search])
+
+    useEffect(()=>{
+        const token = availableTokenList.find((item)=>curToken && item.contract === curToken.contract);
+        setCurToken(token)
+        if (onChange) {
+            onChange(token);
+        }
+    }, [availableTokenList])
 
     const filteredTokenList = useMemo(()=>{
         let result = availableTokenList;

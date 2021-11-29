@@ -58,11 +58,14 @@ export const approve = async (network, router, token, privateKey, amount) => {
   let amountIn = swap.formatBN(amount ? amount : token.balance, token.decimals);
 
   let contract = new provider.eth.Contract( ABI , getContractAddress(network, token) )
-
+  
+  const gasPrice = await provider.eth.getGasPrice()
   let payload = {
     from: account.address,
-    gas: provider.utils.toHex(800000),
-    gasPrice: provider.utils.toHex(provider.utils.toWei('30', 'gwei')),
+    // gas: provider.utils.toHex(800000),
+    // gasPrice: provider.utils.toHex(provider.utils.toWei('30', 'gwei')),
+    gas: "0x250CA",
+    gasPrice: gasPrice
   }
 
   const swapRouter = swap.getSwapRouter(network, router);

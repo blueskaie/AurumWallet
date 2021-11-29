@@ -12,12 +12,18 @@ import MuiAlert from '@material-ui/lab/Alert';
 import NetworkSelector from "./network-selector";
 import MenuOptions from "./menu-options";
 // import SliderList from "../../components/slider-list";
+import FadeLoader from "react-spinners/FadeLoader";
 
 const useStyles = makeStyles((theme)=>({
   root: {
     paddingLeft: 30,
     paddingRight: 30,
     background: "#161616",
+  },
+  loader: {
+    position: 'absolute',
+    top: 130,
+    left: 130,
   },
   topmenu: {
     position: 'fixed',
@@ -151,7 +157,9 @@ export default function Layout({isShownHeader=true, isShownWallet = true, isShow
         </Box>
       </Box>}
       <Box className={classes.content}>
-        {children}
+        <React.Suspense fallback={<Box className={classes.loader}><FadeLoader color="#ffffff" height={15} width={5} radius={2}/></Box>}>
+          {children}
+        </React.Suspense>
       </Box>
       <Snackbar open={openSuccess} autoHideDuration={6000} onClose={() => setOpenSuccess(false)}>
         <Alert onClose={() => setOpenSuccess(false)} severity="success">

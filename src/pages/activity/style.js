@@ -15,8 +15,11 @@ const useStyles = makeStyles((theme) => ({
     fontSize: 33,
     fontWeight: 400,
     lineHeight: '31px',
-    letterSpacing: '1px'
+    letterSpacing: '1px',
   },
+  transactions: {
+    marginTop: 15
+  }
 }));
 
 export default useStyles;

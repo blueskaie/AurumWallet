@@ -15,7 +15,9 @@ export default function Activity() {
         <Box className={classes.title}>
           Activity
         </Box>
-        <TransactionsLocal height={400}/>
+        <Box className={classes.transactions}>
+          <TransactionsLocal height={400}/>
+        </Box>
       </Box>
     </Layout>
   )
