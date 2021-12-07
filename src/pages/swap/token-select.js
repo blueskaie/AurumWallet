@@ -73,25 +73,29 @@ const TokenSelect = (props) => {
 
     useEffect(() => {
         const getTokenInfo = async ()=>{
-            const tokenInfo = await getTokenInfoByAddress(network,search)
-            let main='',test='';
-            if(tokenInfo)
-            {
-                for (let i = 0; i < tokens.length; i++) {
-                    if (tokens[i].contract[1] == search) {
-                        console.log("same");
-                        return;
+            try {
+                const tokenInfo = await getTokenInfoByAddress(network,search)
+                let main='',test='';
+                if(tokenInfo)
+                {
+                    for (let i = 0; i < tokens.length; i++) {
+                        if (tokens[i].contract[1] == search) {
+                            console.log("same");
+                            return;
+                        }
                     }
+                    console.log("new");
+                    setGetResult(2);
+                    if(network.id == 1)
+                        main = search
+                    else
+                        test = search
+                    setVals({...vals,...{title: tokenInfo.name,decimals:tokenInfo.decimals,code:tokenInfo.symbol,main,test}})
+                    let shortaddress = search.substring(0, 7) + '.....' + search.substring(search.length - 6, search.length);
+                    setImportAddress(shortaddress);
                 }
-                console.log("new");
-                setGetResult(2);
-                if(network.id == 1)
-                    main = search
-                else
-                    test = search
-                setVals({...vals,...{title: tokenInfo.name,decimals:tokenInfo.decimals,code:tokenInfo.symbol,main,test}})
-                let shortaddress = search.substring(0, 7) + '.....' + search.substring(search.length - 6, search.length);
-                setImportAddress(shortaddress);
+            } catch (e) {
+                console.log(e);
             }
         }
         getTokenInfo();
