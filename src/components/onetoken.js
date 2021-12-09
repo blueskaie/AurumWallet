@@ -16,7 +16,7 @@ const OneToken = (props) => {
 
   const classes = useStyles(useTheme());
   const history = useHistory();
-  const { code, balance, coinId, decimals, contract, trade, coingecko, showInfo, showSendLink, onClick } = props;
+  const { code, balance, coinId, decimals, contract, trade, coingecko, price, showInfo, showSendLink, onClick } = props;
 
   const network = useRecoilValue( currentNetwork );
   const currency = useRecoilValue( currentCurrencyCode );
@@ -36,7 +36,8 @@ const OneToken = (props) => {
   }
 
   const series = [{data: coingecko && coingecko.market.price}]
-  const curPrice = coingecko && coingecko.market && coingecko.market.price && coingecko.market.price.length ? coingecko.market.price[coingecko.market.price.length - 1] : 0;
+  const coCurPrice = coingecko && coingecko.market && coingecko.market.price && coingecko.market.price.length ? coingecko.market.price[coingecko.market.price.length - 1] : 0;
+  const curPrice = price ? price : coCurPrice;
   const prevPrice = coingecko && coingecko.market && coingecko.market.price && coingecko.market.price.length ? coingecko.market.price[0] : 0;
   const cAmount = parseFloat(LatomicNumber.toDecimal(balance, decimals)) * curPrice * trade.cmp;
   // const pAmount = parseFloat(LatomicNumber.toDecimal(balance, decimals)) * prevPrice * trade.cmp;
