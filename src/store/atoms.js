@@ -13,6 +13,7 @@ import { getCurrencyPerToken } from '../utils/chainlink-utils'
 import { getOHLC, getMarketChart } from '../utils/coingeco-utils'
 import { BNB_CODE } from '../config/tokens';
 import coingekoCoinIds from '../config/coingecko-info';
+import { getCurrentPrice } from '../utils/aurum-api-utils';
 
 const NetworkMap = {};
 Networks.forEach(item => {
@@ -260,7 +261,7 @@ export const tokenList = selector({
       //   return item;
       // }
       const cr = item.contract[network.id]
-      return {...item, contract: cr};
+      return {...item, contract: cr, mainContract: item.contract['1']};
     });
 
     console.log("tokenList step3",toUseTokens);
@@ -320,15 +321,17 @@ export const tokenLoader = selectorFamily({
       console.error('coingeko error', e);
     }
 
+    let price = await getCurrentPrice(token.mainContract);
+
     if (token.code === BNB_CODE) {
       const wallet = get(currentWallet)
       const web3 = get(networkProvider)
       const bal = await web3.eth.getBalance(wallet.address)
-      return {...token, balance: bal, coinId: coinId, trade: trade, coingecko: coingecko};
+      return {...token, balance: bal, coinId: coinId, trade: trade, coingecko: coingecko, price};
     }
     const {balance, allowance} = await loadSingle(network, token, address);
 
-    return {...token, balance, allowance, coinId: coinId, trade: trade, coingecko: coingecko};
+    return {...token, balance, allowance, coinId: coinId, trade: trade, coingecko: coingecko, price};
   }
 })
 
