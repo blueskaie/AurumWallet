@@ -9,7 +9,7 @@ import ARUButton from '../../components/buttons';
 import { useRecoilValue, useRecoilState } from 'recoil';
 import { networkProvider, currentWallet, currentNetwork, tokenList, allTransactions } from '../../store/atoms'
 import { decryptKeyStore } from '../../utils/keystore'
-
+import { useHistory } from 'react-router-dom';
 import MuiAlert from '@material-ui/lab/Alert';
 
 import { DEFAULT_TOKEN } from '../../config/tokens';
@@ -28,6 +28,7 @@ function Alert(props) {
 export default function SendToken(props) {
   const classes = useStyles();
   const { code } = props.match.params;
+  const history = useHistory();
 
   const wallet = useRecoilValue( currentWallet );
   const provider = useRecoilValue( networkProvider );

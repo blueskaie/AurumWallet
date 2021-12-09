@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 
 import { useHistory } from "react-router-dom";
 import { useTheme, Box, Typography, Snackbar } from "@material-ui/core";
@@ -8,8 +8,8 @@ import Clipboard from "react-clipboard.js";
 import Layout from "../../components/layout";
 import TokenList from "../../components/token-list";
 import StatisticInfo from "../../components/statistic-info";
-import { currentWallet } from "../../store/atoms";
-import { useRecoilValue } from "recoil";
+import { currentWallet, refreshCalled } from "../../store/atoms";
+import { useRecoilValue, useRecoilState } from "recoil";
 import HiddenText from "../../components/hidden-text";
 import MuiAlert from '@material-ui/lab/Alert';
 
@@ -23,6 +23,7 @@ export default function Home() {
   const classes = useStyles(useTheme());
   const history = useHistory();
   const [showInfo, setToggleInfo] = React.useState(true);
+  const [refresh, setRefresh] = useRecoilState(refreshCalled);
 
   const addToken = () => { history.push("/add-token"); };
 
@@ -31,6 +32,10 @@ export default function Home() {
     ? wallet.address.slice(0, 6) + "..." + wallet.address.substr(-4)
     : "";
   const [openSuccess, setOpenSuccess] = React.useState(false);
+  
+  useEffect(()=>{
+    setRefresh(refresh + 1);
+  }, []);
 
   return (
     <Layout isShownWallet={false} >

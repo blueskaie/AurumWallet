@@ -92,13 +92,11 @@ export default function Accounts() {
             </Box>
           </Box>
           <ScrollContainer className={classes.accountlist} vertical={true}>
-            <React.Suspense fallback={<Box>Loading...</Box>}>
               <AccountList
                 list={walletList}
                 onSelectWallet={onSelectWallet}
                 showAccountInfo={showAccountInfo}
               />
-            </React.Suspense>
           </ScrollContainer>
         </Box>
       </Box>

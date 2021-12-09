@@ -128,7 +128,7 @@ const OneToken = (props) => {
         <Box style={{display: 'flex', flexDirection: 'row', justifyContent: 'space-between', cursor:'pointer'}} onClick={goToDetail}>
           <p className={classes.tokenprice}>
             {currency == 'USD' ? '$' : '€'}
-            {(curPrice * trade.cmp).toFixed(4).toLocaleString()}
+            {(curPrice * trade.cmp).toFixed(8).toLocaleString()}
           </p>
           <p className={classes.tokenprice}>
             <HiddenText show={showInfo}>
@@ -140,7 +140,7 @@ const OneToken = (props) => {
         <Box style={{display: 'flex', flexDirection: 'row', justifyContent: 'space-between'}}>
           <Box style={{color: percent >= 0?'green':'red'}} >
             {percent >= 0 ? <FontAwesomeIcon icon={faCaretUp} /> : <FontAwesomeIcon icon={faCaretDown} /> }
-            <span style={{marginLeft: 5}}>{percent.toFixed(2)}%</span>
+            <span style={{marginLeft: 5}}>{Math.abs(percent).toFixed(2)}%</span>
           </Box>
           {showSendLink && <Box style={{color: '#999999', cursor: 'pointer'}} onClick={()=>goToSendToken(code)} >
             <span>Send</span>

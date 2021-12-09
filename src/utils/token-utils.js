@@ -89,18 +89,21 @@ export const transferToAddresss = async (network, token, privateKey, amount, des
   try {
     if(balance > rawAmount) {
           const transferAmount = "0x" + rawAmount.toString(16)
+          const transferMethod = contract.methods.transfer(destAddress, transferAmount);
+          const gas = await transferMethod.estimateGas({ from: account.address });
+
           const rawTransaction = {
-              "from": account.address,
-              "nonce": "0x" + nonceCount.toString(16),
-              "gasPrice": gasPrice,
-              "gasLimit": "0x250CA",
-              "to": contractAddress,
-              "value": "0x0",
-              "data": contract.methods.transfer(destAddress, transferAmount).encodeABI()
+              from: account.address,
+              nonce: "0x" + nonceCount.toString(16),
+              gasPrice: gasPrice,
+              gasLimit: "0x" + gas.toString(16),
+              to: contractAddress,
+              value: "0x0",
+              data: transferMethod.encodeABI()
           };
 
           const signedTransaction = await account.signTransaction(rawTransaction);
-
+          
           const result = await provider.eth.sendSignedTransaction(signedTransaction.rawTransaction);
           return result;
       }
