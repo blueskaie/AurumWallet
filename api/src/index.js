@@ -30,8 +30,6 @@ app.use((req, res, next) => {
 
 // * Routes * //
 
-// app.use('/session', routes.session);
-// app.use('/users', routes.user);
 // app.use('/messages', routes.message);
 app.use('/dextools', routes.dextools);
 app.use('/pancakeswap', routes.pancakeswap);
