@@ -310,7 +310,7 @@ const Swap = () => {
                     {!fromSelect && <Box className={classes.swapform}>
                       <Box className={classes.fromtokeninfoleft}>
                         <Box>From</Box>
-                        <Box><input type="number" className={classes.fromtokenamount} placeholder="0.0" value={swapAmount} onChange={onSwapAmount}/></Box>
+                        <Box><input type="text" className={classes.fromtokenamount} placeholder="0.0" value={swapAmount} onChange={onSwapAmount}/></Box>
                       </Box>
                       <Box className={classes.amountSection}>
                         <Box className={classes.balanceAmount}>Balance: {fromToken ? parseFloat(LatomicNumber.toDecimal(fromToken.balance, fromToken.decimals)).toFixed(5) : ''}</Box>
@@ -345,7 +345,7 @@ const Swap = () => {
                     {!toSelect && <Box className={classes.swapform}>
                       <Box className={classes.fromtokeninfoleft}>
                         <Box>To</Box>
-                        <Box><input type="number" className={classes.fromtokenamount} placeholder="0.0" value={expectedAmount} disabled/></Box>
+                        <Box><input type="text" className={classes.fromtokenamount} placeholder="0.0" value={expectedAmount} disabled/></Box>
                       </Box>
                       <Box className={classes.amountSection}>
                         <Box className={classes.balanceAmount}>Balance: {toToken?parseFloat(LatomicNumber.toDecimal(toToken.balance,toToken.decimals)).toFixed(5) : ''}</Box>
@@ -517,7 +517,7 @@ const Swap = () => {
                   disabled={autoSlippage}
                 />
                 <Box style={{display: 'flex', justifyContent: 'space-between', alignItems: 'center'}}>
-                  <input className={classes.slippageInput} type="number" value={allowedSlippage} onChange={(e)=>setAllowedSlippage(parseFloat(e.target.value))} disabled={autoSlippage}/>
+                  <input className={classes.slippageInput} type="text" value={allowedSlippage} onChange={(e)=>setAllowedSlippage(parseFloat(e.target.value))} disabled={autoSlippage}/>
                   <Switch label="Auto" checked={autoSlippage} onChange={(e)=>setAutoSlippage(e.target.checked)}/>
                   <span style={{color: 'white'}}>Auto</span>
                 </Box>

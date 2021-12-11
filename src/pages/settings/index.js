@@ -22,16 +22,16 @@ export default function Settings() {
         <h1 className={classes.wallettitle}>
           <Box>Settings</Box>
         </h1>
-        <ARUCard className={classes.card}>
+        <ARUCard className={classes.disabled}>
           General
         </ARUCard>
-        <ARUCard className={classes.card}>
+        <ARUCard className={classes.disabled}>
           Network
         </ARUCard>
         <ARUCard className={classes.card} onClick={() => clickButton('security')}>
           Wallet Security
         </ARUCard>
-        <ARUCard className={classes.card}>
+        <ARUCard className={classes.disabled}>
           About Aurum Wallet
         </ARUCard>
       </Box>
