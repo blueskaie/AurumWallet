@@ -258,8 +258,8 @@ const Swap = () => {
     if (swapRouter && fromToken && toToken && swapAmount > 0) {
       const unlocked = decryptKeyStore(provider, wallet.keystore, wallet.password)
       const res = await getExpectedAmounts(network, swapRouter, fromToken, toToken, swapAmount, unlocked.privateKey)
-      if (res && res.length === 2) {
-        setExpectedAmount(LatomicNumber.toDecimal(res[1], toToken.decimals));
+      if (res && res.length > 0) {
+        setExpectedAmount(LatomicNumber.toDecimal(res[res.length - 1], toToken.decimals));
       }
     } else {
       setExpectedAmount(0);

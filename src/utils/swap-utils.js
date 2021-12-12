@@ -39,7 +39,11 @@ export const getExpectedAmounts = async (network, router, fromToken, toToken, am
     let swapContractAddress = getSwapRouter(network, router);
     let contract = new provider.eth.Contract( ABI , swapContractAddress );
     let amountIn = formatBN(amount, fromToken.decimals);
-    const path = [fromToken.contract, toToken.contract];
+
+    let path = [fromToken.contract, toToken.contract];
+    if (fromToken.code != DEFAULT_TOKEN.code && toToken.code != DEFAULT_TOKEN.code) {
+        path = [fromToken.contract, DEFAULT_TOKEN.contract[network.id], toToken.contract];
+    }
 
     let args = [amountIn.toHexString(), path];
     let res = await contract.methods.getAmountsOut(...args).call();
@@ -58,7 +62,6 @@ export const getGasInfo = async ( network, router, fromToken, toToken, amount, p
     
     let amountIn = formatBN(amount, fromToken.decimals);
 
-    const path = [fromToken.contract, toToken.contract]
     const to = account.address; // current account
     let deadline = Math.floor(Date.now() / 1000) + 60 * parseFloat(30) //default deadline 30mins
 
@@ -68,13 +71,16 @@ export const getGasInfo = async ( network, router, fromToken, toToken, amount, p
 
     let method = undefined;
     if (fromToken.code === DEFAULT_TOKEN.code) {
+        const path = [fromToken.contract, toToken.contract]
         const args = [0, path, to, deadline];
         payload = {...payload, value: amountIn};
         method = contract.methods.swapExactETHForTokensSupportingFeeOnTransferTokens(...args)
     } else if (toToken.code === DEFAULT_TOKEN.code) {
+        const path = [fromToken.contract, toToken.contract]
         const args = [amountIn.toHexString(), 0, path, to, deadline];
         method = contract.methods.swapExactTokensForETHSupportingFeeOnTransferTokens(...args)
     } else {
+        const path = [fromToken.contract, DEFAULT_TOKEN.contract[network.id], toToken.contract]
         const args = [amountIn.toHexString(), 0, path, to, deadline]
         method = contract.methods.swapExactTokensForTokensSupportingFeeOnTransferTokens(...args)
     }
@@ -108,7 +114,6 @@ export const doSwap = async ( network, router, fromToken, toToken, amount, priva
     
     let amountIn = formatBN(amount, fromToken.decimals);
 
-    const path = [fromToken.contract, toToken.contract]
     const to = account.address; // current account
     let deadline = Math.floor(Date.now() / 1000) + 60 * parseFloat(30) //default deadline 30mins
 
@@ -120,13 +125,16 @@ export const doSwap = async ( network, router, fromToken, toToken, amount, priva
 
     let res = undefined;
     if (fromToken.code === DEFAULT_TOKEN.code) {
+        const path = [fromToken.contract, toToken.contract]
         const args = [0, path, to, deadline];
         payload = {...payload, value: amountIn};
         res = await contract.methods.swapExactETHForTokensSupportingFeeOnTransferTokens(...args).send(payload)
     } else if (toToken.code === DEFAULT_TOKEN.code) {
+        const path = [fromToken.contract, toToken.contract]
         const args = [amountIn.toHexString(), 0, path, to, deadline];
         res = await contract.methods.swapExactTokensForETHSupportingFeeOnTransferTokens(...args).send(payload)
     } else {
+        const path = [fromToken.contract, DEFAULT_TOKEN.contract[network.id], toToken.contract]
         const args = [amountIn.toHexString(), 0, path, to, deadline]
         res = await contract.methods.swapExactTokensForTokensSupportingFeeOnTransferTokens(...args).send(payload)
     }
