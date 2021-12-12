@@ -254,6 +254,11 @@ const Swap = () => {
     }
   }, [allowedSlippage, expectedAmount]);
 
+  const liquidityProviderFee = useMemo(()=>{
+    const percent = swapRouter == 'pancake' ? 0.25 : 0.2;
+    return swapAmount * percent / 100;
+  }, [swapRouter, swapAmount]);
+
   useEffect(async () => {
     if (swapRouter && fromToken && toToken && swapAmount > 0) {
       const unlocked = decryptKeyStore(provider, wallet.keystore, wallet.password)
@@ -405,9 +410,9 @@ const Swap = () => {
                   <p>Liquidity provider fee</p>
                 </Box>
                 <Box className={classes.swapsubinfo}>
-                  <p style={{color: '#00d70a'}}>{toToken ? `${minimumReceivedAmount.toFixed(4)} ${toToken.code}` : 0}</p>
-                  <p>0.0000</p>
-                  <p>0.00</p>
+                  <p style={{color: toToken ? '#00d70a' : '#ffffff'}}>{toToken ? `${minimumReceivedAmount.toFixed(4)} ${toToken.code}` : 0}</p>
+                  <p style={{color: '#00d70a'}}>{'<0.01%'}</p>
+                  <p style={{color: fromToken ? '#00d70a' : '#ffffff'}}>{fromToken ? `${liquidityProviderFee.toFixed(2)} ${fromToken.code}` : 0}</p>
                 </Box>
             </Box>
           </Box>
