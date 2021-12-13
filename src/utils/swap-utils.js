@@ -33,7 +33,7 @@ export const formatBN = (value, decimals = 18) => {
     return BigNumber.from(0)
 }
 
-export const getExpectedAmounts = async (network, router, fromToken, toToken, amount) => {
+export const getAmountsOut = async (network, router, fromToken, toToken, amount) => {
     let provider = getProvider(network);
 
     let swapContractAddress = getSwapRouter(network, router);
@@ -47,6 +47,23 @@ export const getExpectedAmounts = async (network, router, fromToken, toToken, am
 
     let args = [amountIn.toHexString(), path];
     let res = await contract.methods.getAmountsOut(...args).call();
+    return res;    
+}
+
+export const getAmountsIn = async (network, router, fromToken, toToken, amount) => {
+    let provider = getProvider(network);
+
+    let swapContractAddress = getSwapRouter(network, router);
+    let contract = new provider.eth.Contract( ABI , swapContractAddress );
+    let amountOut = formatBN(amount, toToken.decimals);
+
+    let path = [fromToken.contract, toToken.contract];
+    if (fromToken.code != DEFAULT_TOKEN.code && toToken.code != DEFAULT_TOKEN.code) {
+        path = [fromToken.contract, DEFAULT_TOKEN.contract[network.id], toToken.contract];
+    }
+
+    let args = [amountOut.toHexString(), path];
+    let res = await contract.methods.getAmountsIn(...args).call();
     return res;    
 }
 
