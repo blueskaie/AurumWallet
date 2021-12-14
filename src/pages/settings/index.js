@@ -31,7 +31,7 @@ export default function Settings() {
         <ARUCard className={classes.card} onClick={() => clickButton('security')}>
           Wallet Security
         </ARUCard>
-        <ARUCard className={classes.disabled}>
+        <ARUCard className={classes.card} onClick={() => {window.open("https://www.aurofficial.com", "_blank")}}>
           About Aurum Wallet
         </ARUCard>
       </Box>

@@ -10,6 +10,8 @@ import { selectedNetworkId } from '../store/atoms';
 
 const useStyles = makeStyles((theme) => ({
   menuItem: {
+    paddingRight: 12,
+    paddingLeft: 12,
     '& img': {
       width: theme.spacing(2),
       marginRight: theme.spacing(1),
@@ -18,15 +20,15 @@ const useStyles = makeStyles((theme) => ({
     display:'flex',
     justifyContent:'space-between',
     '&.Mui-selected':{
-      background:'black',
+      background:'#222121',
       '&:hover':{
-        background:'#2d2d2d',
+        background:'#1e1d1d',
       }
     }
   },
   select: {
     padding:'3px 10px',
-    background: '#222222',
+    background: '#222121',
     boxShadow: '0 3px 3px black',
     borderRadius:6,
     fontSize: 14,
@@ -40,7 +42,7 @@ const useStyles = makeStyles((theme) => ({
       borderBottomColor:'transparent',
     },
     '& .MuiSelect-root': {
-      paddingRight: theme.spacing(3),
+      paddingRight: theme.spacing(2),
       paddingLeft: theme.spacing(0),
       color:'#ffffff',
         },
@@ -50,7 +52,7 @@ const useStyles = makeStyles((theme) => ({
       marginLeft: theme.spacing(1)
     },
     "& > div":{
-      width:123,
+      width:115,
       display: 'flex',
     justifyContent: 'center',
     alignItems: 'center',
@@ -61,10 +63,10 @@ const useStyles = makeStyles((theme) => ({
     }
   },
   list:{
-    backgroundColor:'#17191e',
+    backgroundColor:'#222121',
     color:'#ffffff',
     '& li:hover':{
-      background:'#2d2d2d'
+      background:'#1e1d1d'
     }
   },
   paper:{

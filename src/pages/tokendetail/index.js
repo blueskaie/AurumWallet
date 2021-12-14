@@ -55,7 +55,7 @@ const TokenDetail = (props) => {
       height: 250
     },
     title: {
-      text: `${coin && coin.code} Trading View`,
+      text: `${coin && coin.code}`,
       align: 'left',
       style: {
         color: '#ffffff'
@@ -92,7 +92,7 @@ const TokenDetail = (props) => {
   }];
 
   return (
-    <Layout isShownBackButton = {true} isShownWallet = {false}>
+    <Layout isShownWallet = {false}>
       <Box className={classes.root}>
         {coin && coin.code && coin.code !== 'BNB' && <div style={{marginBottom: 20, textAlign: 'right'}}>
           <span className={classes.deleteBtn} onClick={deleteToken}>Delete Token</span>
