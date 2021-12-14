@@ -15,10 +15,10 @@ import TokenSelect from './token-select';
 
 import * as LatomicNumber from '../../utils/big.number'
 import { decryptKeyStore } from '../../utils/keystore'
-import { getExpectedAmounts, getGasInfo, doSwap } from '../../utils/swap-utils';
+import { getAmountsOut, getAmountsIn, getGasInfo, doSwap } from '../../utils/swap-utils';
 import { approve } from '../../utils/token-utils';
 
-import { networkProvider, refreshCalled, currentWallet, currentNetwork, currentGasOptions, allTransactions  } from '../../store/atoms'
+import { networkProvider, refreshCalled, currentWallet, currentNetwork, currentGasOptions, currentSlippageTolerance, allTransactions  } from '../../store/atoms'
 
 import { DEFAULT_TOKEN } from "../../config/tokens";
 import {tokenLogos} from "../../config/token-info";
@@ -76,16 +76,18 @@ const Swap = () => {
   const shortWalletAddress = wallet.address.slice(0, 5) + "..." + wallet.address.substr(-4);
 
   const [currentGas, setCurrentGas] = useRecoilState(currentGasOptions);
+  const [slippageTolerance, setSlippageTolerance] = useRecoilState(currentSlippageTolerance);
+
   const [fromSelect, setFromSelect] = useState(false);
   const [toSelect, setToSelect] = useState(false);
   const [fromToken, setFromToken] = useState(null);
   const [toToken, setToToken] = useState(null);
   const [swapAmount, setSwapAmount] = useState(0);
   const [expectedAmount, setExpectedAmount] = useState(0);
-  const [allowedSlippage, setAllowedSlippage] = useState(1);
-  const [autoSlippage, setAutoSlippage] = useState(true);
 
-  const [swapRouter, setSwapRouter] = React.useState('pancake')
+  const [swapRouter, setSwapRouter] = React.useState('pancake');
+  // if true, it means exact input to output, if false, it means input to exact output 
+  const [swapDirection, setSwapDirection] = React.useState(true);   
   const [gasOptions, setGasOptions] = React.useState(currentGas);
   const [formSubmitting, setFormSubmitting] = React.useState(false);
   const [isSwapping, setSwapping] = React.useState(false);
@@ -118,7 +120,13 @@ const Swap = () => {
   }
 
   const onSwapAmount = (e) => {
+    setSwapDirection(true);
     setSwapAmount(parseFloat(e.target.value));
+  }
+
+  const onExpectedAmount = (e) => {
+    setSwapDirection(false);
+    setExpectedAmount(parseFloat(e.target.value));
   }
 
   const approveToken = async () => {
@@ -154,7 +162,7 @@ const Swap = () => {
     setSwapping(true);
     const unlocked = decryptKeyStore(provider, wallet.keystore, wallet.password)
     try {
-      const result = await doSwap(network, swapRouter, fromToken, toToken, swapAmount, unlocked.privateKey, gasOptions);
+      const result = await doSwap(network, swapRouter, fromToken, toToken, swapAmount, expectedAmount, swapDirection, unlocked.privateKey, gasOptions);
       const gasPrice = await provider.eth.getGasPrice();
       if (result.status) {
         setSwapping(false);
@@ -239,6 +247,7 @@ const Swap = () => {
     const temp = fromToken;
     setFromToken(toToken);
     setToToken(temp);
+    setSwapDirection(true);
     setSwapAmount(parseFloat(expectedAmount));
   }
 
@@ -247,32 +256,48 @@ const Swap = () => {
   }, [fromToken])
 
   const minimumReceivedAmount = useMemo(()=>{
-    if (allowedSlippage > 0 && expectedAmount>0) {
-      return (100-allowedSlippage)/100 * expectedAmount;
+    if (slippageTolerance && slippageTolerance.allowedSlippage > 0 && expectedAmount>0) {
+      return (100-slippageTolerance.allowedSlippage)/100 * expectedAmount;
     } else {
       return 0;
     }
-  }, [allowedSlippage, expectedAmount]);
+  }, [slippageTolerance, expectedAmount]);
+
+  const liquidityProviderFee = useMemo(()=>{
+    const percent = swapRouter == 'pancake' ? 0.25 : 0.2;
+    return swapAmount * percent / 100;
+  }, [swapRouter, swapAmount]);
 
   useEffect(async () => {
-    if (swapRouter && fromToken && toToken && swapAmount > 0) {
-      const unlocked = decryptKeyStore(provider, wallet.keystore, wallet.password)
-      const res = await getExpectedAmounts(network, swapRouter, fromToken, toToken, swapAmount, unlocked.privateKey)
-      if (res && res.length === 2) {
-        setExpectedAmount(LatomicNumber.toDecimal(res[1], toToken.decimals));
+    let predictedAmount = 0;
+    const unlocked = decryptKeyStore(provider, wallet.keystore, wallet.password)
+      
+    if (swapDirection) {
+      if (swapRouter && fromToken && toToken && swapAmount > 0) {
+        const res = await getAmountsOut(network, swapRouter, fromToken, toToken, swapAmount, unlocked.privateKey)
+        if (res && res.length > 0) {
+          predictedAmount = LatomicNumber.toDecimal(res[res.length - 1], toToken.decimals);
+        }  
+        setExpectedAmount(predictedAmount);
       }
     } else {
-      setExpectedAmount(0);
+      if (swapRouter && fromToken && toToken && expectedAmount > 0) {
+        const res = await getAmountsIn(network, swapRouter, fromToken, toToken, expectedAmount, unlocked.privateKey)
+        if (res && res.length > 0) {
+          predictedAmount = LatomicNumber.toDecimal(res[0], fromToken.decimals);
+        }  
+        setSwapAmount(parseFloat(predictedAmount));
+      }
     }
-  }, [fromToken, toToken, swapAmount, swapRouter]);
+  }, [fromToken, toToken, swapAmount, expectedAmount, swapRouter, swapDirection]);
 
   useEffect(async () => {
     const isAllowed = !fromToken || fromToken.code === DEFAULT_TOKEN.code || LatomicNumber.toDecimal(fromToken.allowance,fromToken.decimals) > 0;
-    if (isAllowed && fromToken && toToken && swapAmount) {
+    if (isAllowed && fromToken && toToken && swapAmount && expectedAmount) {
       setErrors({});
       setHelper({});
       const unlocked = decryptKeyStore(provider, wallet.keystore, wallet.password)
-      let result = await getGasInfo(network, swapRouter, fromToken, toToken, swapAmount, unlocked.privateKey);
+      let result = await getGasInfo(network, swapRouter, fromToken, toToken, swapAmount, expectedAmount, swapDirection, unlocked.privateKey);
       result = {
         ...result,
         price: LatomicNumber.toDecimal(result.price, 9)
@@ -280,7 +305,7 @@ const Swap = () => {
       setCurrentGas(result);
     }
 
-  }, [fromToken, toToken, swapAmount]);
+  }, [fromToken, toToken, swapAmount, expectedAmount, swapDirection]);
 
   useEffect(() => {
     setGasOptions(currentGas);
@@ -330,9 +355,7 @@ const Swap = () => {
                         </Box>
                       </Box>
                     </Box>}
-                    {/* <React.Suspense fallback={<Box></Box>}> */}
-                      <TokenSelect onChange={onFromChange} isShown={fromSelect} exceptToken={toToken}/>
-                    {/* </React.Suspense> */}
+                    <TokenSelect onChange={onFromChange} isShown={fromSelect} exceptToken={toToken}/>
                     <FormHelperText id="address_helper">
                       {helper.fromToken}
                     </FormHelperText>
@@ -345,7 +368,7 @@ const Swap = () => {
                     {!toSelect && <Box className={classes.swapform}>
                       <Box className={classes.fromtokeninfoleft}>
                         <Box>To</Box>
-                        <Box><input type="number" className={classes.fromtokenamount} placeholder="0.0" value={expectedAmount} disabled/></Box>
+                        <Box><input type="number" className={classes.fromtokenamount} placeholder="0.0" value={expectedAmount} onChange={onExpectedAmount}/></Box>
                       </Box>
                       <Box className={classes.amountSection}>
                         <Box className={classes.balanceAmount}>Balance: {toToken?parseFloat(LatomicNumber.toDecimal(toToken.balance,toToken.decimals)).toFixed(5) : ''}</Box>
@@ -365,9 +388,7 @@ const Swap = () => {
                         </Box>
                       </Box>
                     </Box>}
-                    {/* <React.Suspense fallback={<Box></Box>}> */}
-                      <TokenSelect onChange={onToChange} isShown={toSelect} exceptToken={fromToken}/>
-                    {/* </React.Suspense> */}
+                    <TokenSelect onChange={onToChange} isShown={toSelect} exceptToken={fromToken}/>
                     <FormHelperText id="address_helper">
                       {helper.toToken}
                     </FormHelperText>
@@ -385,6 +406,7 @@ const Swap = () => {
                     color='secondary'
                     onChange={(e, value)=>{
                       const swval = fromToken ? parseFloat(LatomicNumber.toDecimal(fromToken.balance, fromToken.decimals)) * value / 100 : 0
+                      setSwapDirection(true);
                       setSwapAmount(swval);
                     }}
                   />
@@ -405,9 +427,9 @@ const Swap = () => {
                   <p>Liquidity provider fee</p>
                 </Box>
                 <Box className={classes.swapsubinfo}>
-                  <p style={{color: '#00d70a'}}>{toToken ? `${minimumReceivedAmount.toFixed(4)} ${toToken.code}` : 0}</p>
-                  <p>0.0000</p>
-                  <p>0.00</p>
+                  <p style={{color: toToken ? '#00d70a' : '#ffffff'}}>{toToken ? `${minimumReceivedAmount.toFixed(4)} ${toToken.code}` : 0}</p>
+                  <p style={{color: '#00d70a'}}>{'<0.01%'}</p>
+                  <p style={{color: fromToken ? '#00d70a' : '#ffffff'}}>{fromToken ? `${liquidityProviderFee.toFixed(2)} ${fromToken.code}` : 0}</p>
                 </Box>
             </Box>
           </Box>
@@ -506,19 +528,38 @@ const Swap = () => {
               <label className={classes.label}>Slippage tolerance</label>
               <Box style={{textAlign: 'center'}} id='dlg_slider'>
                 <IOSSlider
-                  value={allowedSlippage}
-                  onChange={(e, value)=>setAllowedSlippage(value)}
+                  value={slippageTolerance.allowedSlippage}
+                  onChange={(e, value)=>setSlippageTolerance({
+                    ...slippageTolerance,
+                    allowedSlippage: parseFloat(value)
+                  })}
                   aria-labelledby="input-slider"
                   step={null}
                   valueLabelDisplay="off"
                   marks={availableSlipageToleranceArray}
                   min={0.1}
                   max={1.5}
-                  disabled={autoSlippage}
+                  disabled={slippageTolerance.auto}
                 />
                 <Box style={{display: 'flex', justifyContent: 'space-between', alignItems: 'center'}}>
-                  <input className={classes.slippageInput} type="text" value={allowedSlippage} onChange={(e)=>setAllowedSlippage(parseFloat(e.target.value))} disabled={autoSlippage}/>
-                  <Switch label="Auto" checked={autoSlippage} onChange={(e)=>setAutoSlippage(e.target.checked)}/>
+                  <input
+                    className={classes.slippageInput}
+                    type="number"
+                    value={slippageTolerance.allowedSlippage}
+                    onChange={(e)=>setSlippageTolerance({
+                      ...slippageTolerance,
+                      allowedSlippage: parseFloat(e.target.value)
+                    })}
+                    disabled={slippageTolerance.auto}
+                  />
+                  <Switch
+                    label="Auto"
+                    checked={slippageTolerance.auto}
+                    onChange={(e)=>setSlippageTolerance({
+                      ...slippageTolerance,
+                      auto: e.target.checked
+                    })}
+                  />
                   <span style={{color: 'white'}}>Auto</span>
                 </Box>
               </Box>

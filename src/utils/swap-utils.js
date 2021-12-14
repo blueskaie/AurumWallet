@@ -33,20 +33,41 @@ export const formatBN = (value, decimals = 18) => {
     return BigNumber.from(0)
 }
 
-export const getExpectedAmounts = async (network, router, fromToken, toToken, amount) => {
+export const getAmountsOut = async (network, router, fromToken, toToken, amount) => {
     let provider = getProvider(network);
 
     let swapContractAddress = getSwapRouter(network, router);
     let contract = new provider.eth.Contract( ABI , swapContractAddress );
     let amountIn = formatBN(amount, fromToken.decimals);
-    const path = [fromToken.contract, toToken.contract];
+
+    let path = [fromToken.contract, toToken.contract];
+    if (fromToken.code != DEFAULT_TOKEN.code && toToken.code != DEFAULT_TOKEN.code) {
+        path = [fromToken.contract, DEFAULT_TOKEN.contract[network.id], toToken.contract];
+    }
 
     let args = [amountIn.toHexString(), path];
     let res = await contract.methods.getAmountsOut(...args).call();
     return res;    
 }
 
-export const getGasInfo = async ( network, router, fromToken, toToken, amount, privateKey ) => {
+export const getAmountsIn = async (network, router, fromToken, toToken, amount) => {
+    let provider = getProvider(network);
+
+    let swapContractAddress = getSwapRouter(network, router);
+    let contract = new provider.eth.Contract( ABI , swapContractAddress );
+    let amountOut = formatBN(amount, toToken.decimals);
+
+    let path = [fromToken.contract, toToken.contract];
+    if (fromToken.code != DEFAULT_TOKEN.code && toToken.code != DEFAULT_TOKEN.code) {
+        path = [fromToken.contract, DEFAULT_TOKEN.contract[network.id], toToken.contract];
+    }
+
+    let args = [amountOut.toHexString(), path];
+    let res = await contract.methods.getAmountsIn(...args).call();
+    return res;    
+}
+
+export const getGasInfo = async ( network, router, fromToken, toToken, inAmount, outAmount, swapDirection, privateKey ) => {
     
     let provider = getProvider(network);
     const account = provider.eth.accounts.privateKeyToAccount( privateKey );
@@ -56,9 +77,9 @@ export const getGasInfo = async ( network, router, fromToken, toToken, amount, p
     let swapContractAddress = getSwapRouter(network, router);
     let contract = new provider.eth.Contract( ABI , swapContractAddress );
     
-    let amountIn = formatBN(amount, fromToken.decimals);
+    let amountIn = formatBN(inAmount, fromToken.decimals);
+    let amountOut = formatBN(outAmount, toToken.decimals);
 
-    const path = [fromToken.contract, toToken.contract]
     const to = account.address; // current account
     let deadline = Math.floor(Date.now() / 1000) + 60 * parseFloat(30) //default deadline 30mins
 
@@ -67,16 +88,37 @@ export const getGasInfo = async ( network, router, fromToken, toToken, amount, p
     }
 
     let method = undefined;
-    if (fromToken.code === DEFAULT_TOKEN.code) {
-        const args = [0, path, to, deadline];
-        payload = {...payload, value: amountIn};
-        method = contract.methods.swapExactETHForTokensSupportingFeeOnTransferTokens(...args)
-    } else if (toToken.code === DEFAULT_TOKEN.code) {
-        const args = [amountIn.toHexString(), 0, path, to, deadline];
-        method = contract.methods.swapExactTokensForETHSupportingFeeOnTransferTokens(...args)
+    if (swapDirection) {
+        if (fromToken.code === DEFAULT_TOKEN.code) {
+            const path = [fromToken.contract, toToken.contract]
+            const args = [0, path, to, deadline];
+            payload = {...payload, value: amountIn};
+            method = contract.methods.swapExactETHForTokensSupportingFeeOnTransferTokens(...args)
+        } else if (toToken.code === DEFAULT_TOKEN.code) {
+            const path = [fromToken.contract, toToken.contract]
+            const args = [amountIn.toHexString(), 0, path, to, deadline];
+            method = contract.methods.swapExactTokensForETHSupportingFeeOnTransferTokens(...args)
+        } else {
+            const path = [fromToken.contract, DEFAULT_TOKEN.contract[network.id], toToken.contract]
+            const args = [amountIn.toHexString(), 0, path, to, deadline]
+            method = contract.methods.swapExactTokensForTokensSupportingFeeOnTransferTokens(...args)
+        }
     } else {
-        const args = [amountIn.toHexString(), 0, path, to, deadline]
-        method = contract.methods.swapExactTokensForTokensSupportingFeeOnTransferTokens(...args)
+        let maxAmountIn = formatBN(inAmount * 1.1, fromToken.decimals);
+        if (fromToken.code === DEFAULT_TOKEN.code) {
+            const path = [fromToken.contract, toToken.contract]
+            const args = [amountOut, path, to, deadline];
+            payload = {...payload, value: maxAmountIn};
+            method = contract.methods.swapETHForExactTokens(...args);
+        } else if (toToken.code === DEFAULT_TOKEN.code) {
+            const path = [fromToken.contract, toToken.contract];
+            const args = [amountOut.toHexString(), maxAmountIn.toHexString(), path, to, deadline];
+            method = contract.methods.swapTokensForExactETH(...args)
+        } else {
+            const path = [fromToken.contract, DEFAULT_TOKEN.contract[network.id], toToken.contract]
+            const args = [amountOut.toHexString(), maxAmountIn.toHexString(), path, to, deadline]
+            method = contract.methods.swapTokensForExactTokens(...args)
+        }
     }
 
     let [gasPrice, gasCost] = [0, 0]
@@ -96,7 +138,7 @@ export const getGasInfo = async ( network, router, fromToken, toToken, amount, p
     return res;
 }
 
-export const doSwap = async ( network, router, fromToken, toToken, amount, privateKey, gasOptions) => {
+export const doSwap = async ( network, router, fromToken, toToken, inAmount, outAmount, swapDirection, privateKey, gasOptions) => {
 
     let provider = getProvider(network);
     const account = provider.eth.accounts.privateKeyToAccount( privateKey );
@@ -106,9 +148,9 @@ export const doSwap = async ( network, router, fromToken, toToken, amount, priva
     let swapContractAddress = getSwapRouter(network, router);
     let contract = new provider.eth.Contract( ABI , swapContractAddress );
     
-    let amountIn = formatBN(amount, fromToken.decimals);
+    let amountIn = formatBN(inAmount, fromToken.decimals);
+    let amountOut = formatBN(outAmount, toToken.decimals);
 
-    const path = [fromToken.contract, toToken.contract]
     const to = account.address; // current account
     let deadline = Math.floor(Date.now() / 1000) + 60 * parseFloat(30) //default deadline 30mins
 
@@ -119,16 +161,38 @@ export const doSwap = async ( network, router, fromToken, toToken, amount, priva
     }
 
     let res = undefined;
-    if (fromToken.code === DEFAULT_TOKEN.code) {
-        const args = [0, path, to, deadline];
-        payload = {...payload, value: amountIn};
-        res = await contract.methods.swapExactETHForTokensSupportingFeeOnTransferTokens(...args).send(payload)
-    } else if (toToken.code === DEFAULT_TOKEN.code) {
-        const args = [amountIn.toHexString(), 0, path, to, deadline];
-        res = await contract.methods.swapExactTokensForETHSupportingFeeOnTransferTokens(...args).send(payload)
+    if (swapDirection) {
+        if (fromToken.code === DEFAULT_TOKEN.code) {
+            const path = [fromToken.contract, toToken.contract]
+            const args = [0, path, to, deadline];
+            payload = {...payload, value: amountIn};
+            res = await contract.methods.swapExactETHForTokensSupportingFeeOnTransferTokens(...args).send(payload)
+        } else if (toToken.code === DEFAULT_TOKEN.code) {
+            const path = [fromToken.contract, toToken.contract]
+            const args = [amountIn.toHexString(), 0, path, to, deadline];
+            res = await contract.methods.swapExactTokensForETHSupportingFeeOnTransferTokens(...args).send(payload)
+        } else {
+            const path = [fromToken.contract, DEFAULT_TOKEN.contract[network.id], toToken.contract]
+            const args = [amountIn.toHexString(), 0, path, to, deadline]
+            res = await contract.methods.swapExactTokensForTokensSupportingFeeOnTransferTokens(...args).send(payload)
+        }
     } else {
-        const args = [amountIn.toHexString(), 0, path, to, deadline]
-        res = await contract.methods.swapExactTokensForTokensSupportingFeeOnTransferTokens(...args).send(payload)
+        let maxAmountIn = formatBN(inAmount * 1.1, fromToken.decimals);
+        if (fromToken.code === DEFAULT_TOKEN.code) {
+            const path = [fromToken.contract, toToken.contract]
+            const args = [amountOut, path, to, deadline];
+            payload = {...payload, value: maxAmountIn};
+            res = await contract.methods.swapETHForExactTokens(...args).send(payload)
+        } else if (toToken.code === DEFAULT_TOKEN.code) {
+            const path = [fromToken.contract, toToken.contract];
+            const args = [amountOut.toHexString(), maxAmountIn.toHexString(), path, to, deadline];
+            res = await contract.methods.swapTokensForExactETH(...args).send(payload)
+        } else {
+            const path = [fromToken.contract, DEFAULT_TOKEN.contract[network.id], toToken.contract]
+            const args = [amountOut.toHexString(), maxAmountIn.toHexString(), path, to, deadline]
+            res = await contract.methods.swapTokensForExactTokens(...args).send(payload)
+        }
     }
+
     return res;
 }
