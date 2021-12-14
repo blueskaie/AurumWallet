@@ -24,6 +24,17 @@ const useStyles = makeStyles((theme) => ({
         fontSize: 20,
         cursor: 'pointer'
     },
+    disabled: {
+        display: 'flex',
+        flexDirection: 'row',
+        justifyContent: 'center',
+        alignItems: 'flex-start',
+        padding: 18,
+        marginBottom: 10,
+        color: '#777777',
+        fontSize: 20,
+        cursor: 'not-allowed'
+    },
 }));
 
 export default useStyles;
