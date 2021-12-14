@@ -31,9 +31,9 @@ const useStyles = makeStyles((theme) => ({
         alignItems: 'flex-start',
         padding: 18,
         marginBottom: 10,
-        color: '#333333',
+        color: '#777777',
         fontSize: 20,
-        cursor: 'pointer'
+        cursor: 'not-allowed'
     },
 }));
 
