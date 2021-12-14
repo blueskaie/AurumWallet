@@ -138,39 +138,19 @@ img {
 .main_content p::-webkit-scrollbar{
   display: none;
 }
-.sub_content p#total{
-  font-size:12px;
-  color:white;
-  margin:0;
-}
-.sub_content p#totalValue{
-  font-size:10px;
-  color:white;
-  margin:0;
-}
 
-.sub_content p#totalValue a{
-  font-size:8px;
-  color:#3cff00;
-  margin:0;
-}
-.avatar{
-    width: 46px;
-    height: 46px;
-    background-size:cover;
-}
-#bnb{
-    /* background-image: url('../../../public/BNBbtn.png'); */
-}
-#sfm{
-  background-repeat: no-repeat;
-  background-position:5px 0;
-  background-size:82%;
-  /* background-image: url('../../../public/SFMbtn.png'); */
-}
-#mbs{
-  /* background-image: url('../../../public/MBSbtn.png'); */
-}
 .disabled{
     opacity: 0.7;
+}
+
+/* Chrome, Safari, Edge, Opera */
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* Firefox */
+input[type=number] {
+  -moz-appearance: textfield;
 }

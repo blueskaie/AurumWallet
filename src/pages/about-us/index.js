@@ -24,7 +24,7 @@ export default function AboutUs() {
             <ARUCard className={classes.card} onClick={() => history.push('/terms-of-use')}>
               Terms of Use
             </ARUCard>
-            <ARUCard className={classes.card}>
+            <ARUCard className={classes.card} onClick={() => {window.open("https://aurumofficial.net/", "_blank")}}>
               Visit Our Website
             </ARUCard>
           </Box>

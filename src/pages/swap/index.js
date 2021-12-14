@@ -517,7 +517,7 @@ const Swap = () => {
                   disabled={autoSlippage}
                 />
                 <Box style={{display: 'flex', justifyContent: 'space-between', alignItems: 'center'}}>
-                  <input className={classes.slippageInput} type="number" value={allowedSlippage} onChange={(e)=>setAllowedSlippage(parseFloat(e.target.value))} disabled={autoSlippage}/>
+                  <input className={classes.slippageInput} type="text" value={allowedSlippage} onChange={(e)=>setAllowedSlippage(parseFloat(e.target.value))} disabled={autoSlippage}/>
                   <Switch label="Auto" checked={autoSlippage} onChange={(e)=>setAutoSlippage(e.target.checked)}/>
                   <span style={{color: 'white'}}>Auto</span>
                 </Box>
