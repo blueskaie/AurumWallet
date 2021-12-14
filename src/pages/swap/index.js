@@ -162,7 +162,7 @@ const Swap = () => {
     setSwapping(true);
     const unlocked = decryptKeyStore(provider, wallet.keystore, wallet.password)
     try {
-      const result = await doSwap(network, swapRouter, fromToken, toToken, swapAmount, unlocked.privateKey, gasOptions);
+      const result = await doSwap(network, swapRouter, fromToken, toToken, swapAmount, expectedAmount, swapDirection, unlocked.privateKey, gasOptions);
       const gasPrice = await provider.eth.getGasPrice();
       if (result.status) {
         setSwapping(false);
@@ -293,11 +293,11 @@ const Swap = () => {
 
   useEffect(async () => {
     const isAllowed = !fromToken || fromToken.code === DEFAULT_TOKEN.code || LatomicNumber.toDecimal(fromToken.allowance,fromToken.decimals) > 0;
-    if (isAllowed && fromToken && toToken && swapAmount) {
+    if (isAllowed && fromToken && toToken && swapAmount && expectedAmount) {
       setErrors({});
       setHelper({});
       const unlocked = decryptKeyStore(provider, wallet.keystore, wallet.password)
-      let result = await getGasInfo(network, swapRouter, fromToken, toToken, swapAmount, unlocked.privateKey);
+      let result = await getGasInfo(network, swapRouter, fromToken, toToken, swapAmount, expectedAmount, swapDirection, unlocked.privateKey);
       result = {
         ...result,
         price: LatomicNumber.toDecimal(result.price, 9)
@@ -305,7 +305,7 @@ const Swap = () => {
       setCurrentGas(result);
     }
 
-  }, [fromToken, toToken, swapAmount]);
+  }, [fromToken, toToken, swapAmount, expectedAmount, swapDirection]);
 
   useEffect(() => {
     setGasOptions(currentGas);
