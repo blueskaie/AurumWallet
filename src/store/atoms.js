@@ -59,6 +59,17 @@ export const currentGasOptions = atom({
   }
 });
 
+export const currentSlippageTolerance = atom({
+  key: 'currentSlippageTolerance',
+  default: {
+    auto: true,
+    allowedSlippage: 1
+  },
+  persistence_UNSTABLE: {
+    type: 'currentSlippageTolerance'
+  }
+});
+
 export const networkProvider = selector({
   key: 'networkProvider',
   get: ({get}) => {

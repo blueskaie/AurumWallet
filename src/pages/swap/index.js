@@ -18,7 +18,7 @@ import { decryptKeyStore } from '../../utils/keystore'
 import { getAmountsOut, getAmountsIn, getGasInfo, doSwap } from '../../utils/swap-utils';
 import { approve } from '../../utils/token-utils';
 
-import { networkProvider, refreshCalled, currentWallet, currentNetwork, currentGasOptions, allTransactions  } from '../../store/atoms'
+import { networkProvider, refreshCalled, currentWallet, currentNetwork, currentGasOptions, currentSlippageTolerance, allTransactions  } from '../../store/atoms'
 
 import { DEFAULT_TOKEN } from "../../config/tokens";
 import {tokenLogos} from "../../config/token-info";
@@ -76,14 +76,14 @@ const Swap = () => {
   const shortWalletAddress = wallet.address.slice(0, 5) + "..." + wallet.address.substr(-4);
 
   const [currentGas, setCurrentGas] = useRecoilState(currentGasOptions);
+  const [slippageTolerance, setSlippageTolerance] = useRecoilState(currentSlippageTolerance);
+
   const [fromSelect, setFromSelect] = useState(false);
   const [toSelect, setToSelect] = useState(false);
   const [fromToken, setFromToken] = useState(null);
   const [toToken, setToToken] = useState(null);
   const [swapAmount, setSwapAmount] = useState(0);
   const [expectedAmount, setExpectedAmount] = useState(0);
-  const [allowedSlippage, setAllowedSlippage] = useState(1);
-  const [autoSlippage, setAutoSlippage] = useState(true);
 
   const [swapRouter, setSwapRouter] = React.useState('pancake');
   // if true, it means exact input to output, if false, it means input to exact output 
@@ -256,12 +256,12 @@ const Swap = () => {
   }, [fromToken])
 
   const minimumReceivedAmount = useMemo(()=>{
-    if (allowedSlippage > 0 && expectedAmount>0) {
-      return (100-allowedSlippage)/100 * expectedAmount;
+    if (slippageTolerance && slippageTolerance.allowedSlippage > 0 && expectedAmount>0) {
+      return (100-slippageTolerance.allowedSlippage)/100 * expectedAmount;
     } else {
       return 0;
     }
-  }, [allowedSlippage, expectedAmount]);
+  }, [slippageTolerance, expectedAmount]);
 
   const liquidityProviderFee = useMemo(()=>{
     const percent = swapRouter == 'pancake' ? 0.25 : 0.2;
@@ -528,19 +528,38 @@ const Swap = () => {
               <label className={classes.label}>Slippage tolerance</label>
               <Box style={{textAlign: 'center'}} id='dlg_slider'>
                 <IOSSlider
-                  value={allowedSlippage}
-                  onChange={(e, value)=>setAllowedSlippage(value)}
+                  value={slippageTolerance.allowedSlippage}
+                  onChange={(e, value)=>setSlippageTolerance({
+                    ...slippageTolerance,
+                    allowedSlippage: parseFloat(value)
+                  })}
                   aria-labelledby="input-slider"
                   step={null}
                   valueLabelDisplay="off"
                   marks={availableSlipageToleranceArray}
                   min={0.1}
                   max={1.5}
-                  disabled={autoSlippage}
+                  disabled={slippageTolerance.auto}
                 />
                 <Box style={{display: 'flex', justifyContent: 'space-between', alignItems: 'center'}}>
-                  <input className={classes.slippageInput} type="text" value={allowedSlippage} onChange={(e)=>setAllowedSlippage(parseFloat(e.target.value))} disabled={autoSlippage}/>
-                  <Switch label="Auto" checked={autoSlippage} onChange={(e)=>setAutoSlippage(e.target.checked)}/>
+                  <input
+                    className={classes.slippageInput}
+                    type="number"
+                    value={slippageTolerance.allowedSlippage}
+                    onChange={(e)=>setSlippageTolerance({
+                      ...slippageTolerance,
+                      allowedSlippage: parseFloat(e.target.value)
+                    })}
+                    disabled={slippageTolerance.auto}
+                  />
+                  <Switch
+                    label="Auto"
+                    checked={slippageTolerance.auto}
+                    onChange={(e)=>setSlippageTolerance({
+                      ...slippageTolerance,
+                      auto: e.target.checked
+                    })}
+                  />
                   <span style={{color: 'white'}}>Auto</span>
                 </Box>
               </Box>
