@@ -195,7 +195,7 @@ const TokenSelect = (props) => {
                     <Box>{vals.title}({vals.code})</Box>
                     <Box>{importAddress}</Box>
                 </Box>
-                <Box>
+                <Box onClick={()=>{window.open(`${network.explore}/address/${search}`, "_blank");}} style={{cursor: 'pointer'}}>
                     <Box>View on</Box>
                     <Box>BSCSCAN</Box>
                 </Box>

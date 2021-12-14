@@ -14,6 +14,8 @@ export default function Settings() {
   const clickButton = (type) => {
     if (type === 'security')
       history.push('/security')
+    else if (type === 'about-wallet')
+      history.push('/about-us')
   }
 
   return (
@@ -31,7 +33,7 @@ export default function Settings() {
         <ARUCard className={classes.card} onClick={() => clickButton('security')}>
           Wallet Security
         </ARUCard>
-        <ARUCard className={classes.card} onClick={() => {window.open("https://www.aurofficial.com", "_blank")}}>
+        <ARUCard className={classes.card} onClick={() => clickButton('about-wallet')}>
           About Aurum Wallet
         </ARUCard>
       </Box>

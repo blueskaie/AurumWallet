@@ -92,7 +92,7 @@ const TokenDetail = (props) => {
   }];
 
   return (
-    <Layout isShownWallet = {false}>
+    <Layout isShownBackButton = {true} isShownWallet = {false}>
       <Box className={classes.root}>
         {coin && coin.code && coin.code !== 'BNB' && <div style={{marginBottom: 20, textAlign: 'right'}}>
           <span className={classes.deleteBtn} onClick={deleteToken}>Delete Token</span>

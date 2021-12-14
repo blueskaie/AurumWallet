@@ -87,8 +87,8 @@ const useStyles = makeStyles((theme)=>({
     padding: 0
   },
   backIcon: {
-    width: 60,
-    height: 60,
+    width: 50,
+    height: 50,
     color: 'white'
   },
 }));

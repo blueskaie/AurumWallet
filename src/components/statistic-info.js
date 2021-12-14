@@ -61,7 +61,7 @@ export default function StatisticInfo({showInfo, setToggleInfo}) {
           <Box style={{marginBottom: 5}}>
             <HiddenText show={showInfo} length={10}>
               {currency == 'USD' ? '$' : '€'}
-              {totalAmount.toFixed(4).toLocaleString()}
+              {totalAmount.toFixed(2).toLocaleString()}
             </HiddenText>
           </Box>
           <Box style={{fontSize: '15px'}}>
@@ -73,7 +73,7 @@ export default function StatisticInfo({showInfo, setToggleInfo}) {
             <span style={{color: profitAmount >= 0 ? 'green' : 'red', marginTop: '10px'}}>
               <HiddenText show={showInfo} length={18}>
                 {currency == 'USD' ? '$' : '€'}
-                {Math.abs(diffAmount).toFixed(4)}/{Math.abs(profitAmount).toFixed(2)}%
+                {Math.abs(diffAmount).toFixed(2)} | {Math.abs(profitAmount).toFixed(2)}%
               </HiddenText>
             </span>
             <span style={{marginLeft: '10px', marginTop: '10px'}}>24h</span>

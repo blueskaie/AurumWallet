@@ -7,7 +7,7 @@ const Networks = [
     explore: 'https://bscscan.com/',
     type: 'mainnet',
     apiKey: 'NJJ3NK3UTG95N68PAVP31AQA7EBWNY5FDJ',
-    icon: 'images/smartchainIcon.png'
+    icon: 'images/BNBWhite.svg'
   },
   {
     id: 2,
@@ -17,7 +17,7 @@ const Networks = [
     explore: 'https://testnet.bscscan.com/',
     type: 'testnet',
     apiKey: 'NJJ3NK3UTG95N68PAVP31AQA7EBWNY5FDJ',
-    icon: 'images/smartchainIcon.png',
+    icon: 'images/BNBWhite.svg',
   }
 ]
 

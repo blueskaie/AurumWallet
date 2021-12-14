@@ -1,7 +1,7 @@
 {
   "title": "BUSD",
   "code": "BUSD",
-  "icon": "busd.webp",
+  "icon": "busd.svg",
   "decimals": 18,
   "contract": {
     "1": "0xe9e7cea3dedca5984780bafc599bd69add087d56",

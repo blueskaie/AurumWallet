@@ -2356,7 +2356,7 @@ export const tokenLogos = {
   "ZUSD": "https://s3.us-east-2.amazonaws.com/nomics-api/static/images/currencies/ZUSD4.jpg",
   "ZUZU": "https://s3.us-east-2.amazonaws.com/nomics-api/static/images/currencies/ZUZU.png",
   "WBNB": "/images/tokens/wbnb.webp",
-  "BUSD": "/images/tokens/busd.webp",
+  "BUSD": "/images/tokens/busd.svg",
 }
 
 export const getTokenInfo = ()=> {

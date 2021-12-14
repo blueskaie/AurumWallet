@@ -215,15 +215,11 @@ export default function CreateWallet() {
               <strong> {showSecretPharse ? 'Hide' : 'Show'}</strong> <span style={{marginLeft: 5}}>my Secret Recovery Phrase</span>
             </ARUButton>
             <ARUButton className={classes.wroteDownBtn} mode='filled' onClick={()=>onClickNext()}>
-              {!showSecretPharse && <span>I WROTE DOWN MY PHRASE</span>}
-              {showSecretPharse && <span>CANCEL</span>}
+              I WROTE DOWN MY PHRASE
             </ARUButton>
-              {/* <Box className={classes.copyGroup}>
-                <textarea type="text" rows="3" readOnly value={mnemonic}></textarea>
-                <Clipboard component="button" button-href="#" data-clipboard-text={mnemonic}>
-                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" className="icon"><path d="M6 6V2c0-1.1.9-2 2-2h10a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2h-4v4a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V8c0-1.1.9-2 2-2h4zm2 0h4a2 2 0 0 1 2 2v4h4V2H8v4zM2 8v10h10V8H2z"/></svg>
-                </Clipboard>
-              </Box> */}
+            <ARUButton className={classes.wroteDownBtn} mode='filled' onClick={()=>{setStep(1);}}>
+              CANCEL
+            </ARUButton>
           </Box>
         }
         {
