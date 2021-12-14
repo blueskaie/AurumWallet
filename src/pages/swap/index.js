@@ -85,7 +85,7 @@ const Swap = () => {
   const [swapAmount, setSwapAmount] = useState(0);
   const [expectedAmount, setExpectedAmount] = useState(0);
 
-  const [swapRouter, setSwapRouter] = React.useState('pancake');
+  const [swapRouter, setSwapRouter] = React.useState('pancakeswap');
   // if true, it means exact input to output, if false, it means input to exact output 
   const [swapDirection, setSwapDirection] = React.useState(true);   
   const [gasOptions, setGasOptions] = React.useState(currentGas);
@@ -264,7 +264,7 @@ const Swap = () => {
   }, [slippageTolerance, expectedAmount]);
 
   const liquidityProviderFee = useMemo(()=>{
-    const percent = swapRouter == 'pancake' ? 0.25 : 0.2;
+    const percent = swapRouter == 'pancakeswap' ? 0.25 : 0.2;
     return swapAmount * percent / 100;
   }, [swapRouter, swapAmount]);
 
@@ -323,7 +323,7 @@ const Swap = () => {
               <Box className={classes.swaptoken}>
                 <Box className={classes.swapOptions} style={{paddingRight: '7px'}}>
                   <select className={classes.swapRouter} onChange={(e)=>setSwapRouter(e.target.value)} value={swapRouter}>
-                    <option value="pancake">Pancake</option>
+                    <option value="pancakeswap">Pancakeswap</option>
                     <option value="apeswap">Apeswap</option>
                   </select>
                   <Box className={classes.setting} onClick={()=>setOpenSettingsDialog(true)}>
