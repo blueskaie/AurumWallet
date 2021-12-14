@@ -7,9 +7,9 @@ export const getProvider = (network) => {
   return new Web3( new Web3.providers.HttpProvider(network.main) );
 }
 
-export const getSwapRouter = (network, service="pancake") => {
+export const getSwapRouter = (network, service="pancakeswap") => {
   if (network.type === 'mainnet') {
-      if (service === 'pancake') {
+      if (service === 'pancakeswap') {
           return "0x10ED43C718714eb63d5aA57B78B54704E256024E";
       } else {
           return "0xcF0feBd3f17CEf5b47b0cD257aCf6025c5BFf3b7";
