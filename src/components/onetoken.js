@@ -128,7 +128,7 @@ const OneToken = (props) => {
         <Box style={{display: 'flex', flexDirection: 'row', justifyContent: 'space-between', cursor:'pointer'}} onClick={goToDetail}>
           <p className={classes.tokenprice}>
             {currency == 'USD' ? '$' : '€'}
-            {(curPrice * trade.cmp).toFixed(10).toLocaleString()}
+            {(curPrice * trade.cmp).toFixed(12).toLocaleString()}
           </p>
           <p className={classes.tokenprice}>
             <HiddenText show={showInfo}>
