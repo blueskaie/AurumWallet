@@ -37,7 +37,7 @@ const OneToken = (props) => {
 
   const series = [{data: coingecko && coingecko.market.price}]
   const coCurPrice = coingecko && coingecko.market && coingecko.market.price && coingecko.market.price.length ? coingecko.market.price[coingecko.market.price.length - 1] : 0;
-  const curPrice = price ? price : coCurPrice;
+  const curPrice = coCurPrice ? coCurPrice : price;
   const prevPrice = coingecko && coingecko.market && coingecko.market.price && coingecko.market.price.length ? coingecko.market.price[0] : 0;
   const cAmount = parseFloat(LatomicNumber.toDecimal(balance, decimals)) * curPrice * trade.cmp;
   // const pAmount = parseFloat(LatomicNumber.toDecimal(balance, decimals)) * prevPrice * trade.cmp;
