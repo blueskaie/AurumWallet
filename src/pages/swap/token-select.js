@@ -7,7 +7,7 @@ import { useRecoilValue, useSetRecoilState } from 'recoil';
 import { currentNetwork, tokenList, allTokens  } from '../../store/atoms'
 import { getTokenInfoByAddress } from '../../utils/token-utils';
 import ARUButton from '../../components/buttons';
-import { Box, Dialog } from '@material-ui/core';
+import { Box, Dialog, Icon } from '@material-ui/core';
 
 const TokenSelect = (props) => {
     const network = useRecoilValue( currentNetwork );
@@ -19,6 +19,7 @@ const TokenSelect = (props) => {
 
     
     const [search, setSearch] = useState(null);
+    const [checking, setChecking] = React.useState(false);
 
     const onSearchChange = (e) => {
         setSearch(e.target.value);
@@ -40,7 +41,9 @@ const TokenSelect = (props) => {
     const tokens = useRecoilValue(allTokens);
 
     const onImportToken = (event) => {
+
         event.preventDefault();
+        if (!checking) return;
         setSearch('');
         setGetResult(0);
     
@@ -166,7 +169,7 @@ const TokenSelect = (props) => {
                         </Box>
                         <p className={classes.tokenName}>{vals.code}</p>
                     </Box>
-                    <ARUButton className={classes.importButton} onClick={() => setOpenImportDlg(true)}>IMPORT</ARUButton>
+                    <ARUButton className={classes.importButton} onClick={() => {setOpenImportDlg(true); setChecking(false);} }>IMPORT</ARUButton>
                 </li>
             </ul>
         }
@@ -202,8 +205,13 @@ const TokenSelect = (props) => {
             </Box>
             <Box style={{width: '100%', borderTop: '1px solid #333333', marginTop: 10}}></Box>
             <Box className={classes.dlgHeader} style={{marginTop: 10}}>
-                <Box className={classes.dlgHeader}>
-                    <img src="images/checked-circle.svg" style={{color: 'green', width: 32, height: 32}} />
+                <Box className={classes.dlgHeader} onClick={() => setChecking(!checking)}>
+                    {!checking && <Icon className={classes.checkIcon}>
+                        <img src="images/unchecked-circle.svg" alt="AurumWallet" className="logo-image" style={{width: 25, height: 25}} />
+                    </Icon>}
+                    {checking && <Icon className={classes.checkIcon}>
+                        <img src="images/checked-circle.svg" alt="AurumWallet" className="logo-image" style={{width: 25, height: 25}} />
+                    </Icon>}
                     <span style={{marginLeft: 10}}>I understand</span>
                 </Box>
                 <ARUButton onClick={onImportToken}>IMPORT</ARUButton>
@@ -218,6 +226,7 @@ const useStyles = makeStyles((theme) => ({
         flexDirection: 'row',
         justifyContent: 'space-between',
         alignItems: 'center',
+        cursor: 'pointer'
     },
     tokenHeader: {
         display: 'flex',

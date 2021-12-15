@@ -137,12 +137,6 @@ export default function CreateWallet() {
     }
   }
 
-  const onClickNext = () => {
-    if (showSecretPharse)
-      history.push('/');
-    setStep(3);
-  }
-
   return (
     <Layout isShownBackButton={true} isShownWallet={false} isShownNetworkSelector={false}>
       <Box className={classes.root}>
@@ -214,7 +208,7 @@ export default function CreateWallet() {
             <ARUButton className={classes.hideSecretPharseBtn} mode='outline' onClick={()=>{setToggleSecretPharse(!showSecretPharse)}}>
               <strong> {showSecretPharse ? 'Hide' : 'Show'}</strong> <span style={{marginLeft: 5}}>my Secret Recovery Phrase</span>
             </ARUButton>
-            <ARUButton className={classes.wroteDownBtn} mode='filled' onClick={()=>onClickNext()}>
+            <ARUButton className={classes.wroteDownBtn} mode='filled' onClick={()=>{setStep(3);}}>
               I WROTE DOWN MY PHRASE
             </ARUButton>
             <ARUButton className={classes.wroteDownBtn} mode='filled' onClick={()=>{setStep(1);}}>
