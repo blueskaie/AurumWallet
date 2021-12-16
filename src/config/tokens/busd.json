@@ -3,6 +3,7 @@
   "code": "BUSD",
   "icon": "busd.svg",
   "decimals": 18,
+  "coinId": "binance-usd",
   "contract": {
     "1": "0xe9e7cea3dedca5984780bafc599bd69add087d56",
     "2": "0x78867bbeef44f2326bf8ddd1941a4439382ef2a7"

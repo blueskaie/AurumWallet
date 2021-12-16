@@ -1,5 +1,18 @@
 import callAPI from "./api-utils";
 
+export const getCoingeckoInfoByAddress = async (address) => {
+    if (address) {
+        try {
+            let result = await callAPI(`https://api.coingecko.com/api/v3/coins/binance-smart-chain/contract/${address}`);
+            return result;
+        } catch (e) {
+            return {};
+        }        
+    } else {
+        return {};
+    }
+}
+
 export const getMarketChart = async (coinId) => {
     let data = { index: [], price: [], volumes: [] };
     if (coinId) {

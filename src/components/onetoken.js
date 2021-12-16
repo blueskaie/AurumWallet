@@ -16,7 +16,7 @@ const OneToken = (props) => {
 
   const classes = useStyles(useTheme());
   const history = useHistory();
-  const { code, balance, coinId, decimals, contract, trade, coingecko, price, showInfo, showSendLink, onClick } = props;
+  const { code, balance, coinId, image, decimals, contract, trade, coingecko, price, showInfo, showSendLink, onClick } = props;
 
   const network = useRecoilValue( currentNetwork );
   const currency = useRecoilValue( currentCurrencyCode );
@@ -109,9 +109,9 @@ const OneToken = (props) => {
   return (
     <Box className={classes.onetoken}>
       <Box className={classes.tokenimg} onClick={goToDetail}>
-        { (tokenLogos[code.toUpperCase()] && (code.toUpperCase() === 'AUR'))?
-            <img src="images/AurumLogo-whitecircule.svg" alt={code} width={20} /> : 
-            (tokenLogos[code.toUpperCase()]
+        { image
+          ? <img src={image.large} alt={code} width={20} style={{borderRadius: '50%'}} />
+          : (tokenLogos[code.toUpperCase()] 
             ? <img src={tokenLogos[code.toUpperCase()]} alt={code} width={20} style={{borderRadius: '50%'}} />
             : <Jazzicon diameter={40} seed={contract[network.id]} />)
         }
@@ -180,6 +180,7 @@ const useStyles = makeStyles((theme) => ({
     cursor:'pointer',
     "& > img": {
       width: 40,
+      height: 40
     },
   },
   tokeninfo: {

@@ -5,6 +5,7 @@ import {tokenLogos} from "../../config/token-info";
 import Jazzicon from 'react-jazzicon';
 import { useRecoilValue, useSetRecoilState } from 'recoil';
 import { currentNetwork, tokenList, allTokens  } from '../../store/atoms'
+import { getCoingeckoInfoByAddress } from '../../utils/coingeco-utils';
 import { getTokenInfoByAddress } from '../../utils/token-utils';
 import ARUButton from '../../components/buttons';
 import { Box, Dialog, Icon } from '@material-ui/core';
@@ -40,7 +41,7 @@ const TokenSelect = (props) => {
     const setAllTokens = useSetRecoilState(allTokens);
     const tokens = useRecoilValue(allTokens);
 
-    const onImportToken = (event) => {
+    const onImportToken = async (event) => {
 
         event.preventDefault();
         if (!checking) return;
@@ -52,7 +53,9 @@ const TokenSelect = (props) => {
             return;
         }
     
-        let tokenInfo = {title, code, decimals};
+        let {id, image} = await getCoingeckoInfoByAddress(main);
+
+        let tokenInfo = {title, code, decimals, coinId: id, image: image};
         tokenInfo.contract = {
           "1": main,
           "2": test
@@ -62,7 +65,7 @@ const TokenSelect = (props) => {
         setGetResult('');
     
         setAllTokens((tokens) => {
-            const index = tokens.findIndex(token=>token.code === tokenInfo.code);
+            const index = tokens.findIndex(token=>token.contract === tokenInfo.contract[network.id]);
             const newTokens = [...tokens];
             if (index > -1) {
               tokenInfo.contract = {...tokens[index].contract, [network.id]: tokenInfo.contract[network.id]};
@@ -142,12 +145,12 @@ const TokenSelect = (props) => {
                 {filteredTokenList.map((token, index)=>(
                     <li key={index} className={classes.tokenItem} onClick={()=>selectToken(token)}>
                         <Box className={classes.tokenImg}>
-                        { token && (tokenLogos[token.code.toUpperCase()] && token.code.toUpperCase() === "AUR"?
-                            <img src="images/AurumLogo-whitecircule.svg" alt={token.code} width={30} /> : 
-                            (tokenLogos[token.code.toUpperCase()]
+                        { token && token.image
+                        ? <img src={token.image.large} alt={token.code} width={30} style={{borderRadius: '50%'}} />
+                        : (token && tokenLogos[token.code.toUpperCase()] 
                             ? <img src={tokenLogos[token.code.toUpperCase()]} alt={token.code} width={30} style={{borderRadius: '50%'}} />
-                            : <Jazzicon diameter={30} seed={token.contract[network.id]} />
-                        ))}
+                            : <Jazzicon diameter={30} seed={token.contract[network.id]} />)
+                        }
                         </Box>
                         <p className={classes.tokenName}>{token.code}</p>
                     </li>
@@ -318,6 +321,10 @@ const useStyles = makeStyles((theme) => ({
         height: 30,
         borderRadius: 6,
         overflow:'hidden',
+        "&>img": {
+            width: 30,
+            height: 30
+        }
     },
     tokenName: {
         color: "white",

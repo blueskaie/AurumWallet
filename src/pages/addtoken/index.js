@@ -1,4 +1,5 @@
 import React,{useEffect} from 'react'
+import { getCoingeckoInfoByAddress } from '../../utils/coingeco-utils';
 import { getTokenInfoByAddress } from '../../utils/token-utils';
 import Layout from "../../components/layout";
 
@@ -54,7 +55,7 @@ export default function AddCustomToken() {
     }
   }
   
-  const handleSubmit = (event) => {
+  const handleSubmit = async (event) => {
     event.preventDefault();
 
     const {main, test, title, code, decimals} = vals;
@@ -71,14 +72,16 @@ export default function AddCustomToken() {
       return;
     }
 
-    let tokenInfo = {title, code, decimals};
+    let {id, image} = await getCoingeckoInfoByAddress(main);
+
+    let tokenInfo = {title, code, decimals, coinId: id, image};
     tokenInfo.contract = {
       "1": main,
       "2": test
     };
 
     setAllTokens((tokens) => {
-      const index = tokens.findIndex(token=>token.code === tokenInfo.code);
+      const index = tokens.findIndex(token=>token.contract === tokenInfo.contract[network.id]);
       const newTokens = [...tokens];
       if (index > -1) {
         tokenInfo.contract = {...tokens[index].contract, [network.id]: tokenInfo.contract[network.id]};

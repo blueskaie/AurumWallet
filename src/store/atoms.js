@@ -12,7 +12,6 @@ import { getProvider, loadSingle } from '../utils/token-utils'
 import { getCurrencyPerToken } from '../utils/chainlink-utils'
 import { getOHLC, getMarketChart } from '../utils/coingeco-utils'
 import { BNB_CODE } from '../config/tokens';
-import coingekoCoinIds from '../config/coingecko-info';
 import { getCurrentPrice } from '../utils/aurum-api-utils';
 
 const NetworkMap = {};
@@ -322,11 +321,10 @@ export const tokenLoader = selectorFamily({
       "cmp": cmpTrade
     }
 
-    const coinId = coingekoCoinIds[token.code.toLowerCase()];
     let coingecko = null;
     try {
-      const market = await getMarketChart(coinId);
-      const ohlc = await getOHLC(coinId);
+      const market = await getMarketChart(token.coinId);
+      const ohlc = await getOHLC(token.coinId);
       coingecko = {ohlc: ohlc, market: market};
     } catch (e) {
       console.error('coingeko error', e);
@@ -338,11 +336,11 @@ export const tokenLoader = selectorFamily({
       const wallet = get(currentWallet)
       const web3 = get(networkProvider)
       const bal = await web3.eth.getBalance(wallet.address)
-      return {...token, balance: bal, coinId: coinId, trade: trade, coingecko: coingecko, price};
+      return {...token, balance: bal, trade: trade, coingecko: coingecko, price};
     }
     const {balance, allowance} = await loadSingle(network, token, address);
 
-    return {...token, balance, allowance, coinId: coinId, trade: trade, coingecko: coingecko, price};
+    return {...token, balance, allowance, trade: trade, coingecko: coingecko, price};
   }
 })
 
