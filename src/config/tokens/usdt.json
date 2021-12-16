@@ -4,6 +4,11 @@
   "icon": "usdt.webp",
   "decimals": 18,
   "coinId": "tether",
+  "image" : {
+    "thumb":"https://assets.coingecko.com/coins/images/325/thumb/Tether-logo.png?1598003707",
+    "small":"https://assets.coingecko.com/coins/images/325/small/Tether-logo.png?1598003707",
+    "large": "https://assets.coingecko.com/coins/images/325/large/Tether-logo.png?1598003707"
+  },
   "contract": {
     "1": "0x55d398326f99059ff775485246999027b3197955",
     "2": "0x7ef95a0fee0dd31b22626fa2e10ee6a223f8a684"
