@@ -48,14 +48,12 @@ const TokenSelect = (props) => {
         setSearch('');
         setGetResult(0);
     
-        const {main, test, title, code, decimals} = vals;
+        const {main, test, title, code, decimals, coinId, image} = vals;
         if(!main && !test) {
             return;
         }
-    
-        let {id, image} = await getCoingeckoInfoByAddress(main);
 
-        let tokenInfo = {title, code, decimals, coinId: id, image: image};
+        let tokenInfo = {title, code, decimals, coinId: coinId, image: image};
         tokenInfo.contract = {
           "1": main,
           "2": test
@@ -96,7 +94,8 @@ const TokenSelect = (props) => {
                         main = search
                     else
                         test = search
-                    setVals({...vals,...{title: tokenInfo.name,decimals:tokenInfo.decimals,code:tokenInfo.symbol,main,test}})
+                    let {id, image} = await getCoingeckoInfoByAddress(main);
+                    setVals({...vals,...{title: tokenInfo.name,decimals:tokenInfo.decimals,code:tokenInfo.symbol,main,test, coinId: id, image}})
                     let shortaddress = search.substring(0, 7) + '.....' + search.substring(search.length - 6, search.length);
                     setImportAddress(shortaddress);
                 }
@@ -126,9 +125,9 @@ const TokenSelect = (props) => {
             setGetResult(3);
             return result;
         }
-        if (exceptToken && exceptToken.code) {
+        if (exceptToken && exceptToken.contract) {
             setGetResult(1);
-            result = result.filter(item=>item.code!==exceptToken.code);
+            result = result.filter(item=>item.contract!==exceptToken.contract);
             return result;
         }
         setGetResult(1);
@@ -163,12 +162,12 @@ const TokenSelect = (props) => {
                     <Box className={classes.tokenHeader}>
                         {/* <img src={tokenLogos[vals.code.toUpperCase()]} alt={vals.code} width={40} /> */}
                         <Box className={classes.tokenImg}>
-                        { vals && (tokenLogos[vals.code.toUpperCase()] && vals.code.toUpperCase() === "AUR"?
-                            <img src="images/AurumLogo-whitecircule.svg" alt={vals.code} width={30} /> : 
-                            (tokenLogos[vals.code.toUpperCase()]
+                        { vals && vals.image
+                        ? <img src={vals.image.large} alt={vals.code} width={30} style={{borderRadius: '50%'}} />
+                        : (vals && tokenLogos[vals.code.toUpperCase()] 
                             ? <img src={tokenLogos[vals.code.toUpperCase()]} alt={vals.code} width={30} style={{borderRadius: '50%'}} />
-                            : <Jazzicon diameter={30} seed={network.id == 1 ? vals.main : vals.test} />
-                        ))}
+                            : <Jazzicon diameter={30} seed={network.id == 1 ? vals.main : vals.test} />)
+                        }
                         </Box>
                         <p className={classes.tokenName}>{vals.code}</p>
                     </Box>

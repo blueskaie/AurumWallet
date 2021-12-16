@@ -78,6 +78,10 @@ const useStyles = makeStyles((theme) => ({
     height: 20,
     borderRadius: 6,
     overflow:'hidden',
+    "&>img": {
+      width: 20,
+      height: 20
+    }
   },
   submitWrapper: {
     display: 'flex',

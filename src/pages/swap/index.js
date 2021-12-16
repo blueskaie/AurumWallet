@@ -342,12 +342,12 @@ const Swap = () => {
                         <Box className={classes.fromtokeninfo} onClick={()=>{setFromSelect(true); setToSelect(false);}}>
                           <Box className={classes.tokenImg}>
                             { fromToken 
-                              ? (fromToken.code.toUpperCase() === 'AUR'?
-                                <img src="images/AurumLogo-whitecircule.svg" alt={fromToken.code} width={20} /> : 
-                                (tokenLogos[fromToken.code.toUpperCase()]
-                                ? <img src={tokenLogos[fromToken.code.toUpperCase()]} alt={fromToken.code} width={20} style={{borderRadius: '50%'}} />
-                                : <Jazzicon diameter={20} seed={fromToken.contract[network.id]} /> ))
-                              : <Box style={{width: 20, height: 20}}></Box>
+                            ? fromToken.image
+                              ? <img src={fromToken.image.large} alt={fromToken.code} width={20} style={{borderRadius: '50%'}} />
+                              : (fromToken && tokenLogos[fromToken.code.toUpperCase()] 
+                                  ? <img src={tokenLogos[fromToken.code.toUpperCase()]} alt={fromToken.code} width={20} style={{borderRadius: '50%'}} />
+                                  : <Jazzicon diameter={20} seed={fromToken.contract[network.id]} />)
+                            : <Box style={{width: 20, height: 20}}></Box>
                             }
                           </Box>
                           <Box style={{color:'white', marginLeft: '5px'}}>{fromToken?fromToken.code:'From'}</Box>
@@ -375,12 +375,12 @@ const Swap = () => {
                         <Box className={classes.fromtokeninfo} onClick={()=>{setToSelect(true); setFromSelect(false);}}>
                           <Box className={classes.tokenImg}>
                             { toToken 
-                              ? (toToken.code.toUpperCase() === "AUR"? 
-                              <img src="images/AurumLogo-whitecircule.svg" alt={toToken.code} width={20} /> :
-                              (tokenLogos[toToken.code.toUpperCase()]
-                                ? <img src={tokenLogos[toToken.code.toUpperCase()]} alt={toToken.code} width={20} style={{borderRadius: '50%'}} />
-                                : <Jazzicon diameter={20} seed={toToken.contract[network.id]} /> ))
-                              : <Box style={{width: 20, height: 20}}></Box>
+                            ? toToken.image
+                              ? <img src={toToken.image.large} alt={toToken.code} width={20} style={{borderRadius: '50%'}} />
+                              : (toToken && tokenLogos[toToken.code.toUpperCase()] 
+                                  ? <img src={tokenLogos[toToken.code.toUpperCase()]} alt={toToken.code} width={20} style={{borderRadius: '50%'}} />
+                                  : <Jazzicon diameter={20} seed={toToken.contract[network.id]} />)
+                            : <Box style={{width: 20, height: 20}}></Box>
                             }
                           </Box>
                           <Box style={{color:'white', marginLeft: '5px'}}>{toToken?toToken.code:'To'}</Box>
