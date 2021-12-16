@@ -63,7 +63,7 @@ const TokenSelect = (props) => {
         setGetResult('');
     
         setAllTokens((tokens) => {
-            const index = tokens.findIndex(token=>token.contract === tokenInfo.contract[network.id]);
+            const index = tokens.findIndex(token=>token.contract[network.id] === tokenInfo.contract[network.id]);
             const newTokens = [...tokens];
             if (index > -1) {
               tokenInfo.contract = {...tokens[index].contract, [network.id]: tokenInfo.contract[network.id]};
