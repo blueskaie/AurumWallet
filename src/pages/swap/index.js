@@ -277,6 +277,7 @@ const Swap = () => {
         const res = await getAmountsOut(network, swapRouter, fromToken, toToken, swapAmount, unlocked.privateKey)
         if (res && res.length > 0) {
           predictedAmount = LatomicNumber.toDecimal(res[res.length - 1], toToken.decimals);
+          predictedAmount = parseFloat(predictedAmount).toFixed(6);
         }  
         setExpectedAmount(predictedAmount);
       }
@@ -285,6 +286,7 @@ const Swap = () => {
         const res = await getAmountsIn(network, swapRouter, fromToken, toToken, expectedAmount, unlocked.privateKey)
         if (res && res.length > 0) {
           predictedAmount = LatomicNumber.toDecimal(res[0], fromToken.decimals);
+          predictedAmount = parseFloat(predictedAmount).toFixed(6);
         }  
         setSwapAmount(parseFloat(predictedAmount));
       }
@@ -338,7 +340,7 @@ const Swap = () => {
                         <Box><input type="number" className={classes.fromtokenamount} placeholder="0.0" value={swapAmount} onChange={onSwapAmount}/></Box>
                       </Box>
                       <Box className={classes.amountSection}>
-                        <Box className={classes.balanceAmount}>Balance: {fromToken ? parseFloat(LatomicNumber.toDecimal(fromToken.balance, fromToken.decimals)).toFixed(5) : ''}</Box>
+                        <Box className={classes.balanceAmount}>Balance: {fromToken ? parseFloat(LatomicNumber.toDecimal(fromToken.balance, fromToken.decimals)).toFixed(6) : ''}</Box>
                         <Box className={classes.fromtokeninfo} onClick={()=>{setFromSelect(true); setToSelect(false);}}>
                           <Box className={classes.tokenImg}>
                             { fromToken 
@@ -371,7 +373,7 @@ const Swap = () => {
                         <Box><input type="number" className={classes.fromtokenamount} placeholder="0.0" value={expectedAmount} onChange={onExpectedAmount}/></Box>
                       </Box>
                       <Box className={classes.amountSection}>
-                        <Box className={classes.balanceAmount}>Balance: {toToken?parseFloat(LatomicNumber.toDecimal(toToken.balance,toToken.decimals)).toFixed(5) : ''}</Box>
+                        <Box className={classes.balanceAmount}>Balance: {toToken?parseFloat(LatomicNumber.toDecimal(toToken.balance,toToken.decimals)).toFixed(6) : ''}</Box>
                         <Box className={classes.fromtokeninfo} onClick={()=>{setToSelect(true); setFromSelect(false);}}>
                           <Box className={classes.tokenImg}>
                             { toToken 
@@ -405,7 +407,8 @@ const Swap = () => {
                     max={100}
                     color='secondary'
                     onChange={(e, value)=>{
-                      const swval = fromToken ? parseFloat(LatomicNumber.toDecimal(fromToken.balance, fromToken.decimals)) * value / 100 : 0
+                      let swval = fromToken ? parseFloat(LatomicNumber.toDecimal(fromToken.balance, fromToken.decimals)) * value / 100 : 0
+                      swval = parseFloat(swval.toFixed(6));
                       setSwapDirection(true);
                       setSwapAmount(swval);
                     }}
@@ -423,13 +426,13 @@ const Swap = () => {
             <Box className={classes.swapinfo}>
                 <Box className={classes.swapsubinfo}>
                   <p>Minimum received</p>
-                  <p>Price Impact</p>
+                  {/* <p>Price Impact</p> */}
                   <p>Liquidity provider fee</p>
                 </Box>
                 <Box className={classes.swapsubinfo}>
                   <p style={{color: toToken ? '#00d70a' : '#ffffff'}}>{toToken ? `${minimumReceivedAmount.toFixed(4)} ${toToken.code}` : 0}</p>
-                  <p style={{color: '#00d70a'}}>{'<0.01%'}</p>
-                  <p style={{color: fromToken ? '#00d70a' : '#ffffff'}}>{fromToken ? `${liquidityProviderFee.toFixed(2)} ${fromToken.code}` : 0}</p>
+                  {/* <p style={{color: '#00d70a'}}>{'<0.01%'}</p> */}
+                  <p style={{color: fromToken ? '#00d70a' : '#ffffff'}}>{fromToken ? `${liquidityProviderFee.toFixed(4)} ${fromToken.code}` : 0}</p>
                 </Box>
             </Box>
           </Box>

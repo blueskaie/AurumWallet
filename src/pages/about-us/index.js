@@ -27,6 +27,12 @@ export default function AboutUs() {
             <ARUCard className={classes.card} onClick={() => {window.open("https://www.aurofficial.com", "_blank")}}>
               Visit Our Website
             </ARUCard>
+            <ARUCard className={classes.card} onClick={() => {window.open("https://t.me/AURofficial", "_blank")}}>
+              Join our Telegram
+            </ARUCard>
+            <ARUCard className={classes.card} onClick={() => {window.open("https://discord.com/invite/SHuAD2yPpm", "_blank")}}>
+              Join Our Discord
+            </ARUCard>
           </Box>
         </Box>
       </Box>
