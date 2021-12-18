@@ -277,7 +277,7 @@ const Swap = () => {
         const res = await getAmountsOut(network, swapRouter, fromToken, toToken, swapAmount, unlocked.privateKey)
         if (res && res.length > 0) {
           predictedAmount = LatomicNumber.toDecimal(res[res.length - 1], toToken.decimals);
-          predictedAmount = parseFloat(predictedAmount).toFixed(6);
+          predictedAmount = Fixed(predictedAmount, 6);
         }  
         setExpectedAmount(predictedAmount);
       }
@@ -286,7 +286,7 @@ const Swap = () => {
         const res = await getAmountsIn(network, swapRouter, fromToken, toToken, expectedAmount, unlocked.privateKey)
         if (res && res.length > 0) {
           predictedAmount = LatomicNumber.toDecimal(res[0], fromToken.decimals);
-          predictedAmount = parseFloat(predictedAmount).toFixed(6);
+          predictedAmount = Fixed(predictedAmount, 6);
         }  
         setSwapAmount(parseFloat(predictedAmount));
       }
@@ -312,6 +312,10 @@ const Swap = () => {
   useEffect(() => {
     setGasOptions(currentGas);
   }, [currentGas]);
+
+  const Fixed = (number, point) => {
+    return  Math.floor(parseFloat(number) * Math.pow(10, point))/Math.pow(10, point);
+  }
 
   return (
     <Layout isShownWallet={false}>
@@ -340,7 +344,7 @@ const Swap = () => {
                         <Box><input type="number" className={classes.fromtokenamount} placeholder="0.0" value={swapAmount} onChange={onSwapAmount}/></Box>
                       </Box>
                       <Box className={classes.amountSection}>
-                        <Box className={classes.balanceAmount}>Balance: {fromToken ? parseFloat(LatomicNumber.toDecimal(fromToken.balance, fromToken.decimals)).toFixed(6) : ''}</Box>
+                        <Box className={classes.balanceAmount}>Balance: {fromToken ? Fixed(LatomicNumber.toDecimal(fromToken.balance, fromToken.decimals), 6) : ''}</Box>
                         <Box className={classes.fromtokeninfo} onClick={()=>{setFromSelect(true); setToSelect(false);}}>
                           <Box className={classes.tokenImg}>
                             { fromToken 
@@ -373,7 +377,7 @@ const Swap = () => {
                         <Box><input type="number" className={classes.fromtokenamount} placeholder="0.0" value={expectedAmount} onChange={onExpectedAmount}/></Box>
                       </Box>
                       <Box className={classes.amountSection}>
-                        <Box className={classes.balanceAmount}>Balance: {toToken?parseFloat(LatomicNumber.toDecimal(toToken.balance,toToken.decimals)).toFixed(6) : ''}</Box>
+                        <Box className={classes.balanceAmount}>Balance: {toToken ? Fixed(LatomicNumber.toDecimal(toToken.balance,toToken.decimals), 6) : ''}</Box>
                         <Box className={classes.fromtokeninfo} onClick={()=>{setToSelect(true); setFromSelect(false);}}>
                           <Box className={classes.tokenImg}>
                             { toToken 
@@ -408,7 +412,7 @@ const Swap = () => {
                     color='secondary'
                     onChange={(e, value)=>{
                       let swval = fromToken ? parseFloat(LatomicNumber.toDecimal(fromToken.balance, fromToken.decimals)) * value / 100 : 0
-                      swval = parseFloat(swval.toFixed(6));
+                      swval = Fixed(swval, 6);
                       setSwapDirection(true);
                       setSwapAmount(swval);
                     }}
@@ -430,9 +434,9 @@ const Swap = () => {
                   <p>Liquidity provider fee</p>
                 </Box>
                 <Box className={classes.swapsubinfo}>
-                  <p style={{color: toToken ? '#00d70a' : '#ffffff'}}>{toToken ? `${minimumReceivedAmount.toFixed(4)} ${toToken.code}` : 0}</p>
+                  <p style={{color: toToken ? '#00d70a' : '#ffffff'}}>{toToken ? `${Fixed(minimumReceivedAmount, 4)} ${toToken.code}` : 0}</p>
                   {/* <p style={{color: '#00d70a'}}>{'<0.01%'}</p> */}
-                  <p style={{color: fromToken ? '#00d70a' : '#ffffff'}}>{fromToken ? `${liquidityProviderFee.toFixed(4)} ${fromToken.code}` : 0}</p>
+                  <p style={{color: fromToken ? '#00d70a' : '#ffffff'}}>{fromToken ? `${Fixed(liquidityProviderFee, 4)} ${fromToken.code}` : 0}</p>
                 </Box>
             </Box>
           </Box>
@@ -444,12 +448,12 @@ const Swap = () => {
             open={openSwapConfirmDialog}
           >
             <form method="post" autoComplete="off" onSubmit={handleSwapConfirmSubmit} className={classes.gasForm}>
-              <Box className={classes.swapAmount}>{parseFloat(swapAmount.toFixed(4))} {fromToken ? fromToken.code : ''}</Box>
+              <Box className={classes.swapAmount}>{Fixed(swapAmount, 4)} {fromToken ? fromToken.code : ''}</Box>
               <Box className={classes.accountInfo}>
                 <Jazzicon diameter={32} seed={fromToken && fromToken.contract[network.id]} />
                 <Box style={{marginLeft: 10, textAlign: 'left'}}>
                   <Box style={{fontSize: 14, fontWeight: 500}}>Account ({shortWalletAddress})</Box>
-                  <Box style={{marginTop: 5}}>Balance: {fromToken ? parseFloat(LatomicNumber.toDecimal(fromToken.balance, fromToken.decimals)).toFixed(5) : ''} {fromToken && fromToken.code}</Box>
+                  <Box style={{marginTop: 5}}>Balance: {fromToken ? Fixed(LatomicNumber.toDecimal(fromToken.balance, fromToken.decimals), 6) : ''} {fromToken && fromToken.code}</Box>
                 </Box>
               </Box>
               <Box className={classes.amountInfo}>
@@ -462,8 +466,8 @@ const Swap = () => {
                   <Box> Total</Box>
                   {fromToken && <Box>
                     {fromToken.code == 'BNB'
-                    ? `${(parseFloat(swapAmount)+parseFloat(gasOptions.limit) * parseFloat(gasOptions.price) / 1000000000).toFixed(4)} BNB`
-                    : `${parseFloat(swapAmount).toFixed(4)} ${fromToken.code} + ${(parseFloat(gasOptions.limit) * parseFloat(gasOptions.price) / 1000000000).toFixed(4)} BNB`}
+                    ? `${Fixed((parseFloat(swapAmount)+parseFloat(gasOptions.limit) * parseFloat(gasOptions.price) / 1000000000), 4)} BNB`
+                    : `${Fixed(swapAmount, 4)} ${fromToken.code} + ${Fixed((parseFloat(gasOptions.limit) * parseFloat(gasOptions.price) / 1000000000), 4)} BNB`}
                   </Box>}
                 </Box>
               </Box>
