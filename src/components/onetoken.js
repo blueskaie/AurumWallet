@@ -16,7 +16,7 @@ const OneToken = (props) => {
 
   const classes = useStyles(useTheme());
   const history = useHistory();
-  const { code, balance, coinId, image, decimals, contract, trade, coingecko, price, showInfo, showSendLink, onClick } = props;
+  const { code, balance, image, decimals, contract, trade, coingecko, price, showInfo, showSendLink, onClick } = props;
 
   const network = useRecoilValue( currentNetwork );
   const currency = useRecoilValue( currentCurrencyCode );
@@ -25,7 +25,7 @@ const OneToken = (props) => {
     if (onClick) {
       onClick();
     } else {
-      history.push(`/token-detail/${code}`);
+      history.push(`/token-detail/${contract}`);
     }
   }
 
@@ -39,7 +39,7 @@ const OneToken = (props) => {
   const coCurPrice = coingecko && coingecko.market && coingecko.market.price && coingecko.market.price.length ? coingecko.market.price[coingecko.market.price.length - 1] : 0;
   const curPrice = coCurPrice ? coCurPrice : price;
   const prevPrice = coingecko && coingecko.market && coingecko.market.price && coingecko.market.price.length ? coingecko.market.price[0] : 0;
-  const cAmount = parseFloat(LatomicNumber.toDecimal(balance, decimals)) * curPrice * trade.cmp;
+  const cAmount = parseFloat(LatomicNumber.toDecimal(balance, decimals)) * curPrice * (trade ? trade.cmp : 0);
   // const pAmount = parseFloat(LatomicNumber.toDecimal(balance, decimals)) * prevPrice * trade.cmp;
   const percent = prevPrice !== 0 ? (curPrice - prevPrice) / prevPrice * 100 : 0;
 
@@ -113,7 +113,7 @@ const OneToken = (props) => {
           ? <img src={image.large} alt={code} width={20} style={{borderRadius: '50%'}} />
           : (tokenLogos[code.toUpperCase()] 
             ? <img src={tokenLogos[code.toUpperCase()]} alt={code} width={20} style={{borderRadius: '50%'}} />
-            : <Jazzicon diameter={40} seed={contract[network.id]} />)
+            : <Jazzicon diameter={40} seed={contract} />)
         }
       </Box>
       <Box className={classes.tokeninfo}>

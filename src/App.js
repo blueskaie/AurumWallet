@@ -165,7 +165,7 @@ function App() {
               <PrivateRoute path="/buysell">
                 <Buysell />
               </PrivateRoute>
-              <PrivateRoute path="/token-detail/:code" component={TokenDetail}>
+              <PrivateRoute path="/token-detail/:address" component={TokenDetail}>
               </PrivateRoute>
             </Switch>
           </Router>

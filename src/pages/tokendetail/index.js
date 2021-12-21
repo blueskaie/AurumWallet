@@ -14,7 +14,7 @@ import Layout from "../../components/layout";
 const TokenDetail = (props) => {
 
   const classes = useStyles();
-  const {code} = props.match.params;
+  const {address} = props.match.params;
 
   const network = useRecoilValue( currentNetwork );
   const list = useRecoilValue(tokenList);
@@ -27,7 +27,7 @@ const TokenDetail = (props) => {
 
     setAllTokens((tokens) => {
       const array = tokens.map(x=>x);
-      const index = array.findIndex((token)=>token.code === code);
+      const index = array.findIndex((token)=>token.contract[network.id] === address);
 
       const token = {
         ...array[index],
@@ -43,11 +43,11 @@ const TokenDetail = (props) => {
   }
 
   const coin = useMemo(()=>{
-    if (code && list) {
-      return list.find((item)=>item.code === code)
+    if (address && list) {
+      return list.find((item)=>item.contract === address)
     }
     return null;
-  }, [list, code]);
+  }, [list, address]);
 
   const options = {
     chart: {
@@ -88,7 +88,7 @@ const TokenDetail = (props) => {
   };
 
   const series = [{
-    data: coin.coingecko && coin.coingecko.ohlc
+    data: coin && coin.coingecko && coin.coingecko.ohlc
   }];
 
   return (
