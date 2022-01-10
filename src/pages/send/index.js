@@ -25,7 +25,7 @@ export default function Send() {
           type="text"
           placeholder="Search tokens..."
         />
-        <React.Suspense fallback={<Box className="slidebar"></Box>}>
+        <React.Suspense fallback={<Box></Box>}>
           <TokenList keyword={keyword}/>
         </React.Suspense>
       </Box>

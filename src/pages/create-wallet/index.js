@@ -179,10 +179,10 @@ export default function CreateWallet() {
             </FormControl>
             <ARUCard className={classes.alarmCard} onClick={() => setChecking(!checking)}>
               {!checking && <Icon className={classes.checkIcon}>
-                <img src="images/unchecked-circle.svg" alt="AurumWallet" className="logo-image" style={{height: '100%'}} />
+                <img src="images/unchecked-circle.svg" alt="AurumWallet" style={{height: '100%'}} />
               </Icon>}
               {checking && <Icon className={classes.checkIcon}>
-                <img src="images/checked-circle.svg" alt="AurumWallet" className="logo-image" style={{height: '100%'}} />
+                <img src="images/checked-circle.svg" alt="AurumWallet" style={{height: '100%'}} />
               </Icon>}
               <p>I understand that Aurum cannot recover this password.</p>
             </ARUCard>
@@ -193,7 +193,7 @@ export default function CreateWallet() {
           <Box className={classes.flexBox}>
             <ARUCard className={classes.alarmCard}>
               <Icon className={classes.checkIcon}>
-                <img src="images/warning.svg" alt="AurumWallet" className="logo-image" style={{height: '100%'}} />
+                <img src="images/warning.svg" alt="AurumWallet" style={{height: '100%'}} />
               </Icon>
               <p>
                 This is your Secret Recovery Phrase. Write it down and keep it in a safe place.

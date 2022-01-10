@@ -1,5 +1,4 @@
 import React from "react";
-import { useHistory } from "react-router-dom";
 import { Box, Icon } from "@material-ui/core";
 import { makeStyles, useTheme } from "@material-ui/core/styles";
 import HiddenText from "../../components/hidden-text";
@@ -7,7 +6,6 @@ import HiddenText from "../../components/hidden-text";
 const OneAccount = (props) => {
 
   const classes = useStyles(useTheme());
-  const history = useHistory();
   const { name, account, visible, onClick } = props;
 
   const shortWalletAddress =  account && account.address 
@@ -19,11 +17,10 @@ const OneAccount = (props) => {
       <Box className={classes.accountinfo}>
         <Box style={{display: 'flex', flexDirection: 'column', justifyContent: 'space-between'}}>
           <p className={classes.name}>{name}</p>
-          {/* <p className={classes.money}><HiddenText show={visible}>$826,181.55</HiddenText></p> */}
           <p className={classes.address}><HiddenText show={visible} length={22}>{shortWalletAddress}</HiddenText></p>
         </Box>
         {account.current && <Icon className={classes.checkIcon}>
-          <img src="images/checked-circle.svg" alt="AurumWallet" className="logo-image" style={{height: '100%'}} />
+          <img src="images/checked-circle.svg" alt="AurumWallet" style={{height: '100%'}} />
         </Icon>}
       </Box>
     </Box>

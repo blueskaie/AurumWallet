@@ -100,7 +100,7 @@ export default function ImportWallet() {
     <Layout isShownHeader={false}>
       <Box className={classes.root}>
         <div className={classes.logo}>
-          <img src="images/logo.png" alt="AurumWallet" className="wallet-image"/>
+          <img src="images/logo.png" alt="AurumWallet" className={classes.walletImage}/>
         </div>
 
         <h1 className={classes.logoTitle}>AurumWallet</h1>

@@ -11,7 +11,6 @@ import "slick-carousel/slick/slick-theme.css";
 import MuiAlert from '@material-ui/lab/Alert';
 import NetworkSelector from "./network-selector";
 import MenuOptions from "./menu-options";
-// import SliderList from "../../components/slider-list";
 import FadeLoader from "react-spinners/FadeLoader";
 
 const useStyles = makeStyles((theme)=>({

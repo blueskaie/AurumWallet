@@ -209,10 +209,10 @@ const TokenSelect = (props) => {
             <Box className={classes.dlgHeader} style={{marginTop: 10}}>
                 <Box className={classes.dlgHeader} onClick={() => setChecking(!checking)}>
                     {!checking && <Icon className={classes.checkIcon}>
-                        <img src="images/unchecked-circle.svg" alt="AurumWallet" className="logo-image" style={{width: 25, height: 25}} />
+                        <img src="images/unchecked-circle.svg" alt="AurumWallet" style={{width: 25, height: 25}} />
                     </Icon>}
                     {checking && <Icon className={classes.checkIcon}>
-                        <img src="images/checked-circle.svg" alt="AurumWallet" className="logo-image" style={{width: 25, height: 25}} />
+                        <img src="images/checked-circle.svg" alt="AurumWallet" style={{width: 25, height: 25}} />
                     </Icon>}
                     <span style={{marginLeft: 10}}>I understand</span>
                 </Box>

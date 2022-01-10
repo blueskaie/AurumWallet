@@ -80,8 +80,8 @@ export default function Accounts() {
                 <Icon className={classes.eyeIcon}>
                 {
                   showAccountInfo 
-                    ?<img src="images/hide.svg" alt="AurumWallet" className="logo-image" style={{height: '100%'}} />
-                    :<img src="images/show.svg" alt="AurumWallet" className="logo-image" style={{height: '100%'}} />
+                    ?<img src="images/hide.svg" alt="AurumWallet" style={{height: '100%'}} />
+                    :<img src="images/show.svg" alt="AurumWallet" style={{height: '100%'}} />
                 }
                 </Icon>
               </IconButton>

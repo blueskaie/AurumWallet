@@ -63,15 +63,14 @@ export default function Signin() {
   return (
     <Layout isShownHeader={false}>
       <Box className={classes.root}>
-        <Box className="auth-logo">
-          <img src="images/AURUM LOGO-white.svg" alt="AurumWallet" className="logo-image" />
+        <Box>
+          <img src="images/AURUM LOGO-white.svg" alt="AurumWallet" className={classes.logoImage} />
         </Box>
 
-        <h1 className="auth-title">Welcome</h1>
-        <p className="auth-subtitle">
+        <h1 className={classes.authTitle}>Welcome</h1>
+        <p className={classes.authSubTitle}>
           to the <b>AURUM</b> wallet
         </p>
-        <Box className="message error"></Box>
         <form
           method="post"
           autoComplete="off"

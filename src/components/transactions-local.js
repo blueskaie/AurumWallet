@@ -76,6 +76,12 @@ const useStyles = makeStyles(() => ({
   infoIcon: {
     width: 28,
     height: 28,
+  },
+  nothingMsg: {
+    fontSize:'.9rem',
+    display: 'block',
+    textAlign: 'center',
+    color: '#666'
   }
 }));
 
@@ -166,7 +172,7 @@ export function AllTransactionsLocal({token, height}) {
           return renderRow({di, index})
         })}
       </Box>
-      : <span className="nothing-msg">No transactions found</span> }
+      : <span className={classes.nothingMsg}>No transactions found</span> }
     </ARUCard>
   )
 }

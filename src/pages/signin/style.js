@@ -6,6 +6,25 @@ const useStyles = makeStyles(() => ({
     marginTop: -50
   },
 
+  logoImage: {
+    width: 140,
+    userSelect: 'none'
+  },
+
+  authTitle: {
+    color: 'white',
+    fontWeight: 'bold',
+    fontSize: 40,
+    margin: 0,
+    userSelect: 'none'
+  },
+
+  authSubTitle: {
+    userSelect: 'none',
+    margin: 0,
+    color: 'white'
+  },
+
   form: {
     margin: "40px auto 0 auto",
     width: 220,

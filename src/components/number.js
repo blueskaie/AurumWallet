@@ -26,7 +26,7 @@ export default function ARUNumberInput(props) {
           <Box>
             <IconButton className={classes.button} onClick={onDecreasement}>
               <Icon className={classes.icon}>
-                <img src="images/minus.svg" alt="AurumWallet" className="logo-image" style={{height: '100%'}} />
+                <img src="images/minus.svg" alt="AurumWallet" style={{height: '100%'}} />
               </Icon>
             </IconButton>
           </Box>
@@ -34,7 +34,7 @@ export default function ARUNumberInput(props) {
           <Box>
             <IconButton className={classes.button} onClick={onIncreasement}>
               <Icon className={classes.icon}>
-                <img src="images/plus.svg" alt="AurumWallet" className="logo-image" style={{height: '100%'}} />
+                <img src="images/plus.svg" alt="AurumWallet" style={{height: '100%'}} />
               </Icon>
             </IconButton>
           </Box>

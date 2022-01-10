@@ -162,7 +162,7 @@ export default function MenuOptions({loggedIn}) {
         onClick={handleClick}
       >
         <Icon className={classes.menuIcon}>
-          <img src="images/Menu icon v2.svg" alt="AurumWallet" className="logo-image" style={{height: '100%'}} />
+          <img src="images/Menu icon v2.svg" alt="AurumWallet" style={{height: '100%'}} />
         </Icon>
       </IconButton>
       <Menu
@@ -189,7 +189,7 @@ export default function MenuOptions({loggedIn}) {
             
             <ListItemIcon className={classes.listItemIcon}>
               <Icon className={classes.menuItemIcon}>
-                <img src={`images/${option.icon}`} alt="AurumWallet" className="logo-image" style={{height: '100%'}} />
+                <img src={`images/${option.icon}`} alt="AurumWallet" style={{height: '100%'}} />
               </Icon>
             </ListItemIcon>
             <ListItemText primary={option.name} style={{height: '20px'}} />

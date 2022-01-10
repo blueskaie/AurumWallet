@@ -10,6 +10,10 @@ const useStyles = makeStyles((theme) => ({
     margin: '0 auto',
     marginTop: 15
   },
+  walletImage: {
+    width:130,
+    userSelect: 'none'
+  },
   logoTitle: {
     color: 'white',
     fontWeight: 'bold',

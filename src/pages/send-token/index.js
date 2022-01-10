@@ -223,7 +223,7 @@ export default function SendToken(props) {
               onClick={()=>setOpenGasEditDialog(true)}
             >
               <Icon className={classes.settingIcon}>
-                <img src="images/settings.svg" alt="AurumWallet" className="logo-image" style={{height: '100%'}} />
+                <img src="images/settings.svg" alt="AurumWallet" style={{height: '100%'}} />
               </Icon>
             </IconButton>
             <Grid container spacing={1} style={{marginBottom: 16}}>
@@ -265,7 +265,7 @@ export default function SendToken(props) {
         >
           <IconButton onClick={()=>setOpenGasEditDialog(false)} style={{padding: 0, position: 'absolute', right: 20, top: 20}}>
             <Icon className={classes.icon}>
-              <img src="images/close.svg" alt="AurumWallet" className="logo-image" style={{height: '100%'}} />
+              <img src="images/close.svg" alt="AurumWallet" style={{height: '100%'}} />
             </Icon>
           </IconButton>
           <Box style={{fontSize: 14, textAlign: 'center', marginBottom: 15, color: '#ffffff'}}>Edit Gas Fee</Box>
