@@ -41,7 +41,7 @@ export const getAmountsOut = async (network, router, fromToken, toToken, amount)
     let amountIn = formatBN(amount, fromToken.decimals);
 
     let path = [fromToken.contract, toToken.contract];
-    if (fromToken.code != DEFAULT_TOKEN.code && toToken.code != DEFAULT_TOKEN.code) {
+    if (fromToken.code !== DEFAULT_TOKEN.code && toToken.code !== DEFAULT_TOKEN.code) {
         path = [fromToken.contract, DEFAULT_TOKEN.contract[network.id], toToken.contract];
     }
 
@@ -58,7 +58,7 @@ export const getAmountsIn = async (network, router, fromToken, toToken, amount) 
     let amountOut = formatBN(amount, toToken.decimals);
 
     let path = [fromToken.contract, toToken.contract];
-    if (fromToken.code != DEFAULT_TOKEN.code && toToken.code != DEFAULT_TOKEN.code) {
+    if (fromToken.code !== DEFAULT_TOKEN.code && toToken.code !== DEFAULT_TOKEN.code) {
         path = [fromToken.contract, DEFAULT_TOKEN.contract[network.id], toToken.contract];
     }
 

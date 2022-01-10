@@ -28,7 +28,7 @@ export default function CreateWallet() {
   const [, setWalletAtom] = useRecoilState(allWallets)
   const provider = useRecoilValue(networkProvider);
   const cWallet = useRecoilValue(currentWallet);
-  const [currentTokens, setCurrentTokens] = useRecoilState(allTokens);
+  const [, setCurrentTokens] = useRecoilState(allTokens);
 
   const [pass, setPass] = React.useState("");
   const [repass, setRepass] = React.useState("");
@@ -141,11 +141,11 @@ export default function CreateWallet() {
     <Layout isShownBackButton={true} isShownWallet={false} isShownNetworkSelector={false}>
       <Box className={classes.root}>
         <h1 className={classes.wallettitle}>
-          {step == 1 && 'Create Password'}
-          {step == 2 && 'Secure Wallet'}
-          {step == 3 && 'Confirm Recovery Phrase'}
+          {step === 1 && 'Create Password'}
+          {step === 2 && 'Secure Wallet'}
+          {step === 3 && 'Confirm Recovery Phrase'}
         </h1>
-        {step == 1 && (
+        {step === 1 && (
           <form
             method="post"
             autoComplete="off"
@@ -189,7 +189,7 @@ export default function CreateWallet() {
             <ARUButton className={classes.submitPassword} type='submit'>CREATE PASSWORD</ARUButton>
           </form>
         )}
-        { step == 2 &&
+        { step === 2 &&
           <Box className={classes.flexBox}>
             <ARUCard className={classes.alarmCard}>
               <Icon className={classes.checkIcon}>
@@ -217,7 +217,7 @@ export default function CreateWallet() {
           </Box>
         }
         {
-          step == 3 &&
+          step === 3 &&
           <Box className={classes.flexBox}>
             <Box className={classes.confirmSecretPharse}>{confirmMnemonic}</Box>
             <ARUCard className={classes.confirmPharseDescription}>
@@ -230,7 +230,7 @@ export default function CreateWallet() {
           </Box>
         }
         {
-          step == 4 && 
+          step === 4 && 
           <Box className={classes.flexBox}>
             <Alert severity="success" className={classes.congulatelations}>
               CONGRATULATIONS

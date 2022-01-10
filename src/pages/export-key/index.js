@@ -1,7 +1,6 @@
 import React from 'react';
 
-import { Box, Container, Typography, FormControl, TextField, FormHelperText, Button } from '@material-ui/core'
-import { makeStyles } from '@material-ui/core/styles';
+import { Box, Typography, FormControl, TextField, FormHelperText, Button } from '@material-ui/core';
 import { decryptKeyStore } from '../../utils/keystore';
 import Layout from "../../components/layout";
 

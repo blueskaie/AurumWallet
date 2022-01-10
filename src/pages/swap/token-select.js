@@ -83,14 +83,14 @@ const TokenSelect = (props) => {
                 if(tokenInfo)
                 {
                     for (let i = 0; i < tokens.length; i++) {
-                        if (tokens[i].contract[1] == search) {
+                        if (tokens[i].contract[1] === search) {
                             console.log("same");
                             return;
                         }
                     }
                     console.log("new");
                     setGetResult(2);
-                    if(network.id == 1)
+                    if(network.id === 1)
                         main = search
                     else
                         test = search

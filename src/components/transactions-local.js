@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { currentNetwork, currentWallet, networkTransactions, allTokens, allTransactions } from '../store/atoms'
+import { allTransactions } from '../store/atoms'
 import { useRecoilValue } from 'recoil';
 
 import {ButtonBase, Box, Icon} from '@material-ui/core';
@@ -89,26 +89,8 @@ const useStyles = makeStyles(() => ({
 export function AllTransactionsLocal({token, height}) {
 
   const classes = useStyles( );
-
-  const wallet = useRecoilValue(currentWallet);
-  const network = useRecoilValue(currentNetwork);
-  const transactions = useRecoilValue(networkTransactions(0));
-
-  const allTokensData = useRecoilValue(allTokens);
   const allTrans = useRecoilValue(allTransactions);
-  console.log('allTrans===>', allTrans);
   const history = useHistory();
-
-  const ALL_TOKENS_MAP = React.useMemo(() => {
-    let mp = {};
-    allTokensData.forEach((item) => {
-      let {contract} = item;
-      if(contract && contract[network.id]) {
-        mp[contract[network.id].toUpperCase()] = item;
-      }
-    });
-    return mp;
-  }, [network, allTokensData])
 
   const goToTransactionDetail = (di) => {
     if (di && di.transactionHash && di.from && di.to) {
@@ -120,7 +102,7 @@ export function AllTransactionsLocal({token, height}) {
     const { di, index, style } = props;
 
     const tokenValue = di && di.token ? di.token : DEFAULT_TOKEN;
-    const type = di.type && di.type == 'send' ? 'Sent' : 'Contract Call';
+    const type = di.type && di.type === 'send' ? 'Sent' : 'Contract Call';
     const image = type === 'Sent' ? 'transfer_out.svg' : (type === 'Received' ? 'transfer_in.svg' : 'contract_call.svg');
 
     return (

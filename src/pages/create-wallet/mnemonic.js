@@ -29,7 +29,7 @@ const ARUMnemonic = (props) => {
     let currentIndex = array.length,  randomIndex;
   
     // While there remain elements to shuffle...
-    while (currentIndex != 0) {
+    while (currentIndex !== 0) {
   
       // Pick a remaining element...
       randomIndex = Math.floor(Math.random() * currentIndex);
@@ -45,7 +45,7 @@ const ARUMnemonic = (props) => {
 
   const clickWord = (e) => {
     const word = e.target.innerText;
-    const index = selectedWords.findIndex(item=>word==item);
+    const index = selectedWords.findIndex(item=>word===item);
     if (index > -1) {
         selectedWords.splice(index, 1);
         e.target.style.color='white';
@@ -67,7 +67,7 @@ const ARUMnemonic = (props) => {
   return (
     <Grid className={classes.root} container spacing={1}>
     {mnemonicArray.map((word, index)=>{ 
-        const selected =selectedWords.findIndex(item=>word==item) > -1;
+        const selected =selectedWords.findIndex(item=>word===item) > -1;
         console.log('selected', selected);
         return <Grid item xs={4} key={index.toString()}>
             <Button

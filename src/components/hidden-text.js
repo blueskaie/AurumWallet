@@ -1,5 +1,4 @@
 import React from "react";
-import { Box } from "@material-ui/core";
 
 const HiddenText = ({show = true, children, length = 8}) => {
   return (

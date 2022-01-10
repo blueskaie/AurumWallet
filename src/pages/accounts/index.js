@@ -52,7 +52,7 @@ export default function Accounts() {
       const all = [...current];
       for(let i = 0; i < all.length; i++) {
         let si = {...all[i]};
-        if (wallet.address == all[i].address) {
+        if (wallet.address === all[i].address) {
           si = {...si, current: true};
         } else {
           si = {...si, current: false};

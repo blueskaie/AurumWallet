@@ -6,7 +6,7 @@ import * as LatomicNumber from '../utils/big.number'
 import {tokenLogos} from "../config/token-info"
 import Jazzicon from 'react-jazzicon';
 import { useRecoilValue } from 'recoil';
-import { currentNetwork, currentCurrencyCode  } from '../store/atoms'
+import { currentCurrencyCode  } from '../store/atoms';
 import ReactApexChart from 'react-apexcharts';
 import { faCaretDown, faCaretUp, faSignOutAlt } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -18,7 +18,6 @@ const OneToken = (props) => {
   const history = useHistory();
   const { code, balance, image, decimals, contract, trade, coingecko, price, showInfo, showSendLink, onClick } = props;
 
-  const network = useRecoilValue( currentNetwork );
   const currency = useRecoilValue( currentCurrencyCode );
 
   const goToDetail = () => { 
@@ -127,12 +126,12 @@ const OneToken = (props) => {
         </Box>
         <Box style={{display: 'flex', flexDirection: 'row', justifyContent: 'space-between', cursor:'pointer'}} onClick={goToDetail}>
           <p className={classes.tokenprice}>
-            {currency == 'USD' ? '$' : '€'}
+            {currency === 'USD' ? '$' : '€'}
             {(curPrice * trade.cmp).toFixed(12).toLocaleString()}
           </p>
           <p className={classes.tokenprice}>
             <HiddenText show={showInfo}>
-              {currency == 'USD' ? '$' : '€'}
+              {currency === 'USD' ? '$' : '€'}
               {cAmount.toFixed(2).toLocaleString()}
             </HiddenText>
           </p>

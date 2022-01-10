@@ -2360,12 +2360,12 @@ export const tokenLogos = {
 }
 
 export const getTokenInfo = ()=> {
-  const bnbToken = tokenInfo.filter((item)=> item.platform_currency_id == 'BNB');
+  const bnbToken = tokenInfo.filter((item)=> item.platform_currency_id === 'BNB');
   let bnbObj = {};
 
   for(let i =0; i< bnbToken.length; i++)
   {
-    if(bnbToken[i].logo_url == "")
+    if(bnbToken[i].logo_url === "")
       continue;
     bnbObj[bnbToken[i].original_symbol] = bnbToken[i].logo_url
   }

@@ -7,13 +7,13 @@ export default function ARUNumberInput(props) {
   const classes = useStyles();
 
   const onDecreasement = () => {
-    if (value, onChange) {
+    if (typeof value !== 'undefined' && onChange) {
       onChange(parseInt(value) - 1);
     }
   }
 
   const onIncreasement = () => {
-    if (value, onChange) {
+    if (typeof value !== 'undefined' && onChange) {
       onChange(parseInt(value) + 1);
     }
   }

@@ -1,4 +1,4 @@
-import React, {useState, useMemo, useEffect} from 'react';
+import React, {useState, useEffect} from 'react';
 import { Box, Icon, IconButton } from "@material-ui/core";
 import { useRecoilValue, useRecoilState } from 'recoil';
 import { tokenList, currentCurrencyCode } from '../store/atoms'
@@ -60,7 +60,7 @@ export default function StatisticInfo({showInfo, setToggleInfo}) {
           </Box>
           <Box style={{marginBottom: 5}}>
             <HiddenText show={showInfo} length={10}>
-              {currency == 'USD' ? '$' : '€'}
+              {currency === 'USD' ? '$' : '€'}
               {totalAmount.toFixed(2).toLocaleString()}
             </HiddenText>
           </Box>
@@ -72,7 +72,7 @@ export default function StatisticInfo({showInfo, setToggleInfo}) {
             }
             <span style={{color: profitAmount >= 0 ? 'green' : 'red', marginTop: '10px'}}>
               <HiddenText show={showInfo} length={18}>
-                {currency == 'USD' ? '$' : '€'}
+                {currency === 'USD' ? '$' : '€'}
                 {Math.abs(diffAmount).toFixed(2)} | {Math.abs(profitAmount).toFixed(2)}%
               </HiddenText>
             </span>

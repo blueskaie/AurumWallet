@@ -1,14 +1,12 @@
 import React from 'react';
 import Menu from '@material-ui/core/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
-import MoreVertIcon from '@material-ui/icons/MoreVert';
 import IconButton from '@material-ui/core/IconButton';
 import Icon from '@material-ui/core/Icon';
-import Refresh from '@material-ui/icons/Refresh';
 import { makeStyles, useTheme } from '@material-ui/core/styles';
 import { useHistory } from 'react-router-dom';
 import { useRecoilState } from 'recoil';
-import { allWallets, refreshCalled } from '../store/atoms';
+import { allWallets } from '../store/atoms';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
 
@@ -52,22 +50,16 @@ const KEY_HOME = 0;
 const KEY_SWAP = 1;
 const KEY_LOGOUT = 2;
 const KEY_SEND = 3;
-// const KEY_RECEIVE = 2;
-// const KEY_REVEAL = 4;
 const KEY_SETTINGS = 4;
 const KEY_ACTIVITY = 5;
 const KEY_ACCOUNTS = 6;
 const WALLET_SECURITY = 7;
-// const KEY_ABOUT_US = 5;
-// const KEY_DEPLOY_CONTRACT = 7;
 
 const options = [
   {id: KEY_HOME, name: 'Wallet', icon: 'wallet.svg'},
   {id: KEY_SWAP, name: 'Swap', icon: 'swap.svg'},
   {id: KEY_SEND, name: 'Send', icon: 'send.svg'},
-  // {id: KEY_REVEAL, name: 'Reveal', icon: 'reveal.svg'},
   {id: KEY_SETTINGS, name: 'Settings', icon: 'settings.svg'},
-  // {id: WALLET_SECURITY, name: 'Security', icon: 'reveal.svg'},
   {id: KEY_ACTIVITY, name: 'Activity', icon: 'activity.svg'},
   {id: KEY_ACCOUNTS, name: 'Accounts', icon: 'accounts.svg'},
   {id: KEY_LOGOUT, name: 'Logout', icon: 'logout.svg'}
@@ -80,7 +72,6 @@ export default function MenuOptions({loggedIn}) {
 
   const classes = useStyles(useTheme());
 
-  const [refresh, setRefresh] = useRecoilState(refreshCalled);
   const [anchorEl, setAnchorEl] = React.useState(null);
 
   const [,setAllWallets] = useRecoilState(allWallets);
@@ -93,11 +84,6 @@ export default function MenuOptions({loggedIn}) {
   const handleClose = () => {
     setAnchorEl(null);
   };
-
-  const handleRefresh = () => {
-    const updR = refresh + 1;
-    setRefresh(updR);
-  }
 
   const handleMenuItemClick = (event, {id}) => {
     switch(id) {

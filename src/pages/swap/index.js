@@ -264,7 +264,7 @@ const Swap = () => {
   }, [slippageTolerance, expectedAmount]);
 
   const liquidityProviderFee = useMemo(()=>{
-    const percent = swapRouter == 'pancakeswap' ? 0.25 : 0.2;
+    const percent = swapRouter === 'pancakeswap' ? 0.25 : 0.2;
     return swapAmount * percent / 100;
   }, [swapRouter, swapAmount]);
 
@@ -465,7 +465,7 @@ const Swap = () => {
                 <Box style={{display: 'flex', alignItems: 'center', justifyContent: 'space-between'}}>
                   <Box> Total</Box>
                   {fromToken && <Box>
-                    {fromToken.code == 'BNB'
+                    {fromToken.code === 'BNB'
                     ? `${Fixed((parseFloat(swapAmount)+parseFloat(gasOptions.limit) * parseFloat(gasOptions.price) / 1000000000), 4)} BNB`
                     : `${Fixed(swapAmount, 4)} ${fromToken.code} + ${Fixed((parseFloat(gasOptions.limit) * parseFloat(gasOptions.price) / 1000000000), 4)} BNB`}
                   </Box>}

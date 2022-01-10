@@ -24,7 +24,6 @@ export default function AddCustomToken() {
   const [contract, setContract] = React.useState('');
   const [vals, setVals] = React.useState({title: '', code: '', decimals: '', main: '', test: ''});
   const [helpers, setHelpers] = React.useState({contract:''});
-  const [error, setError] = React.useState({contract:false});
 
   const setAllTokens = useSetRecoilState(allTokens);
 
@@ -37,7 +36,7 @@ export default function AddCustomToken() {
       let main='',test='';
       if(tokenInfo)
       {
-        if(network.id == 1)
+        if(network.id === 1)
           main = contract
         else
           test = contract
@@ -64,10 +63,6 @@ export default function AddCustomToken() {
         return {...hs,
           contract:'Contract address is incorrect'
         }
-      });
-
-      setError(hs => {
-        return {...hs, contract:false}
       });
       return;
     }
