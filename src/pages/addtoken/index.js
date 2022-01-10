@@ -1,6 +1,6 @@
 import React,{useEffect} from 'react'
-import { getCoingeckoInfoByAddress } from '../../utils/coingeco-utils';
-import { getTokenInfoByAddress } from '../../utils/token-utils';
+import { getCoingeckoInfoByAddress } from '../../services/coingeco-utils';
+import { getTokenInfoByAddress } from '../../services/token-utils';
 import Layout from "../../components/layout";
 
 import {  Button, Box, FormControl, FormHelperText, Snackbar } from '@material-ui/core'

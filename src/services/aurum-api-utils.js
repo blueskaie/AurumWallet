@@ -1,4 +1,4 @@
-import callAPI from "./api-utils";
+import callAPI from "../utils/api-utils";
 
 const api_endpoint = 'http://18.219.122.201';
 

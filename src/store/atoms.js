@@ -8,11 +8,11 @@ import {
 
 import Networks from '../config/networks'
 import { precisionFormat } from '../utils/format-utils'
-import { getProvider, loadSingle } from '../utils/token-utils'
-import { getCurrencyPerToken } from '../utils/chainlink-utils'
-import { getOHLC, getMarketChart } from '../utils/coingeco-utils'
+import { getProvider, loadSingle } from '../services/token-utils'
+import { getCurrencyPerToken } from '../services/chainlink-utils'
+import { getOHLC, getMarketChart } from '../services/coingeco-utils'
 import { BNB_CODE } from '../config/tokens';
-import { getCurrentPrice } from '../utils/aurum-api-utils';
+import { getCurrentPrice } from '../services/aurum-api-utils';
 
 const NetworkMap = {};
 Networks.forEach(item => {
@@ -362,9 +362,4 @@ export const transactionDetails = selectorFamily({
     }
     return {};
   }
-});
-
-export const homeSelectedTab = atom({
-  key: 'homeSelectedTab',
-  default: 0
 });

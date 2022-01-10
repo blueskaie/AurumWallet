@@ -13,7 +13,7 @@ import MuiAlert from '@material-ui/lab/Alert';
 
 import { DEFAULT_TOKEN } from '../../config/tokens';
 
-import { doTransfer } from '../../utils/token-utils';
+import { doTransfer } from '../../services/token-utils';
 import useStyles from "./style";
 import ARUCard from '../../components/card';
 import Grid from '@material-ui/core/Grid';

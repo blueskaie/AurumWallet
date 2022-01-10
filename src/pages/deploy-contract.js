@@ -5,7 +5,7 @@ import {  Button, Container, TextField, FormControl, FormHelperText, Snackbar, T
 import { Alert } from '@material-ui/lab';
 import { makeStyles } from '@material-ui/core/styles';
 import { useRecoilValue, useSetRecoilState } from 'recoil';
-import { deployContract } from '../utils/token-utils';
+import { deployContract } from '../services/token-utils';
 import { currentNetwork, currentWallet, networkProvider, allContracts } from '../store/atoms'
 import { decryptKeyStore } from '../utils/keystore'
 

@@ -1,4 +1,4 @@
-import callAPI from "./api-utils";
+import callAPI from "../utils/api-utils";
 
 export const getCoingeckoInfoByAddress = async (address) => {
     if (address) {

@@ -15,8 +15,8 @@ import TokenSelect from './token-select';
 
 import * as LatomicNumber from '../../utils/big.number'
 import { decryptKeyStore } from '../../utils/keystore'
-import { getAmountsOut, getAmountsIn, getGasInfo, doSwap } from '../../utils/swap-utils';
-import { approve } from '../../utils/token-utils';
+import { getAmountsOut, getAmountsIn, getGasInfo, doSwap } from '../../services/swap-utils';
+import { approve } from '../../services/token-utils';
 
 import { networkProvider, refreshCalled, currentWallet, currentNetwork, currentGasOptions, currentSlippageTolerance, allTransactions  } from '../../store/atoms'
 
