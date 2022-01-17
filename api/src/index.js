@@ -33,6 +33,7 @@ app.use((req, res, next) => {
 // app.use('/messages', routes.message);
 app.use('/dextools', routes.dextools);
 app.use('/pancakeswap', routes.pancakeswap);
+app.use('/coingeco', routes.coingeco);
 
 // * Start * //
 

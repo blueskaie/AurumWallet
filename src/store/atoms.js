@@ -10,7 +10,7 @@ import Networks from '../config/networks'
 import { precisionFormat } from '../utils/format-utils'
 import { getProvider, loadSingle } from '../services/token-utils'
 import { getCurrencyPerToken } from '../services/chainlink-utils'
-import { getOHLC, getMarketChart } from '../services/coingeco-utils'
+import { getOHLC, getMarketChart } from '../services/aurum-api-utils'
 import { BNB_CODE } from '../config/tokens';
 import { getCurrentPrice } from '../services/aurum-api-utils';
 

@@ -1,5 +1,5 @@
 import React,{useEffect} from 'react'
-import { getCoingeckoInfoByAddress } from '../../services/coingeco-utils';
+import { getCoingeckoInfoByAddress } from '../../services/aurum-api-utils';
 import { getTokenInfoByAddress } from '../../services/token-utils';
 import Layout from "../../components/layout";
 

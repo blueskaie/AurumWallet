@@ -5,7 +5,7 @@ import {tokenLogos} from "../../config/token-info";
 import Jazzicon from 'react-jazzicon';
 import { useRecoilValue, useSetRecoilState } from 'recoil';
 import { currentWallet, currentNetwork, tokenList, allTokens  } from '../../store/atoms'
-import { getCoingeckoInfoByAddress } from '../../services/coingeco-utils';
+import { getCoingeckoInfoByAddress } from '../../services/aurum-api-utils';
 import { getTokenInfoByAddress } from '../../services/token-utils';
 import ARUButton from '../../components/buttons';
 import { Box, Dialog, Icon } from '@material-ui/core';
