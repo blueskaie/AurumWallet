@@ -4,13 +4,14 @@ import { makeStyles, useTheme } from "@material-ui/core/styles";
 import {tokenLogos} from "../../config/token-info";
 import Jazzicon from 'react-jazzicon';
 import { useRecoilValue, useSetRecoilState } from 'recoil';
-import { currentNetwork, tokenList, allTokens  } from '../../store/atoms'
+import { currentWallet, currentNetwork, tokenList, allTokens  } from '../../store/atoms'
 import { getCoingeckoInfoByAddress } from '../../services/coingeco-utils';
 import { getTokenInfoByAddress } from '../../services/token-utils';
 import ARUButton from '../../components/buttons';
 import { Box, Dialog, Icon } from '@material-ui/core';
 
 const TokenSelect = (props) => {
+    const wallet = useRecoilValue(currentWallet);
     const network = useRecoilValue( currentNetwork );
     const availableTokenList = useRecoilValue(tokenList);
     const [curToken, setCurToken] = useState(null);
@@ -39,7 +40,6 @@ const TokenSelect = (props) => {
     const [openImportDlg, setOpenImportDlg] = useState(false);
 
     const setAllTokens = useSetRecoilState(allTokens);
-    const tokens = useRecoilValue(allTokens);
 
     const onImportToken = async (event) => {
 
@@ -63,16 +63,21 @@ const TokenSelect = (props) => {
         setGetResult('');
     
         setAllTokens((tokens) => {
-            const index = tokens.findIndex(token=>token.contract[network.id] === tokenInfo.contract[network.id]);
-            const newTokens = [...tokens];
+            const curTokens = wallet.address in tokens ? tokens[wallet.address] : [];
+            const index = curTokens.findIndex(token=>token.contract[network.id] === tokenInfo.contract[network.id]);
+            const newTokens = [...curTokens];
             if (index > -1) {
-              tokenInfo.contract = {...tokens[index].contract, [network.id]: tokenInfo.contract[network.id]};
+              tokenInfo.contract = {...curTokens[index].contract, [network.id]: tokenInfo.contract[network.id]};
               newTokens.splice(index, 1, tokenInfo);
             } else {
               newTokens.push(tokenInfo);
             }
-            return [...newTokens];
+            return {
+                ...tokens,
+                [wallet.address]: newTokens
+            };
         });
+        console.log('herere')
     }
 
     useEffect(() => {
@@ -82,8 +87,8 @@ const TokenSelect = (props) => {
                 let main='',test='';
                 if(tokenInfo)
                 {
-                    for (let i = 0; i < tokens.length; i++) {
-                        if (tokens[i].contract[1] === search) {
+                    for (let i = 0; i < availableTokenList.length; i++) {
+                        if (availableTokenList[i].contract === search) {
                             console.log("same");
                             return;
                         }

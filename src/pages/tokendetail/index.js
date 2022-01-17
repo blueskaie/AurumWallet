@@ -4,7 +4,7 @@ import { useHistory } from "react-router-dom";
 import { useRecoilValue, useSetRecoilState } from 'recoil';
 import { Box } from '@material-ui/core';
 import useStyles from './style';
-import { tokenList, allTokens, currentNetwork  } from '../../store/atoms';
+import { currentWallet, tokenList, allTokens, currentNetwork  } from '../../store/atoms';
 import TransactionsLocal from '../../components/transactions-local';
 import ARUCard from '../../components/card';
 import OneToken from "../../components/onetoken";
@@ -16,6 +16,7 @@ const TokenDetail = (props) => {
   const classes = useStyles();
   const {address} = props.match.params;
 
+  const wallet = useRecoilValue(currentWallet);
   const network = useRecoilValue( currentNetwork );
   const list = useRecoilValue(tokenList);
   const history = useHistory();
@@ -26,18 +27,22 @@ const TokenDetail = (props) => {
     event.preventDefault();
 
     setAllTokens((tokens) => {
-      const array = tokens.map(x=>x);
-      const index = array.findIndex((token)=>token.contract[network.id] === address);
+      const curTokens = wallet.address in tokens ? tokens[wallet.address] : [];
+      const index = curTokens.findIndex((token)=>token.contract[network.id] === address);
 
       const token = {
-        ...array[index],
+        ...curTokens[index],
         contract: {
-          ...array[index].contract,
+          ...curTokens[index].contract,
           [network.id]: ""
         }
       }
-      array.splice(index, 1, token);
-      return [...array];
+      const newTokens = [...curTokens];
+      newTokens.splice(index, 1, token);
+      return {
+        ...tokens,
+        [wallet.address]: newTokens
+      };
     });
     history.push("/home");
   }

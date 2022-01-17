@@ -124,7 +124,7 @@ export const walletWithAddress = selectorFamily({
 
 export const allTokens = atom({
   key: 'allTokens',
-  default: [],
+  default: {},
   persistence_UNSTABLE: {
     type: 'allTokens'
   }
@@ -257,10 +257,11 @@ export const tokenList = selector({
     const network = get(currentNetwork);
     const wallet = get(currentWallet);
     const tokens = get(allTokens);
-    
-    console.log("tokenList step1",tokens);
 
-    let toUseTokens = tokens.filter( item => {
+    console.log("tokenList step1",tokens);
+    const curTokens = wallet.address in tokens ? tokens[wallet.address] : [];
+
+    let toUseTokens = curTokens.filter( item => {
       return item.code === BNB_CODE || (item.contract && item.contract[network.id]);
     });
 

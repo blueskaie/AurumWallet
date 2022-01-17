@@ -8,9 +8,9 @@ import { ARUBaseInput } from '../../components/fields';
 import MuiAlert from '@material-ui/lab/Alert';
 
 import { useSetRecoilState,useRecoilValue} from 'recoil';
-import { allTokens,currentNetwork } from '../../store/atoms';
+import { currentWallet, allTokens, currentNetwork } from '../../store/atoms';
 import useStyles from './style';
-import {useHistory} from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
 
 function Alert(props) {
   return <MuiAlert elevation={6} variant="filled" {...props} />;
@@ -19,7 +19,7 @@ function Alert(props) {
 export default function AddCustomToken() {
   const classes = useStyles( );
   const history = useHistory();
-
+  const wallet = useRecoilValue(currentWallet);
   const network = useRecoilValue( currentNetwork );
   const [contract, setContract] = React.useState('');
   const [vals, setVals] = React.useState({title: '', code: '', decimals: '', main: '', test: ''});
@@ -76,15 +76,20 @@ export default function AddCustomToken() {
     };
 
     setAllTokens((tokens) => {
-      const index = tokens.findIndex(token=>token.contract[network.id] === tokenInfo.contract[network.id]);
-      const newTokens = [...tokens];
+      const curTokens = wallet.address in tokens ? tokens[wallet.address] : [];
+
+      const index = curTokens.findIndex(token=>token.contract[network.id] === tokenInfo.contract[network.id]);
+      const newTokens = [...curTokens];
       if (index > -1) {
-        tokenInfo.contract = {...tokens[index].contract, [network.id]: tokenInfo.contract[network.id]};
+        tokenInfo.contract = {...curTokens[index].contract, [network.id]: tokenInfo.contract[network.id]};
         newTokens.splice(index, 1, tokenInfo);
       } else {
         newTokens.push(tokenInfo);
       }
-      return [...newTokens];
+      return {
+        ...tokens,
+        [wallet.address]: newTokens
+      };
     });
 
     setOpenSuccess(true);

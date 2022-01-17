@@ -31,7 +31,7 @@ import TokenDetail from "./pages/tokendetail";
 import Activity from "./pages/activity";
 import Accounts from "./pages/accounts";
 
-import { useRecoilState } from 'recoil';
+import { useRecoilState, useRecoilValue } from 'recoil';
 import { allTokens, currentWallet } from './store/atoms';
 
 import {
@@ -63,13 +63,19 @@ const theme = createMuiTheme({
 
 function App() {
 
-  const [currentTokens, setCurrentTokens] = useRecoilState(allTokens);
-
+  const wallet = useRecoilValue(currentWallet);
+  let [currentTokens, setCurrentTokens] = useRecoilState(allTokens);
+  
   React.useEffect(() => {
-    if(currentTokens.length === 0) {
-      setCurrentTokens(ALL_TOKENS);
+    if (!(wallet.address in currentTokens)) {
+      // setCurrentTokens(ALL_TOKENS);
+      currentTokens = {
+        ...currentTokens,
+        [wallet.address]: ALL_TOKENS
+      };
+      setCurrentTokens(currentTokens);
     }
-  }, [currentTokens]); //eslint-disable-line react-hooks/exhaustive-deps
+  }, [currentTokens, wallet]); //eslint-disable-line react-hooks/exhaustive-deps
 
   return (
 
