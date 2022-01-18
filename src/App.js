@@ -67,7 +67,7 @@ function App() {
   let [currentTokens, setCurrentTokens] = useRecoilState(allTokens);
   
   React.useEffect(() => {
-    if (!(wallet.address in currentTokens)) {
+    if (wallet && wallet.address && !(wallet.address in currentTokens)) {
       // setCurrentTokens(ALL_TOKENS);
       currentTokens = {
         ...currentTokens,
